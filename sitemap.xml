@@ -1,15 +1,69 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>http://mandarl.github.io/blog/2012/04/03/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mandarl.github.io/blog/2012/04/11/regents-canal-camden-taken-with-instagram/
+        </loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mandarl.github.io/blog/2012/04/12/covent-garden-london-taken-with-instagram/
+        </loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mandarl.github.io/blog/2012/04/12/torrential-rain-taken-with-instagram/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mandarl.github.io/blog/2012/04/15/edinburgh-castle-taken-with-instagram/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mandarl.github.io/blog/2012/04/15/glasgow-taken-with-instagram/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mandarl.github.io/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/
+        </loc>
+        <lastmod>2013-06-08T13:59:16+00:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mandarl.github.io/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/
+        </loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mandarl.github.io/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/
+        </loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mandarl.github.io/blog/2013/01/09/cloud9-ide-in-the-cloud/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot/</loc>
+        <lastmod>2013-06-08T13:58:38+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://mandarl.github.io/robots.txt</loc>
         <lastmod>2013-06-07T06:26:31+00:00</lastmod>
     </url>
     <url>
         <loc>http://mandarl.github.io/blog/archives/</loc>
-        <lastmod>2013-06-07T06:26:31+00:00</lastmod>
+        <lastmod>2013-06-08T13:59:16+00:00</lastmod>
     </url>
     <url>
         <loc>http://mandarl.github.io/</loc>
-        <lastmod>2013-06-07T06:26:31+00:00</lastmod>
+        <lastmod>2013-06-08T13:59:16+00:00</lastmod>
     </url>
 </urlset>

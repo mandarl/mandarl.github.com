@@ -5,13 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - mandar's blog</title>
+  <title>command line graphing: gnuplot - mandar's blog</title>
   <meta name="author" content="mandar">
 
   
-  <meta name="description" content="Blog Archive 2013 command line graphing: gnuplot
-Jan 22 2013 Cloud9: IDE in the cloud
-Jan 09 2013 2012 @benguild: Leaked screenshots of native &hellip;">
+  <meta name="description" content="[http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/
+tumblr_inline_mh0jkxILV41rn6683.jpg]
+Who needs charts on the command line?
+If you have &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +21,7 @@ Jan 09 2013 2012 @benguild: Leaked screenshots of native &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mandarl.github.io/blog/archives">
+  <link rel="canonical" href="http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mandar's blog" type="application/atom+xml">
@@ -64,134 +65,102 @@ Jan 09 2013 2012 @benguild: Leaked screenshots of native &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Command Line Graphing: Gnuplot</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>[<a href="http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/">http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/</a>
+tumblr_inline_mh0jkxILV41rn6683.jpg]
+Who needs charts on the command line?
+If you have ever been stuck at an ssh prompt staring a bunch of data gnuplot is
+a must have tool. I was looking at response times over an
+sshÂ promptÂ andÂ realized how I missed MS Excel. All this data would make much
+more sense as a chart!Â Apparently there are others who would agree with me and
+that’s the reason gnuplot exists.
+Enter gnuplot
+gnuplot is a command line tool that generates complex plots from data. It has a
+lot of options and can generate the plots as PNG, SVG etc. But most importantly
+it can plot your data as an ASCII chart :).
+Bonus points
+I use gnuplot to check my nodejs logs:</p>
 
-  
-  <h2>2013</h2>
+<pre><code> tail —lines=1000 ~/.forever/*.log | grep ‘Time: ’ | sed ‘s/.* Time:
+ l: //’ &gt; data
+ gnuplot&gt; set terminal dumb
+ gnuplot&gt; plot “data”
+</code></pre>
 
-<article>
-  
-<h1><a href="/blog/2013/01/22/command-line-graphing-gnuplot/">command line graphing: gnuplot</a></h1>
-<time datetime="2013-01-22T00:00:00+00:00" pubdate><span class='month'>Jan</span> <span class='day'>22</span> <span class='year'>2013</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/09/cloud9-ide-in-the-cloud/">Cloud9: IDE in the cloud</a></h1>
-<time datetime="2013-01-09T00:00:00+00:00" pubdate><span class='month'>Jan</span> <span class='day'>09</span> <span class='year'>2013</span></time>
-
-
-</article>
-
-
-
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked screenshots of native Google Maps (Alpha) for iOS 6.</a></h1>
-<time datetime="2012-10-14T00:00:00+00:00" pubdate><span class='month'>Oct</span> <span class='day'>14</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - they are really pushing mobile ads in India!</a></h1>
-<time datetime="2012-09-28T00:00:00+00:00" pubdate><span class='month'>Sep</span> <span class='day'>28</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/">Download Youtube subscriptions on a schedule</a></h1>
-<time datetime="2012-09-07T00:00:00+00:00" pubdate><span class='month'>Sep</span> <span class='day'>07</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/15/glasgow-taken-with-instagram/">Glasgow (Taken with instagram)</a></h1>
-<time datetime="2012-04-15T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>15</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/15/edinburgh-castle-taken-with-instagram/">Edinburgh Castle (Taken with instagram)</a></h1>
-<time datetime="2012-04-15T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>15</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/12/torrential-rain-taken-with-instagram/">Torrential rain (Taken with instagram)</a></h1>
-<time datetime="2012-04-12T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>12</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/12/covent-garden-london-taken-with-instagram/">Covent Garden, London (Taken with instagram)</a></h1>
-<time datetime="2012-04-12T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>12</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/11/regents-canal-camden-taken-with-instagram/">Regent’s canal, Camden (Taken with instagram)</a></h1>
-<time datetime="2012-04-11T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>11</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/04/03/"></a></h1>
-<time datetime="2012-04-03T00:00:00+00:00" pubdate><span class='month'>Apr</span> <span class='day'>03</span> <span class='year'>2012</span></time>
-
-
-</article>
-
+<p>This is a static plot but you can even plot animated graphs like this:Â 
+[Animated memory usage]</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">mandar</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot/" data-via="mandarlimaye" data-counturl="http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/09/cloud9-ide-in-the-cloud/" title="Previous Post: Cloud9: IDE in the cloud">&laquo; Cloud9: IDE in the cloud</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

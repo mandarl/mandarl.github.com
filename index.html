@@ -9,7 +9,10 @@
   <meta name="author" content="mandar">
 
   
-  <meta name="description" content="Blog Archives Recent Posts GitHub Repos Status updating&#8230; @mandarl on GitHub $(document).ready(function(){ if (!window.jXHR){ var jxhr = &hellip;">
+  <meta name="description" content="[http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/
+tumblr_inline_mh0jkxILV41rn6683.jpg]
+Who needs charts on the command line?
+If you have &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,7 +67,426 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/22/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[<a href="http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/">http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/</a>
+tumblr_inline_mh0jkxILV41rn6683.jpg]
+Who needs charts on the command line?
+If you have ever been stuck at an ssh prompt staring a bunch of data gnuplot is
+a must have tool. I was looking at response times over an
+sshÂ promptÂ andÂ realized how I missed MS Excel. All this data would make much
+more sense as a chart!Â Apparently there are others who would agree with me and
+that’s the reason gnuplot exists.
+Enter gnuplot
+gnuplot is a command line tool that generates complex plots from data. It has a
+lot of options and can generate the plots as PNG, SVG etc. But most importantly
+it can plot your data as an ASCII chart :).
+Bonus points
+I use gnuplot to check my nodejs logs:</p>
+
+<pre><code> tail —lines=1000 ~/.forever/*.log | grep ‘Time: ’ | sed ‘s/.* Time:
+ l: //’ &gt; data
+ gnuplot&gt; set terminal dumb
+ gnuplot&gt; plot “data”
+</code></pre>
+
+<p>This is a static plot but you can even plot animated graphs like this:Â 
+[Animated memory usage]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/09/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-09T00:00:00+00:00" pubdate data-updated="true">Jan 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Cloud9 is a cloud based IDE that works completely within the browser. It even
+provides a full linux terminal within the browser. It is ideal to try out some
+open source language/framework quickly without doing the full setup.
+Currently it supports nodejs, PHP, python and ruby out of the box. There are
+plans to support .Net in the future. It allows one-click deployment to cloud
+platforms like Azure, CloudFoundry and Heroku. PFB screenshot of my attempt at
+a simple nodejs program :).
+[Cloud9 screenshot]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T00:00:00+00:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>@benguild:<em>Leaked_screenshots_of_native_Google_Maps</em>(Alpha)_for_iOS_6.
+benguild:</p>
+
+<pre><code> Oh boy! Here we go.
+     * Itâs vector-based.
+     * Itâs got two-finger rotation to any angle.
+     * Itâs super fast.
+     * 4-inch height of the iPhone 5 is supported!
+ Here are some blurry photos. Ever since iOS 6 came out, we lost
+ Google_Maps. However, Google has been rumored to be hard at work on
+ their own…
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-28T00:00:00+00:00" pubdate data-updated="true">Sep 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_mb289tMFo11rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/">Download Youtube Subscriptions on a Schedule</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-07T00:00:00+00:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[<a href="http://media.tumblr.com/tumblr_m9wy14vW9l1rn6683.jpg">http://media.tumblr.com/tumblr_m9wy14vW9l1rn6683.jpg</a>]
+My BSNL broadband plan gives me unlimited data between 2 AM and 8 AM. I thought
+this would be a great time to download all my YouTube subscriptions. I could
+watch the videos the next day without using my download quota!
+I found a couple of great scripts to get the job done. I had to make a few
+changes to get them working on windows:
+[<a href="http://media.tumblr.com/tumblr_ma0hn7MNnT1rn6683.jpg">http://media.tumblr.com/tumblr_ma0hn7MNnT1rn6683.jpg</a>]
+[<a href="http://media.tumblr.com/tumblr_ma0hnjVnK51rn6683.jpg">http://media.tumblr.com/tumblr_ma0hnjVnK51rn6683.jpg</a>]
+Prerequisites:
+   1. Cygwin or another shell for windows.
+   2. PythonÂ 
+Just run the subscriptions script like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./download-youtube-subscriptions.sh mandarlimaye</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Put this command in a batch file and schedule it to run whenever you like.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/glasgow-taken-with-instagram/">Glasgow (Taken With Instagram)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true">Apr 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_m2igxuoFDU1rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/15/edinburgh-castle-taken-with-instagram/">Edinburgh Castle (Taken With Instagram)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true">Apr 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_m2j8grYDJs1rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/12/torrential-rain-taken-with-instagram/">Torrential Rain (Taken With Instagram)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_m2dp87FvUc1rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/12/covent-garden-london-taken-with-instagram/">Covent Garden, London (Taken With Instagram)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_m2df4fFBiR1rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/11/regents-canal-camden-taken-with-instagram/">Regent’s Canal, Camden (Taken With Instagram)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-11T00:00:00+00:00" pubdate data-updated="true">Apr 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[/tumblr_files/tumblr_m2bwswZ2wt1rt5pkuo1_1280.jpg]</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -75,6 +497,26 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/22/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/09/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/">Download Youtube Subscriptions on a Schedule</a>
+      </li>
     
   </ul>
 </section>
