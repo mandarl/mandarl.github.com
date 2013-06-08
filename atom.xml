@@ -4,7 +4,7 @@
   <title><![CDATA[mandar's blog]]></title>
   <link href="http://mandarl.github.io/atom.xml" rel="self"/>
   <link href="http://mandarl.github.io/"/>
-  <updated>2013-06-08T14:25:49+00:00</updated>
+  <updated>2013-06-08T14:34:33+00:00</updated>
   <id>http://mandarl.github.io/</id>
   <author>
     <name><![CDATA[mandar]]></name>
@@ -18,8 +18,7 @@
     <link href="http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot/"/>
     <updated>2013-01-22T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/2013/01/22/command-line-graphing-gnuplot</id>
-    <content type="html"><![CDATA[<p>[<a href="http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/">http://media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/</a>
-tumblr_inline_mh0jkxILV41rn6683.jpg]
+    <content type="html"><![CDATA[<p>![Alt gnuplot][/tumblr_files/tumblr_inline_mh0jkxILV41rn6683.jpg)
 Who needs charts on the command line?
 If you have ever been stuck at an ssh prompt staring a bunch of data gnuplot is
 a must have tool. I was looking at response times over an
@@ -94,14 +93,14 @@ benguild:</p>
     <link href="http://mandarl.github.io/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/"/>
     <updated>2012-09-07T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule</id>
-    <content type="html"><![CDATA[<p>[<a href="http://media.tumblr.com/tumblr_m9wy14vW9l1rn6683.jpg">http://media.tumblr.com/tumblr_m9wy14vW9l1rn6683.jpg</a>]
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m9wy14vW9l1rn6683.jpg" alt="Alt Youtube" />
 My BSNL broadband plan gives me unlimited data between 2 AM and 8 AM. I thought
 this would be a great time to download all my YouTube subscriptions. I could
 watch the videos the next day without using my download quota!
 I found a couple of great scripts to get the job done. I had to make a few
 changes to get them working on windows:
-[<a href="http://media.tumblr.com/tumblr_ma0hn7MNnT1rn6683.jpg">http://media.tumblr.com/tumblr_ma0hn7MNnT1rn6683.jpg</a>]
-[<a href="http://media.tumblr.com/tumblr_ma0hnjVnK51rn6683.jpg">http://media.tumblr.com/tumblr_ma0hnjVnK51rn6683.jpg</a>]
+<img src="http://mandarl.github.io/tumblr_files/tumblr_ma0hn7MNnT1rn6683.jpg" alt="Alt Repo" />
+<img src="http://mandarl.github.io/tumblr_files/tumblr_ma0hnjVnK51rn6683.jpg" alt="Alt Repo" />
 Prerequisites:
    1. Cygwin or another shell for windows.
    2. PythonÂ 
@@ -119,7 +118,7 @@ Just run the subscriptions script like so:</p>
     <link href="http://mandarl.github.io/blog/2012/04/15/glasgow-taken-with-instagram/"/>
     <updated>2012-04-15T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/2012/04/15/glasgow-taken-with-instagram</id>
-    <content type="html"><![CDATA[<p>[/tumblr_files/tumblr_m2igxuoFDU1rt5pkuo1_1280.jpg]</p>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2igxuoFDU1rt5pkuo1_1280.jpg" alt="Alt Glasgow pic" /></p>
 ]]></content>
   </entry>
   
@@ -128,7 +127,7 @@ Just run the subscriptions script like so:</p>
     <link href="http://mandarl.github.io/blog/2012/04/15/edinburgh-castle-taken-with-instagram/"/>
     <updated>2012-04-15T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/2012/04/15/edinburgh-castle-taken-with-instagram</id>
-    <content type="html"><![CDATA[<p>[/tumblr_files/tumblr_m2j8grYDJs1rt5pkuo1_1280.jpg]</p>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2j8grYDJs1rt5pkuo1_1280.jpg" alt="Alt Edinburgh castle pic" /></p>
 ]]></content>
   </entry>
   
