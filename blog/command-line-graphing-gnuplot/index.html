@@ -130,12 +130,19 @@ gnuplot is a command line tool that generates complex plots from data. It has a
 lot of options and can generate the plots as PNG, SVG etc. But most importantly
 it can plot your data as an ASCII chart :).
 Bonus points
-I use gnuplot to check my nodejs logs:
-     tail —lines=1000 ~/.forever/<em>.log | grep ‘Time: ’ | sed ‘s/.</em> Time:
-     l: //’ > data
-     gnuplot> set terminal dumb
-     gnuplot> plot “data”
-This is a static plot but you can even plot animated graphs like this: 
+I use gnuplot to check my nodejs logs:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail —lines=1000 ~/.forever/*.log | grep ‘Time: ’ | sed ‘s/.* Time:
+</span><span class='line'>l: //’ > data
+</span><span class='line'>gnuplot> set terminal dumb
+</span><span class='line'>gnuplot> plot “data”</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a static plot but you can even plot animated graphs like this: 
 <img src="/tumblr_files/screenshot.gif" alt="Alt Animated memory usage" /></p>
 </div>
 
