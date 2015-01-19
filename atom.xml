@@ -4,7 +4,7 @@
   <title><![CDATA[mandar's blog]]></title>
   <link href="http://mandarl.github.io/atom.xml" rel="self"/>
   <link href="http://mandarl.github.io/"/>
-  <updated>2015-01-19T10:30:54+00:00</updated>
+  <updated>2015-01-19T14:14:21+00:00</updated>
   <id>http://mandarl.github.io/</id>
   <author>
     <name><![CDATA[mandar]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[App Analysis: Zomato plans Uber integration]]></title>
+    <title type="html"><![CDATA[App Analysis: Zomato Plans Uber Integration]]></title>
     <link href="http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration/"/>
     <updated>2015-01-18T10:22:00+00:00</updated>
     <id>http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration</id>
@@ -33,7 +33,7 @@ Zomato is planning Uber integration in its mobile apps. The integration will be 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[command line graphing: gnuplot]]></title>
+    <title type="html"><![CDATA[Command Line Graphing: Gnuplot]]></title>
     <link href="http://mandarl.github.io/blog/command-line-graphing-gnuplot/"/>
     <updated>2013-01-22T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/command-line-graphing-gnuplot</id>
@@ -69,7 +69,7 @@ I use gnuplot to check my nodejs logs:</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Cloud9: IDE in the cloud]]></title>
+    <title type="html"><![CDATA[Cloud9: IDE in the Cloud]]></title>
     <link href="http://mandarl.github.io/blog/cloud9-ide-in-the-cloud/"/>
     <updated>2013-01-09T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/cloud9-ide-in-the-cloud</id>
@@ -87,7 +87,7 @@ a simple nodejs program :).</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[@benguild: Leaked screenshots of native Google Maps (Alpha) for iOS 6.]]></title>
+    <title type="html"><![CDATA[@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.]]></title>
     <link href="http://mandarl.github.io/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/"/>
     <updated>2012-10-14T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6</id>
@@ -105,7 +105,7 @@ benguild:
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[@ Google Mobile Partner Day - they are really pushing mobile ads in India!]]></title>
+    <title type="html"><![CDATA[@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!]]></title>
     <link href="http://mandarl.github.io/blog/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/"/>
     <updated>2012-09-28T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/-google-mobile-partner-day&#8212;they-are-really-pushing-mobile-ads-in-india</id>
@@ -114,7 +114,7 @@ benguild:
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Download Youtube subscriptions on a schedule]]></title>
+    <title type="html"><![CDATA[Download Youtube Subscriptions on a Schedule]]></title>
     <link href="http://mandarl.github.io/blog/download-youtube-subscriptions-on-a-schedule/"/>
     <updated>2012-09-07T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/download-youtube-subscriptions-on-a-schedule</id>
@@ -141,7 +141,7 @@ Put this command in a batch file and schedule it to run whenever you like.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Glasgow (Taken with instagram)]]></title>
+    <title type="html"><![CDATA[Glasgow (Taken With Instagram)]]></title>
     <link href="http://mandarl.github.io/blog/glasgow-taken-with-instagram/"/>
     <updated>2012-04-15T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/glasgow-taken-with-instagram</id>
@@ -150,7 +150,7 @@ Put this command in a batch file and schedule it to run whenever you like.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Edinburgh Castle (Taken with instagram)]]></title>
+    <title type="html"><![CDATA[Edinburgh Castle (Taken With Instagram)]]></title>
     <link href="http://mandarl.github.io/blog/edinburgh-castle-taken-with-instagram/"/>
     <updated>2012-04-15T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/edinburgh-castle-taken-with-instagram</id>
@@ -159,7 +159,7 @@ Put this command in a batch file and schedule it to run whenever you like.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Torrential rain (Taken with instagram)]]></title>
+    <title type="html"><![CDATA[Torrential Rain (Taken With Instagram)]]></title>
     <link href="http://mandarl.github.io/blog/torrential-rain-taken-with-instagram/"/>
     <updated>2012-04-12T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/torrential-rain-taken-with-instagram</id>
@@ -168,7 +168,7 @@ Put this command in a batch file and schedule it to run whenever you like.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Covent Garden, London (Taken with instagram)]]></title>
+    <title type="html"><![CDATA[Covent Garden, London (Taken With Instagram)]]></title>
     <link href="http://mandarl.github.io/blog/covent-garden-london-taken-with-instagram/"/>
     <updated>2012-04-12T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/covent-garden-london-taken-with-instagram</id>
@@ -177,7 +177,7 @@ Put this command in a batch file and schedule it to run whenever you like.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Regent’s canal, Camden (Taken with instagram)]]></title>
+    <title type="html"><![CDATA[Regent’s Canal, Camden (Taken With Instagram)]]></title>
     <link href="http://mandarl.github.io/blog/regents-canal-camden-taken-with-instagram/"/>
     <updated>2012-04-11T00:00:00+00:00</updated>
     <id>http://mandarl.github.io/blog/regents-canal-camden-taken-with-instagram</id>
