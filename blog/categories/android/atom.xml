@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: android | mandar's blog]]></title>
+  <link href="http://mandarl.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://mandarl.github.io/"/>
+  <updated>2015-01-19T08:34:55+00:00</updated>
+  <id>http://mandarl.github.io/</id>
+  <author>
+    <name><![CDATA[mandar]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[App Analysis: Zomato plans Uber integration]]></title>
+    <link href="http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration/"/>
+    <updated>2015-01-18T10:22:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration</id>
+    <content type="html"><![CDATA[<p><img class="left" src="/images/zomato_logo.png" width="200" height="200" title="Zomato #1" >
+Zomato is planning Uber integration in its mobile apps. The integration will be in the form of a button shown next to the restaurant address. The button will show ETA estimate from Uber and tapping it would launch the Uber app if installed. It will allow users to quickly book a ride to the restaurant they like. One big problem (atleast in India) will be data quality, since not all restaurant locations are accurately mapped.</p>
+
+<p>Apparently, this feature has been part of the app for a while but hasn&rsquo;t been switched on. Uber has been getting a lot of negetive publicity lately and Zomato may be waiting for the controversy to blow over.</p>
+
+<p>Here are some screenshots for comparison:</p>
+
+<p><img src="/images/zomato.jpg" alt="Zomato app after Uber integration" /></p>
+
+<p><blockquote><p>Disclaimer: this post is based on source based information as well as app analysis. Final implementation may be different.</p></blockquote></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>mandar's blog</title>
+  <title>mandar&#8217;s blog</title>
   <meta name="author" content="mandar">
 
   
-  <meta name="description" content="Who needs charts on the command line?
-If you have ever been stuck at an ssh prompt staring a bunch of data gnuplot is
-a must have tool. I was &hellip;">
+  <meta name="description" content="Zomato is planning Uber integration in its mobile apps. The integration will be in the form of a button shown next to the restaurant address. The &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,13 +30,35 @@ a must have tool. I was &hellip;">
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:site" content="mandarlimaye" />
+<meta property="twitter:url" content="http://mandarl.github.io" />
+<meta property="twitter:title" content="mandar's blog" />
+<meta property="twitter:description" content="Zomato is planning Uber integration in its mobile apps. The integration will be in the form of a button shown next to the restaurant address. The button will show ETA estimate from Uber and tapping &hellip;" />
+<meta property="twitter:creator" content="mandarlimaye" />
+
+
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26318007-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">mandar's blog</a></h1>
+  <h1><a href="/">mandar&#8217;s blog</a></h1>
   
 </hgroup>
 
@@ -48,7 +68,7 @@ a must have tool. I was &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://www.google.com/search" method="get">
   <fieldset role="search">
     <input type="hidden" name="q" value="site:mandarl.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
@@ -71,7 +91,7 @@ a must have tool. I was &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/22/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a></h1>
+      <h1 class="entry-title"><a href="/blog/app-analysis-zomato-plans-uber-integration/">App Analysis: Zomato Plans Uber Integration</a></h1>
     
     
       <p class="meta">
@@ -87,7 +107,53 @@ a must have tool. I was &hellip;">
   
 
 
-<time datetime="2013-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2013</time>
+<time datetime="2015-01-18T10:22:00+00:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="left" src="/images/zomato_logo.png" width="200" height="200" title="Zomato #1" >
+Zomato is planning Uber integration in its mobile apps. The integration will be in the form of a button shown next to the restaurant address. The button will show ETA estimate from Uber and tapping it would launch the Uber app if installed. It will allow users to quickly book a ride to the restaurant they like. One big problem (atleast in India) will be data quality, since not all restaurant locations are accurately mapped.</p>
+
+<p>Apparently, this feature has been part of the app for a while but hasn&rsquo;t been switched on. Uber has been getting a lot of negetive publicity lately and Zomato may be waiting for the controversy to blow over.</p>
+
+<p>Here are some screenshots for comparison:</p>
+
+<p><img src="/images/zomato.jpg" alt="Zomato app after Uber integration" /></p>
+
+<blockquote><p>Disclaimer: this post is based on source based information as well as app analysis. Final implementation may be different.</p></blockquote>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-22T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -108,15 +174,12 @@ gnuplot is a command line tool that generates complex plots from data. It has a
 lot of options and can generate the plots as PNG, SVG etc. But most importantly
 it can plot your data as an ASCII chart :).
 Bonus points
-I use gnuplot to check my nodejs logs:</p>
-
-<pre><code> tail —lines=1000 ~/.forever/*.log | grep ‘Time: ’ | sed ‘s/.* Time:
- l: //’ &gt; data
- gnuplot&gt; set terminal dumb
- gnuplot&gt; plot “data”
-</code></pre>
-
-<p>This is a static plot but you can even plot animated graphs like this: 
+I use gnuplot to check my nodejs logs:
+     tail —lines=1000 ~/.forever/<em>.log | grep ‘Time: ’ | sed ‘s/.</em> Time:
+     l: //’ > data
+     gnuplot> set terminal dumb
+     gnuplot> plot “data”
+This is a static plot but you can even plot animated graphs like this: 
 <img src="/tumblr_files/screenshot.gif" alt="Alt Animated memory usage" /></p>
 </div>
   
@@ -130,7 +193,7 @@ I use gnuplot to check my nodejs logs:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/09/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a></h1>
+      <h1 class="entry-title"><a href="/blog/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a></h1>
     
     
       <p class="meta">
@@ -146,7 +209,7 @@ I use gnuplot to check my nodejs logs:</p>
   
 
 
-<time datetime="2013-01-09T00:00:00+00:00" pubdate data-updated="true">Jan 9<span>th</span>, 2013</time>
+<time datetime="2013-01-09T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -175,7 +238,7 @@ a simple nodejs program :).</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a></h1>
+      <h1 class="entry-title"><a href="/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a></h1>
     
     
       <p class="meta">
@@ -191,7 +254,7 @@ a simple nodejs program :).</p>
   
 
 
-<time datetime="2012-10-14T00:00:00+00:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+<time datetime="2012-10-14T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -199,17 +262,15 @@ a simple nodejs program :).</p>
 
 
   <div class="entry-content"><p>@benguild:<em>Leaked_screenshots_of_native_Google_Maps</em>(Alpha)_for_iOS_6.
-benguild:</p>
-
-<pre><code> Oh boy! Here we go.
-     * It's vector-based.
-     * It's got two-finger rotation to any angle.
-     * It's super fast.
-     * 4-inch height of the iPhone 5 is supported!
- Here are some blurry photos. Ever since iOS 6 came out, we lost
- Google_Maps. However, Google has been rumored to be hard at work on
- their own…
-</code></pre>
+benguild:
+     Oh boy! Here we go.
+         * It&rsquo;s vector-based.
+         * It&rsquo;s got two-finger rotation to any angle.
+         * It&rsquo;s super fast.
+         * 4-inch height of the iPhone 5 is supported!
+     Here are some blurry photos. Ever since iOS 6 came out, we lost
+     Google_Maps. However, Google has been rumored to be hard at work on
+     their own…</p>
 </div>
   
   
@@ -222,7 +283,7 @@ benguild:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a></h1>
+      <h1 class="entry-title"><a href="/blog/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a></h1>
     
     
       <p class="meta">
@@ -238,7 +299,7 @@ benguild:</p>
   
 
 
-<time datetime="2012-09-28T00:00:00+00:00" pubdate data-updated="true">Sep 28<span>th</span>, 2012</time>
+<time datetime="2012-09-28T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -258,7 +319,7 @@ benguild:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/">Download Youtube Subscriptions on a Schedule</a></h1>
+      <h1 class="entry-title"><a href="/blog/download-youtube-subscriptions-on-a-schedule/">Download Youtube Subscriptions on a Schedule</a></h1>
     
     
       <p class="meta">
@@ -274,7 +335,7 @@ benguild:</p>
   
 
 
-<time datetime="2012-09-07T00:00:00+00:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time>
+<time datetime="2012-09-07T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -297,12 +358,9 @@ changes to get them working on windows:</p>
    1. Cygwin or another shell for windows.
    2. Python</p>
 
-<p>Just run the subscriptions script like so:</p>
-
-<pre><code> ./download-youtube-subscriptions.sh mandarlimaye
-</code></pre>
-
-<p>Put this command in a batch file and schedule it to run whenever you like.</p>
+<p>Just run the subscriptions script like so:
+     ./download-youtube-subscriptions.sh mandarlimaye
+Put this command in a batch file and schedule it to run whenever you like.</p>
 </div>
   
   
@@ -315,7 +373,7 @@ changes to get them working on windows:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/04/15/glasgow-taken-with-instagram/">Glasgow (Taken With Instagram)</a></h1>
+      <h1 class="entry-title"><a href="/blog/glasgow-taken-with-instagram/">Glasgow (Taken With Instagram)</a></h1>
     
     
       <p class="meta">
@@ -331,7 +389,7 @@ changes to get them working on windows:</p>
   
 
 
-<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true">Apr 15<span>th</span>, 2012</time>
+<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -351,7 +409,7 @@ changes to get them working on windows:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/04/15/edinburgh-castle-taken-with-instagram/">Edinburgh Castle (Taken With Instagram)</a></h1>
+      <h1 class="entry-title"><a href="/blog/edinburgh-castle-taken-with-instagram/">Edinburgh Castle (Taken With Instagram)</a></h1>
     
     
       <p class="meta">
@@ -367,7 +425,7 @@ changes to get them working on windows:</p>
   
 
 
-<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true">Apr 15<span>th</span>, 2012</time>
+<time datetime="2012-04-15T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -387,7 +445,7 @@ changes to get them working on windows:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/04/12/torrential-rain-taken-with-instagram/">Torrential Rain (Taken With Instagram)</a></h1>
+      <h1 class="entry-title"><a href="/blog/torrential-rain-taken-with-instagram/">Torrential Rain (Taken With Instagram)</a></h1>
     
     
       <p class="meta">
@@ -403,7 +461,7 @@ changes to get them working on windows:</p>
   
 
 
-<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -423,7 +481,7 @@ changes to get them working on windows:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/04/12/covent-garden-london-taken-with-instagram/">Covent Garden, London (Taken With Instagram)</a></h1>
+      <h1 class="entry-title"><a href="/blog/covent-garden-london-taken-with-instagram/">Covent Garden, London (Taken With Instagram)</a></h1>
     
     
       <p class="meta">
@@ -439,7 +497,7 @@ changes to get them working on windows:</p>
   
 
 
-<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+<time datetime="2012-04-12T00:00:00+00:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -454,45 +512,9 @@ changes to get them working on windows:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/11/regents-canal-camden-taken-with-instagram/">Regent’s Canal, Camden (Taken With Instagram)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-11T00:00:00+00:00" pubdate data-updated="true">Apr 11<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="/tumblr_files/tumblr_m2bwswZ2wt1rt5pkuo1_1280.jpg" alt="Alt Regents canal pic" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+      <a class="prev" href="2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -505,23 +527,23 @@ changes to get them working on windows:</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/01/22/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a>
+        <a href="/blog/app-analysis-zomato-plans-uber-integration/">App Analysis: Zomato Plans Uber Integration</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/01/09/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a>
+        <a href="/blog/command-line-graphing-gnuplot/">Command Line Graphing: Gnuplot</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/10/14/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a>
+        <a href="/blog/cloud9-ide-in-the-cloud/">Cloud9: IDE in the Cloud</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/09/28/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a>
+        <a href="/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/">@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/09/07/download-youtube-subscriptions-on-a-schedule/">Download Youtube Subscriptions on a Schedule</a>
+        <a href="/blog/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/">@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!</a>
       </li>
     
   </ul>
@@ -575,7 +597,7 @@ changes to get them working on windows:</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - mandar -
+  Copyright &copy; 2015 - mandar -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
@@ -585,14 +607,6 @@ changes to get them working on windows:</p>
 
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 
