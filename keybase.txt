@@ -1,147 +1,73 @@
 ==================================================================
-
 https://keybase.io/mandarlimaye
-
 --------------------------------------------------------------------
-
-
 
 I hereby claim:
 
-
-
   * I am an admin of https://mandarl.github.io
-
   * I am mandarlimaye (https://keybase.io/mandarlimaye) on keybase.
-
   * I have a public key with fingerprint 6079 08A3 2711 7670 F29D  CACD FD17 0434 C8E5 45CD
-
-
 
 To claim this, I am signing this object:
 
-
-
 {
-
     "body": {
-
         "key": {
-
             "fingerprint": "607908a327117670f29dcacdfd170434c8e545cd",
-
             "host": "keybase.io",
-
             "key_id": "fd170434c8e545cd",
-
             "kid": "010171cfb8b3759754dcdf9d9a29319418d943c670be72ad86890ad394c8e845df090a",
-
             "uid": "6f880c132f3b236417638f99ce90b100",
-
             "username": "mandarlimaye"
-
         },
-
         "revoke": {
-
             "sig_ids": [
-
-                "96206cacf825439d69cd7ffdc09c40275c9325db33da92089e814b775dd6a2640f"
-
+                "bab67d76ba1fee05a55e06b4898ed5872d542a00b2c84614aace13201ea4530c0f"
             ]
-
         },
-
         "service": {
-
             "hostname": "mandarl.github.io",
-
             "protocol": "https:"
-
         },
-
         "type": "web_service_binding",
-
         "version": 1
-
     },
-
-    "ctime": 1421731201,
-
+    "ctime": 1421731480,
     "expire_in": 157680000,
-
-    "prev": "93552ec275b8a42253790972de990f884a940ac36cbefe637ae98e0b9ebd247f",
-
-    "seqno": 7,
-
+    "prev": "e983d60b69d76f00e3a9dcbc9f8fdc2ef957b2f6352324a9f3ee2e39b72362ba",
+    "seqno": 9,
     "tag": "signature"
-
 }
-
-
 
 with the aforementioned key, yielding the PGP signature:
 
-
-
 -----BEGIN PGP MESSAGE-----
-
 Version: Keybase OpenPGP v2.0.1
-
 Comment: https://keybase.io/crypto
 
-
-
-yMJkAnicbZJbaBVHHMZPEo0mNVFKJW1BJUtblaR2bruzcxBvGBWqiCCIGj3Mzsye
-
-bJPsHvfsOTGRIhHECN4VEUQqxpiXJuAlinitRItR6IPQUtGAwVQbChLF0ia2dTbq
-
-g9B5GWbmm9//+38zvWVFidKCRP9BMmnd57Dgzg+nconVVwZbtxhOIJuN5BajXo1N
-
-ruenVZgJPT8ykoYFKAM2x4hCSC0KXMSk4EK6ElJAMBG2MokppFFt1AXZ+IbGODyr
-
-5niB3tOLlCf17v/o68cOAASQQuE6toOpyahJpKYzyThiGDICbckIFrq0oyji0rZs
-
-BrjELEbZxJQu0GuNy43hLNe2gYAYudhB2CLaNLZdxoRiwIEAxMKsCn3eqLS6kfuS
-
-hw1eI29WxrfVRqjyQb2KU8h6aW08ayTXG8xCwNI9uzYyCWbSYkJS15UCMEEAoqZg
-
-GJnSwVhyhoDNlA2JQ6kppcWRRYBrbNBsXTXviTF4nNT7Duakvagu57wJLRMGUSCC
-
-Bn1cF0WZbDK2FjVnYn2TclJvSSnH86V+LH0jr8KsF/hGEmqliLwYDQmCFEMEYLWh
-
-Nme8UKW8WGFSywZ6xHVUXiMZNk2khG7EsTlByMT6yRlFUjEGdJyEMwK4wJZwlKss
-
-TLlitgIOU45EhLpG3NsmPzCSVNvkaY3U6fk8yoU61BvXa8clCkoTxeML4++WKC2Z
-
-8u4T3to34V+0tSUjhjJFld5vByZdfvb8Unfb3pNzK26veTHjRsWKvsFLPTXlf774
-
-umHGF39Pmz46VS6ZmSg727NzYP5HH6Z/ae9SL5t+/ya76sKi7g+2byx8SD4GW0v6
-
-K7/85Ok99H2m8NVZ8zu0p3P2trbPOh7ev1VeO7irt3VJLi/nNq1c6/4z7trBeQc6
-
-lzZf6+lf+OQRCI4tXXCq5o8jZ8yO0WcTzo2Urv7p8fAKWBKcZsm+q6N7uu8OVxXv
-
-3tXy3+QTPxctPn2vrHfHquslyx8N7G1TFUePJ8nCrkNfHTrvz7tcvjuaeHOoZfjw
-
-6Cw60vrrsspcm1WVutmOf8R9JJp48c6DjTWf7is+NvLX/tdmoEQ0
-
-=t02U
-
+yMJqAnicbZJbaFRHHMY3mloNEQWLFA3YHqsgXbdzO2dm1idtjRIwtjaIGMN25syc
+zTHJnvXs2TVRWsQW0QZqkqKJPrTVQn3wCkorpmsvmNIm2Fow3jEKKiJ4QfECeahz
+on0odF6G+c83v/8338ypyeMTVRWJq1+S6tVzYMXQL98VEw3lW30bLRmoDiu90WrR
+Y5Pn57I6zId+LrLSlgMoB0xgRCGkDgUe4soVrvIUpIBg4jJtE9tVVtJqDgrxCYOR
+oqBTfmBqZpHxlan+j75lbANAACl0PckkpjanNlGGzhUXiGPICWSKE+ya1lJTJBRz
+GAdCYR6jGLGVB8za4IpjOMdjDLgQIw9LhB1iTGPmce5qDiQEIBYWdJgTbdqo20RO
+ibDVbxMd2vo4aYW6FLToOIWCnzXGC1a60ZJCOlRRRwroaQ1sYdsaOJIwzrSyGUXK
+JkgAIJHLiAOJEK42BgDUgtgYuMCzmgzbdC357hg8Tuq/DlJZP2ouyheh5cMgCtyg
+1Ww3R1G+kI6tRR35WL9ey8xLUkb6OWUey5wo6bDgBzkrDY3SjfwYDQmCFEPCQNLS
+7Xk/1Bk/VtjUYcCMuI8uGaTmDCsHSIebS3oAaCzMG0uXe8xTLtIet6lEnoNthBER
+3MNaI425pCZgJOPsC3pdLrDS3NgUWYM06eVEVAxNqL/+vKYyUVGVmPDKuPi7Jaom
+Tf33Ey5f8Oo/9eXd467dGai50plMze67/vqTppOfVA38qUnYXZOvO/F7Uyrz/e7K
+YuWpzeCN2p6lB4ObdZ18beucnopScvH0iW+9Nryq4fGFSyP94ZRp0/tq3101GD6s
+v/G4l+7dVW7vrK4f3VbeeaTldOOn5/ZHmya//8GxH55trenKTOCNs9L1g+veXImW
+bGsbnLiwekXtng2j6fOpvwYu7dtxvrfyesPa7d39DeOfPGhftOm9Qw/21o0Obf5x
+6KebZz9M9lbfP7Bn3vb+Gfxyd/ftrntn5n/+98hH5fyj4Yvzf0ucHXmnZ8HSw8e/
+/XrqmX1d92Z+cXzL28uyc+fe/ePgV4sXPftsxRTyFJ0cPr3c/2be0ecVZUZI
+=NACy
 -----END PGP MESSAGE-----
 
-
-
 And finally, I am proving ownership of this host by posting or
-
 appending to this document.
-
-
 
 View my publicly-auditable identity here: https://keybase.io/mandarlimaye
 
-
-
 ==================================================================
-
-
