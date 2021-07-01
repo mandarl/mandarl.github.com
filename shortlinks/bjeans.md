@@ -1,0 +1,5 @@
+---
+permalink: /bjeans
+redirect_to:
+  - https://bluejeans.com/442577816/7451
+---

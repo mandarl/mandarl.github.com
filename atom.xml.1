@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[mandar's blog]]></title>
+  <link href="http://mandarl.github.io/atom.xml" rel="self"/>
+  <link href="http://mandarl.github.io/"/>
+  <updated>2015-06-19T06:20:03+00:00</updated>
+  <id>http://mandarl.github.io/</id>
+  <author>
+    <name><![CDATA[mandar]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[App Analysis: Zomato Plans Uber Integration]]></title>
+    <link href="http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration/"/>
+    <updated>2015-01-18T10:22:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/app-analysis-zomato-plans-uber-integration</id>
+    <content type="html"><![CDATA[<p><img class="left" src="http://mandarl.github.io/images/zomato_logo.png" width="200" height="200" title="Zomato #1" >
+Zomato is planning Uber integration in its mobile apps. The integration will be in the form of a button shown next to the restaurant address. The button will show ETA estimate from Uber and tapping it would launch the Uber app if installed. It will allow users to quickly book a ride to the restaurant they like. One big problem (atleast in India) will be data quality, since not all restaurant locations are accurately mapped.</p>
+
+<p>Apparently, this feature has been part of the app for a while but hasn&rsquo;t been switched on. Uber has been getting a lot of negetive publicity lately and Zomato may be waiting for the controversy to blow over.</p>
+
+<p>Here are some screenshots for comparison:</p>
+
+<p><img src="http://mandarl.github.io/images/zomato.jpg" alt="Zomato app after Uber integration" /></p>
+
+<blockquote><p>Disclaimer: this post is based on source based information as well as app analysis. Final implementation may be different.</p></blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Command Line Graphing: Gnuplot]]></title>
+    <link href="http://mandarl.github.io/blog/command-line-graphing-gnuplot/"/>
+    <updated>2013-01-22T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/command-line-graphing-gnuplot</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_inline_mh0jkxILV41rn6683.jpg" alt="Alt gnuplot" /></p>
+
+<p><strong>Who needs charts on the command line?</strong>
+If you have ever been stuck at an ssh prompt staring a bunch of data gnuplot is
+a must have tool. I was looking at response times over an
+ssh prompt and realized how I missed MS Excel. All this data would make much
+more sense as a chart! Apparently there are others who would agree with me and
+that’s the reason gnuplot exists.</p>
+
+<p><strong>Enter gnuplot</strong>
+gnuplot is a command line tool that generates complex plots from data. It has a
+lot of options and can generate the plots as PNG, SVG etc. But most importantly
+it can plot your data as an ASCII chart :).
+Bonus points
+I use gnuplot to check my nodejs logs:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail —lines=1000 ~/.forever/*.log | grep ‘Time: ’ | sed ‘s/.* Time:
+</span><span class='line'>l: //’ > data
+</span><span class='line'>gnuplot> set terminal dumb
+</span><span class='line'>gnuplot> plot “data”</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a static plot but you can even plot animated graphs like this: 
+<img src="http://mandarl.github.io/tumblr_files/screenshot.gif" alt="Alt Animated memory usage" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cloud9: IDE in the Cloud]]></title>
+    <link href="http://mandarl.github.io/blog/cloud9-ide-in-the-cloud/"/>
+    <updated>2013-01-09T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/cloud9-ide-in-the-cloud</id>
+    <content type="html"><![CDATA[<p>Cloud9 is a cloud based IDE that works completely within the browser. It even
+provides a full linux terminal within the browser. It is ideal to try out some
+open source language/framework quickly without doing the full setup.</p>
+
+<p>Currently it supports nodejs, PHP, python and ruby out of the box. There are
+plans to support .Net in the future. It allows one-click deployment to cloud
+platforms like Azure, CloudFoundry and Heroku. PFB screenshot of my attempt at
+a simple nodejs program :).</p>
+
+<p><img src="http://mandarl.github.io/tumblr_files/tumblr_inline_mgcuinlXNZ1rn6683.gif" alt="Alt Cloud9 screenshot" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[@benguild: Leaked Screenshots of Native Google Maps (Alpha) for iOS 6.]]></title>
+    <link href="http://mandarl.github.io/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6/"/>
+    <updated>2012-10-14T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/benguild-leaked-screenshots-of-native-google-maps-alpha-for-ios-6</id>
+    <content type="html"><![CDATA[<p>@benguild:<em>Leaked_screenshots_of_native_Google_Maps</em>(Alpha)_for_iOS_6.
+benguild:
+     Oh boy! Here we go.
+         * It&rsquo;s vector-based.
+         * It&rsquo;s got two-finger rotation to any angle.
+         * It&rsquo;s super fast.
+         * 4-inch height of the iPhone 5 is supported!
+     Here are some blurry photos. Ever since iOS 6 came out, we lost
+     Google_Maps. However, Google has been rumored to be hard at work on
+     their own…</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[@ Google Mobile Partner Day - They Are Really Pushing Mobile Ads in India!]]></title>
+    <link href="http://mandarl.github.io/blog/-google-mobile-partner-day---they-are-really-pushing-mobile-ads-in-india/"/>
+    <updated>2012-09-28T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/-google-mobile-partner-day&#8212;they-are-really-pushing-mobile-ads-in-india</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_mb289tMFo11rt5pkuo1_1280.jpg" alt="Alt Google mobile partner day" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Download Youtube Subscriptions on a Schedule]]></title>
+    <link href="http://mandarl.github.io/blog/download-youtube-subscriptions-on-a-schedule/"/>
+    <updated>2012-09-07T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/download-youtube-subscriptions-on-a-schedule</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m9wy14vW9l1rn6683.jpg" alt="Alt Youtube" /></p>
+
+<p>My BSNL broadband plan gives me unlimited data between 2 AM and 8 AM. I thought
+this would be a great time to download all my YouTube subscriptions. I could
+watch the videos the next day without using my download quota!
+I found a couple of great scripts to get the job done. I had to make a few
+changes to get them working on windows:</p>
+
+<p><img src="http://mandarl.github.io/tumblr_files/tumblr_ma0hn7MNnT1rn6683.jpg" alt="Alt Repo" /></p>
+
+<p><img src="http://mandarl.github.io/tumblr_files/tumblr_ma0hnjVnK51rn6683.jpg" alt="Alt Repo" /></p>
+
+<p>Prerequisites:
+   1. Cygwin or another shell for windows.
+   2. Python</p>
+
+<p>Just run the subscriptions script like so:
+     ./download-youtube-subscriptions.sh mandarlimaye
+Put this command in a batch file and schedule it to run whenever you like.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Glasgow (Taken With Instagram)]]></title>
+    <link href="http://mandarl.github.io/blog/glasgow-taken-with-instagram/"/>
+    <updated>2012-04-15T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/glasgow-taken-with-instagram</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2igxuoFDU1rt5pkuo1_1280.jpg" alt="Alt Glasgow pic" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Edinburgh Castle (Taken With Instagram)]]></title>
+    <link href="http://mandarl.github.io/blog/edinburgh-castle-taken-with-instagram/"/>
+    <updated>2012-04-15T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/edinburgh-castle-taken-with-instagram</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2j8grYDJs1rt5pkuo1_1280.jpg" alt="Alt Edinburgh castle pic" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Torrential Rain (Taken With Instagram)]]></title>
+    <link href="http://mandarl.github.io/blog/torrential-rain-taken-with-instagram/"/>
+    <updated>2012-04-12T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/torrential-rain-taken-with-instagram</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2dp87FvUc1rt5pkuo1_1280.jpg" alt="Alt Torrential rain pic" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Covent Garden, London (Taken With Instagram)]]></title>
+    <link href="http://mandarl.github.io/blog/covent-garden-london-taken-with-instagram/"/>
+    <updated>2012-04-12T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/covent-garden-london-taken-with-instagram</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2df4fFBiR1rt5pkuo1_1280.jpg" alt="Alt Covent garden pic" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Regent’s Canal, Camden (Taken With Instagram)]]></title>
+    <link href="http://mandarl.github.io/blog/regents-canal-camden-taken-with-instagram/"/>
+    <updated>2012-04-11T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/blog/regents-canal-camden-taken-with-instagram</id>
+    <content type="html"><![CDATA[<p><img src="http://mandarl.github.io/tumblr_files/tumblr_m2bwswZ2wt1rt5pkuo1_1280.jpg" alt="Alt Regents canal pic" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[]]></title>
+    <link href="http://mandarl.github.io/blog/"/>
+    <updated>2012-04-03T00:00:00+00:00</updated>
+    <id>http://mandarl.github.io/</id>
+    <content type="html"><![CDATA[<p>First post. Hello Tumble!</p>
+]]></content>
+  </entry>
+  
+</feed>
