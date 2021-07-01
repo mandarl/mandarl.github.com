@@ -1,7 +1,8 @@
 ---
 layout: redirected
 sitemap: false
-permalink: /bjeans
+permalink: /bjeans/
 redirect_to:
-  - https://bluejeans.com/442577816/7451
+  - http://bluejeans.com/442577816/7451
 ---
+Hello, World!
