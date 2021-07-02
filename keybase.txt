@@ -1,0 +1,81 @@
+==================================================================
+https://keybase.io/mandarlimaye
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://mandar.dev
+  * I am mandarlimaye (https://keybase.io/mandarlimaye) on keybase.
+  * I have a public key with fingerprint 6079 08A3 2711 7670 F29D  CACD FD17 0434 C8E5 45CD
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "010171cfb8b3759754dcdf9d9a29319418d943c670be72ad86890ad394c8e845df090a",
+      "fingerprint": "607908a327117670f29dcacdfd170434c8e545cd",
+      "host": "keybase.io",
+      "key_id": "fd170434c8e545cd",
+      "kid": "010171cfb8b3759754dcdf9d9a29319418d943c670be72ad86890ad394c8e845df090a",
+      "uid": "6f880c132f3b236417638f99ce90b100",
+      "username": "mandarlimaye"
+    },
+    "merkle_root": {
+      "ctime": 1625233296,
+      "hash_meta": "b9cd4d0a6d8659a0986228218306ccc1f1179413ec1a9d69f89097c451b59535",
+      "seqno": 20300368
+    },
+    "revoke": {
+      "sig_ids": [
+        "134b0cf5cac2b1927b4fc1d2c4fc23070a48d20cf3a56e726bf6d5b341bbacb50f"
+      ]
+    },
+    "service": {
+      "hostname": "mandar.dev",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1625233311,
+  "expire_in": 157680000,
+  "prev": "0a6c8c5fdec993413d91b03f5493770fce8f8bd73e7776898e8874928e717625",
+  "seqno": 11,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.13
+Comment: https://keybase.io/crypto
+
+yMKzAnicrVNdaB1FGL1papqkvwhthKLEJSLWEOZvd2ZuqYE+pFUrtX0w0phe529z
+l5t793Z3czXECBVEUItiqVhFKpZAW38CQtuQQlui5EVRIpSKlNZqJUJBtGgMgtZv
+g4IFH52XYT7OOd+Z8818srq50N5UuHyQrdpzD276dGZ0pPDklY4jY56O7ahXHPMq
+bmlzw9alWakSWa/oIYwwxybUQlPuS+4za2worVREUiwZFlYyagKOtONEWREIiZSl
+khnhBPNtiODsdXthVBtyST2JahnIBohLJBQlHGMO5JBIaxQoW8wRoznZZ76xQCzH
+ac4Ac1qlrieKoQaH0pK9/8D/z75HluSCUAhkMCUh1YQGDExTEUppnEQaI5QDU5fU
+VNUBuqpqViXDUVWNOm+826u6pDLsSkkcZ3nAJotyGA6ITyglMoBLqrRcqrpMAVtL
+Y5lFKgBTvlRIioAQQbCgKDDG4BAigwtQZ7CSNpAhOJfcMB9rX/rUBy+p21eLvSJB
+FCEaCLCQuEZccXn3NBqC7FKvOOBhyjQyoQ/JE40l4ZqFBltiYCMUcaSYsAQQVPkB
+xBToMLC+pgxrrYz2UegNjufdkkZklsTzYd0SQo91DTBUT+IsNvEw1MtZVk+LeSzZ
+aD0HPuV06W+Jko5qFh4KMBouSaO4BjEB8tbEKMbdnnu6HiWuFOUInwcCwcr7QDuY
+vgqMMH5onZES7FIrsUY09JmkHF6bcSIU2nLqOAeuhJELziQRjsNkyb8izFtlagg0
+IbeaykYSmOjM+SeWF5raCy23Lct/UKG9bd0//+qF5Stubt335usru/6MVw1efXmg
+Wd6+Tn3Y3Hetf+f2ocOn5uOPpze+vX9gcY59OXbx3fHnZnd17aCPn+n4Y2vfT9v7
+n1/x4zsutZvfuPBi2wczLQtHTnb+ekfvhtlt5tzGiQvy983HJvbWw7P3HZjb29A9
+a9jE/Hc7n7l7+tFHNkl66a5j1x/84ZWFZP1Hc5cWj3eeP3qtw1u7sqsHDfzS3zp/
++LfP6pMnp156b3HDtu8fwuLh61+cXbj38pkH+tq/aX32/auTXx0wx7ecuHljTetA
+7+dD01uW+efur5xe+/WNtscKh8rooql8u39H56nJE3sOHt11Zfa1yfn1U3e+emg1
+b9m9u7c82Jho+nluZGbqreQvFOB56g==
+=tCxh
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mandarlimaye
+
+==================================================================
