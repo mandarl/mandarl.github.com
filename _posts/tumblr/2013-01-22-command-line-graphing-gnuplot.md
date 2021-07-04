@@ -2,7 +2,9 @@
 layout: post
 title: 'command line graphing: gnuplot'
 date: '2013-01-22T01:23:37-06:00'
-tags: []
+tags:
+  - tips
+  - bash
 tumblr_url: 'https://mandarlimaye.tumblr.com/post/41179256008/command-line-graphing-gnuplot'
 published: true
 image: >-
