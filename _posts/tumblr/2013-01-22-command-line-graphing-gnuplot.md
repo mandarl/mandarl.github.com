@@ -3,7 +3,13 @@ layout: post
 title: 'command line graphing: gnuplot'
 date: '2013-01-22T01:23:37-06:00'
 tags: []
-tumblr_url: https://mandarlimaye.tumblr.com/post/41179256008/command-line-graphing-gnuplot
+tumblr_url: 'https://mandarlimaye.tumblr.com/post/41179256008/command-line-graphing-gnuplot'
+published: true
+---
+---
+layout: post
+categories: tips bash
+image: https://64.media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/tumblr_inline_mh0jkxILV41rn6683.jpg
 ---
 ![](https://64.media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/tumblr_inline_mh0jkxILV41rn6683.jpg)
 
@@ -26,4 +32,3 @@ I use gnuplot to check my nodejs logs:
 This is a static plot but you can even plot animated graphs like [this](http://filipivianna.blogspot.in/2011/11/more-trickery-with-gnuplot-dumb.html):&nbsp;
 
 ![Animated memory usage](http://1.bp.blogspot.com/-6m29LnS1AR0/Ts0tJUar0EI/AAAAAAAAAwo/9lGnM2wA8sk/s1600/screenshot.gif)
-
