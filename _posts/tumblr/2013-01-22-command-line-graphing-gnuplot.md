@@ -2,14 +2,16 @@
 layout: post
 title: 'command line graphing: gnuplot'
 date: '2013-01-22T01:23:37-06:00'
-tags: []
+tags:
+  - tips
+  - bash
 tumblr_url: 'https://mandarlimaye.tumblr.com/post/41179256008/command-line-graphing-gnuplot'
 published: true
----
----
-layout: post
-categories: tips bash
-image: https://64.media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/tumblr_inline_mh0jkxILV41rn6683.jpg
+image: >-
+  https://64.media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/tumblr_inline_mh0jkxILV41rn6683.jpg
+categories:
+  - tips
+  - bash
 ---
 ![](https://64.media.tumblr.com/cca31e1a4430db99a48f488a70077d8a/tumblr_inline_mh0jkxILV41rn6683.jpg)
 
