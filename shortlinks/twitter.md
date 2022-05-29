@@ -1,3 +1,8 @@
-## A New Post
+---
+layout: redirected
+permalink: /twitter
+redirect_to:
+  - 'https://twitter.com/mandarlimaye'
+---
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+Hello, World!
