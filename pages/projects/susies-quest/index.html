@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Susie's Quest</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            touch-action: manipulation;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #7db9e8, #1e5799);
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        #game-canvas {
+            display: block;
+            background-color: transparent;
+        }
+        
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #7db9e8, #1e5799);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 100; /* Ensure proper layering */
+        }
+
+        #welcome-screen {
+            z-index: 10;
+        }
+        
+        #game-over-screen {
+            z-index: 5;
+            display: none;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+            -webkit-appearance: none; /* Fix for iOS styling */
+        }
+        
+        button {
+            padding: 12px 24px;
+            margin: 15px 0;
+            font-size: 20px;
+            background-color: #ff5e9f;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            -webkit-appearance: none; /* Fix for iOS styling */
+            appearance: none;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .control-btn {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            bottom: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5e9f;
+            user-select: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 50; /* Ensure controls are above canvas */
+            cursor: pointer;
+        }
+        
+        #left-btn {
+            left: 30px;
+        }
+        
+        #right-btn {
+            right: 30px;
+        }
+        
+        #jump-btn {
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .leaderboard {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            width: 90%;
+            max-width: 350px;
+            margin-top: 20px;
+        }
+        
+        .leaderboard h2 {
+            margin-top: 0;
+            font-size: 22px;
+        }
+        
+        .leaderboard-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+        
+        .leaderboard-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .score-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff5e9f;
+            z-index: 20;
+        }
+        
+        #character-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="welcome-screen" class="screen">
+            <img id="character-image" src="/api/placeholder/100/100" alt="Susie character">
+            <h1>Susie's Quest</h1>
+            <p>Help Susie collect yarn and candy as she jumps through her colorful world!</p>
+            <input type="text" id="player-name" placeholder="Enter your name" maxlength="15">
+            <button id="start-btn">START GAME</button>
+            
+            <div class="leaderboard">
+                <h2>Global Leaderboard</h2>
+                <ul class="leaderboard-list" id="welcome-leaderboard">
+                    <!-- Generated dynamically -->
+                </ul>
+            </div>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="left-btn" class="control-btn">←</div>
+        <div id="right-btn" class="control-btn">→</div>
+        <div id="jump-btn" class="control-btn">↑</div>
+        
+        <div id="score-display" class="score-display">Score: 0</div>
+        
+        <div id="game-over-screen" class="screen">
+            <h1>Game Over!</h1>
+            <p id="final-score">Your score: 0</p>
+            <p id="high-score-message"></p>
+            <button id="restart-btn">PLAY AGAIN</button>
+            
+            <div class="leaderboard">
+                <h2>Global Leaderboard</h2>
+                <ul class="leaderboard-list" id="gameover-leaderboard">
+                    <!-- Generated dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game variables
+        let canvas, ctx;
+        let gameActive = false;
+        let score = 0;
+        let playerName = "";
+        let leaderboard = [
+            { name: "Mandar", score: 4250 }
+        ];
+        
+        // Game objects
+        const susie = {
+            x: 0,
+            y: 0,
+            width: 40,
+            height: 60,
+            speed: 5,
+            jumpForce: 15,
+            velocity: 0,
+            gravity: 0.5,
+            isJumping: false,
+            direction: 0 // -1: left, 0: none, 1: right
+        };
+        
+        const platforms = [];
+        const collectibles = [];
+        const particles = [];
+        
+        // Images and sounds
+        const images = {
+            susie: { src: "/api/placeholder/40/60", img: new Image() },
+            yarn: { src: "/api/placeholder/30/30", img: new Image() },
+            candy: { src: "/api/placeholder/30/30", img: new Image() },
+            platform: { src: "/api/placeholder/80/20", img: new Image() }
+        };
+        
+        const sounds = {
+            jump: new Audio("https://cdnjs.cloudflare.com/ajax/libs/soundjs/1.0.1/sound.js"), // placeholder
+            collect: new Audio("https://cdnjs.cloudflare.com/ajax/libs/soundjs/1.0.1/sound.js"), // placeholder
+            gameOver: new Audio("https://cdnjs.cloudflare.com/ajax/libs/soundjs/1.0.1/sound.js") // placeholder
+        };
+        
+        // Game settings
+        const platformSpeed = 2; // Speed at which platforms move down
+        let difficultyMultiplier = 1; // Increases as game progresses
+        
+        // Initialize the game
+        window.onload = function() {
+            // Set up canvas
+            canvas = document.getElementById("game-canvas");
+            ctx = canvas.getContext("2d");
+            resizeCanvas();
+            
+            // Load images
+            for (const key in images) {
+                images[key].img.src = images[key].src;
+            }
+            
+            // Event listeners
+            document.getElementById("start-btn").addEventListener("click", startGame);
+            document.getElementById("start-btn").addEventListener("touchend", function(e) {
+                e.preventDefault(); // Prevent double-firing on mobile
+                startGame();
+            });
+            
+            document.getElementById("restart-btn").addEventListener("click", restartGame);
+            document.getElementById("restart-btn").addEventListener("touchend", function(e) {
+                e.preventDefault();
+                restartGame();
+            });
+            
+            // Control buttons - both mouse and touch events
+            const leftBtn = document.getElementById("left-btn");
+            const rightBtn = document.getElementById("right-btn");
+            const jumpBtn = document.getElementById("jump-btn");
+            
+            // Mouse controls
+            leftBtn.addEventListener("mousedown", function() {
+                susie.direction = -1;
+            });
+            
+            leftBtn.addEventListener("mouseup", function() {
+                if (susie.direction === -1) susie.direction = 0;
+            });
+            
+            leftBtn.addEventListener("mouseleave", function() {
+                if (susie.direction === -1) susie.direction = 0;
+            });
+            
+            rightBtn.addEventListener("mousedown", function() {
+                susie.direction = 1;
+            });
+            
+            rightBtn.addEventListener("mouseup", function() {
+                if (susie.direction === 1) susie.direction = 0;
+            });
+            
+            rightBtn.addEventListener("mouseleave", function() {
+                if (susie.direction === 1) susie.direction = 0;
+            });
+            
+            jumpBtn.addEventListener("mousedown", function() {
+                attemptJump();
+            });
+            
+            // Touch controls
+            leftBtn.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                susie.direction = -1;
+            });
+            
+            leftBtn.addEventListener("touchend", function(e) {
+                e.preventDefault();
+                if (susie.direction === -1) susie.direction = 0;
+            });
+            
+            rightBtn.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                susie.direction = 1;
+            });
+            
+            rightBtn.addEventListener("touchend", function(e) {
+                e.preventDefault();
+                if (susie.direction === 1) susie.direction = 0;
+            });
+            
+            jumpBtn.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                attemptJump();
+            });
+            
+            // Keyboard controls
+            window.addEventListener("keydown", function(e) {
+                if (e.key === "ArrowLeft") {
+                    susie.direction = -1;
+                } else if (e.key === "ArrowRight") {
+                    susie.direction = 1;
+                } else if (e.key === "ArrowUp" || e.key === " ") {
+                    attemptJump();
+                }
+            });
+            
+            window.addEventListener("keyup", function(e) {
+                if (e.key === "ArrowLeft" && susie.direction === -1) {
+                    susie.direction = 0;
+                } else if (e.key === "ArrowRight" && susie.direction === 1) {
+                    susie.direction = 0;
+                }
+            });
+            
+            // Window resize
+            window.addEventListener("resize", resizeCanvas);
+            
+            // Hide game UI elements initially
+            document.getElementById("left-btn").style.display = "none";
+            document.getElementById("right-btn").style.display = "none";
+            document.getElementById("jump-btn").style.display = "none";
+            document.getElementById("score-display").style.display = "none";
+            
+            // Fix for iOS Safari - prevent zoom on double-tap
+            document.addEventListener('touchmove', function(event) {
+                if (event.scale !== 1) { event.preventDefault(); }
+            }, { passive: false });
+            
+            // Prevent default on all touch events for game controls
+            const gameControls = document.querySelectorAll('.control-btn');
+            gameControls.forEach(control => {
+                control.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                });
+                control.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                });
+                control.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                });
+            });
+            
+            // Populate initial leaderboard
+            updateLeaderboardDisplay("welcome-leaderboard");
+        };
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Adjust Susie's starting position
+            susie.x = canvas.width / 2 - susie.width / 2;
+            susie.y = canvas.height - 200;
+        }
+        
+        function startGame() {
+            playerName = document.getElementById("player-name").value.trim();
+            if (playerName === "") {
+                playerName = "Player";
+            }
+            
+            document.getElementById("welcome-screen").style.display = "none";
+            document.getElementById("left-btn").style.display = "flex";
+            document.getElementById("right-btn").style.display = "flex";
+            document.getElementById("jump-btn").style.display = "flex";
+            document.getElementById("score-display").style.display = "block";
+            
+            resetGame();
+            gameActive = true;
+            gameLoop();
+        }
+        
+        function restartGame() {
+            document.getElementById("game-over-screen").style.display = "none";
+            resetGame();
+            gameActive = true;
+            gameLoop();
+        }
+        
+        function resetGame() {
+            // Reset score and difficulty
+            score = 0;
+            difficultyMultiplier = 1;
+            updateScoreDisplay();
+            
+            // Reset Susie
+            susie.x = canvas.width / 2 - susie.width / 2;
+            susie.y = canvas.height - 200;
+            susie.velocity = 0;
+            susie.direction = 0;
+            susie.isJumping = false;
+            
+            // Clear arrays
+            platforms.length = 0;
+            collectibles.length = 0;
+            particles.length = 0;
+            
+            // Create initial platforms
+            createInitialPlatforms();
+        }
+        
+        function createInitialPlatforms() {
+            // Create a platform right under the player
+            platforms.push({
+                x: canvas.width / 2 - 60,
+                y: canvas.height - 120,
+                width: 120,
+                height: 20
+            });
+            
+            // Create several platforms above
+            const platformCount = 7;
+            const spacing = canvas.height / platformCount;
+            
+            for (let i = 1; i < platformCount; i++) {
+                const y = canvas.height - spacing * i;
+                createPlatformAt(y);
+            }
+        }
+        
+        function createPlatformAt(y) {
+            const minWidth = 60;
+            const maxWidth = 120;
+            const width = Math.random() * (maxWidth - minWidth) + minWidth;
+            const x = Math.random() * (canvas.width - width);
+            
+            const platform = {
+                x: x,
+                y: y,
+                width: width,
+                height: 20
+            };
+            
+            platforms.push(platform);
+            
+            // Add collectible with 60% chance
+            if (Math.random() < 0.6) {
+                const collectibleType = Math.random() < 0.5 ? "yarn" : "candy";
+                collectibles.push({
+                    x: platform.x + Math.random() * (platform.width - 30),
+                    y: platform.y - 40,
+                    size: 30,
+                    type: collectibleType
+                });
+            }
+        }
+        
+        // Platform generation and timing
+        let lastPlatformY = 0;
+        let platformSpawnTimer = 0;
+        
+        function gameLoop() {
+            if (!gameActive) return;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update game state
+            updateGameState();
+            
+            // Draw game objects
+            drawGame();
+            
+            // Continue the loop
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function updateGameState() {
+            // Gradually increase difficulty
+            difficultyMultiplier = 1 + Math.min(score / 5000, 1.5);
+            const currentPlatformSpeed = platformSpeed * difficultyMultiplier;
+            
+            // Move player horizontally
+            susie.x += susie.direction * susie.speed;
+            
+            // Keep player within bounds
+            if (susie.x < 0) susie.x = 0;
+            if (susie.x > canvas.width - susie.width) susie.x = canvas.width - susie.width;
+            
+            // Apply gravity
+            susie.velocity += susie.gravity;
+            susie.y += susie.velocity;
+            
+            // Check for platform collisions
+            let isOnPlatform = false;
+            platforms.forEach(platform => {
+                // Move platform downward
+                platform.y += currentPlatformSpeed;
+                
+                // Check if Susie is above a platform and falling
+                if (susie.velocity > 0 &&
+                    susie.x + susie.width > platform.x &&
+                    susie.x < platform.x + platform.width &&
+                    susie.y + susie.height > platform.y &&
+                    susie.y + susie.height < platform.y + platform.height) {
+                    // Land on platform
+                    susie.y = platform.y - susie.height;
+                    susie.velocity = 0;
+                    susie.isJumping = false;
+                    isOnPlatform = true;
+                }
+            });
+            
+            // Auto-jump on platforms
+            if (isOnPlatform) {
+                susie.velocity = -susie.jumpForce;
+                susie.isJumping = true;
+                playSound("jump");
+                
+                // Create jump particles
+                for (let i = 0; i < 5; i++) {
+                    particles.push({
+                        x: susie.x + susie.width / 2,
+                        y: susie.y + susie.height,
+                        size: Math.random() * 5 + 3,
+                        speedX: (Math.random() - 0.5) * 3,
+                        speedY: Math.random() * 2 + 1,
+                        color: `hsl(${Math.random() * 60 + 180}, 70%, 60%)`,
+                        life: 30
+                    });
+                }
+            }
+            
+            // Check if player has fallen off the bottom
+            if (susie.y > canvas.height) {
+                gameOver();
+                return;
+            }
+            
+            // Generate new platforms
+            platformSpawnTimer++;
+            if (platformSpawnTimer >= 60 / difficultyMultiplier) { // Every 1 second (60 frames), adjusted by difficulty
+                platformSpawnTimer = 0;
+                createPlatformAt(0); // Create platform at the top
+            }
+            
+            // Update collectibles
+            for (let i = collectibles.length - 1; i >= 0; i--) {
+                const collectible = collectibles[i];
+                collectible.y += currentPlatformSpeed; // Move down with platforms
+                
+                // Check if collected
+                if (susie.x + susie.width > collectible.x &&
+                    susie.x < collectible.x + collectible.size &&
+                    susie.y + susie.height > collectible.y &&
+                    susie.y < collectible.y + collectible.size) {
+                    // Collect item
+                    collectibles.splice(i, 1);
+                    score += collectible.type === "yarn" ? 100 : 150;
+                    updateScoreDisplay();
+                    playSound("collect");
+                    
+                    // Create collection particles
+                    const color = collectible.type === "yarn" ? "pink" : "yellow";
+                    for (let j = 0; j < 8; j++) {
+                        particles.push({
+                            x: collectible.x + collectible.size / 2,
+                            y: collectible.y + collectible.size / 2,
+                            size: Math.random() * 6 + 2,
+                            speedX: (Math.random() - 0.5) * 5,
+                            speedY: (Math.random() - 0.5) * 5 - currentPlatformSpeed,
+                            color: color,
+                            life: 40
+                        });
+                    }
+                }
+                
+                // Remove if off-screen
+                if (collectible.y > canvas.height + collectible.size) {
+                    collectibles.splice(i, 1);
+                }
+            }
+            
+            // Update particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const particle = particles[i];
+                particle.x += particle.speedX;
+                particle.y += particle.speedY + currentPlatformSpeed / 2;
+                particle.life--;
+                
+                if (particle.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            // Remove platforms that are off-screen (below)
+            for (let i = platforms.length - 1; i >= 0; i--) {
+                if (platforms[i].y > canvas.height) {
+                    platforms.splice(i, 1);
+                    
+                    // Increment score for surviving a platform
+                    score += 10;
+                    updateScoreDisplay();
+                }
+            }
+        }
+        
+        function attemptJump() {
+            if (!susie.isJumping) {
+                susie.velocity = -susie.jumpForce;
+                susie.isJumping = true;
+                playSound("jump");
+            }
+        }
+        
+        function drawGame() {
+            // Draw background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, "#85CDE9");
+            gradient.addColorStop(1, "#5B91E5");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw decorative clouds
+            drawClouds();
+            
+            // Draw platforms
+            platforms.forEach(platform => {
+                ctx.drawImage(images.platform.img, platform.x, platform.y, platform.width, platform.height);
+            });
+            
+            // Draw collectibles
+            collectibles.forEach(collectible => {
+                const img = collectible.type === "yarn" ? images.yarn.img : images.candy.img;
+                ctx.drawImage(img, collectible.x, collectible.y, collectible.size, collectible.size);
+            });
+            
+            // Draw particles
+            particles.forEach(particle => {
+                ctx.fillStyle = particle.color;
+                ctx.globalAlpha = particle.life / 40;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            });
+            
+            // Draw Susie
+            ctx.drawImage(images.susie.img, susie.x, susie.y, susie.width, susie.height);
+            
+            // Draw difficulty indicator
+            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.font = "14px Arial";
+            ctx.fillText(`Speed: ${Math.round(difficultyMultiplier * 100)}%`, 20, 30);
+        }
+        
+        function drawClouds() {
+            const cloudPositions = [
+                { x: 50, y: 100, size: 40 },
+                { x: canvas.width - 150, y: 180, size: 60 },
+                { x: canvas.width/2 - 100, y: 300, size: 30 },
+                { x: canvas.width/3, y: 400, size: 50 }
+            ];
+            
+            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+            cloudPositions.forEach(cloud => {
+                // Cycle clouds vertically
+                let cloudY = cloud.y % canvas.height;
+                if (cloudY < 0) cloudY += canvas.height;
+                
+                ctx.beginPath();
+                ctx.arc(cloud.x, cloudY, cloud.size, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.size * 0.8, cloudY - cloud.size * 0.2, cloud.size * 0.8, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.size * 1.5, cloudY, cloud.size * 0.9, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+        
+        function updateScoreDisplay() {
+            document.getElementById("score-display").textContent = `Score: ${score}`;
+        }
+        
+        function playSound(soundName) {
+            // In a real game, you would uncomment this to play actual sounds
+            // sounds[soundName].currentTime = 0;
+            // sounds[soundName].play();
+        }
+        
+        function gameOver() {
+            gameActive = false;
+            
+            // Update leaderboard
+            updateLeaderboard();
+            
+            // Show game over screen
+            document.getElementById("final-score").textContent = `Your score: ${score}`;
+            
+            // Check for high score message
+            const highScoreIndex = leaderboard.findIndex(entry => entry.name === playerName);
+            if (highScoreIndex !== -1) {
+                document.getElementById("high-score-message").textContent = 
+                    `You're #${highScoreIndex + 1} on the leaderboard!`;
+            } else {
+                document.getElementById("high-score-message").textContent = "";
+            }
+            
+            updateLeaderboardDisplay("gameover-leaderboard");
+            document.getElementById("game-over-screen").style.display = "flex";
+            
+            // Play game over sound
+            playSound("gameOver");
+        }
+        
+        function updateLeaderboard() {
+            // Add current player's score if better than existing score for the same name
+            const existingIndex = leaderboard.findIndex(entry => entry.name === playerName);
+            if (existingIndex !== -1) {
+                if (score > leaderboard[existingIndex].score) {
+                    leaderboard[existingIndex].score = score;
+                }
+            } else {
+                // Only add new player if they're not Mandar (preserve the one required entry)
+                if (playerName !== "Mandar") {
+                    leaderboard.push({ name: playerName, score: score });
+                }
+            }
+            
+            // Sort by score (highest first)
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 5 and ensure Mandar is always in the list
+            if (leaderboard.length > 5) {
+                // Check if Mandar is in the top 5
+                const mandarInTop5 = leaderboard.slice(0, 5).some(entry => entry.name === "Mandar");
+                
+                if (mandarInTop5) {
+                    leaderboard = leaderboard.slice(0, 5);
+                } else {
+                    // If Mandar not in top 5, keep top 4 plus Mandar
+                    const top4 = leaderboard.slice(0, 4);
+                    const mandarEntry = leaderboard.find(entry => entry.name === "Mandar");
+                    leaderboard = [...top4, mandarEntry];
+                }
+            }
+            
+            // Ensure Mandar is always in the leaderboard
+            if (!leaderboard.some(entry => entry.name === "Mandar")) {
+                leaderboard.push({ name: "Mandar", score: 4250 });
+                leaderboard.sort((a, b) => b.score - a.score);
+                if (leaderboard.length > 5) {
+                    leaderboard = leaderboard.slice(0, 5);
+                }
+            }
+        }
+        
+        function updateLeaderboardDisplay(elementId) {
+            const leaderboardElement = document.getElementById(elementId);
+            leaderboardElement.innerHTML = "";
+            
+            leaderboard.forEach((entry, index) => {
+                const listItem = document.createElement("li");
+                listItem.className = "leaderboard-item";
+                listItem.innerHTML = `
+                    <span>${index + 1}. ${entry.name}</span>
+                    <span>${entry.score}</span>
+                `;
+                leaderboardElement.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
