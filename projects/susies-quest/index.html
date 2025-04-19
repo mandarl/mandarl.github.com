@@ -43,7 +43,6 @@
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
-            z-index: 100; /* Ensure proper layering */
         }
 
         #welcome-screen {
@@ -70,7 +69,6 @@
             border-radius: 20px;
             border: none;
             text-align: center;
-            -webkit-appearance: none; /* Fix for iOS styling */
         }
         
         button {
@@ -84,8 +82,6 @@
             cursor: pointer;
             transition: transform 0.1s;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            -webkit-appearance: none; /* Fix for iOS styling */
-            appearance: none;
         }
         
         button:active {
@@ -107,8 +103,6 @@
             color: #ff5e9f;
             user-select: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 50; /* Ensure controls are above canvas */
-            cursor: pointer;
         }
         
         #left-btn {
@@ -117,12 +111,6 @@
         
         #right-btn {
             right: 30px;
-        }
-        
-        #jump-btn {
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%);
         }
         
         .leaderboard {
@@ -163,7 +151,6 @@
             font-size: 18px;
             font-weight: bold;
             color: #ff5e9f;
-            z-index: 20;
         }
         
         #character-image {
@@ -194,7 +181,6 @@
         
         <div id="left-btn" class="control-btn">←</div>
         <div id="right-btn" class="control-btn">→</div>
-        <div id="jump-btn" class="control-btn">↑</div>
         
         <div id="score-display" class="score-display">Score: 0</div>
         
@@ -273,75 +259,27 @@
             
             // Event listeners
             document.getElementById("start-btn").addEventListener("click", startGame);
-            document.getElementById("start-btn").addEventListener("touchend", function(e) {
-                e.preventDefault(); // Prevent double-firing on mobile
-                startGame();
-            });
-            
             document.getElementById("restart-btn").addEventListener("click", restartGame);
-            document.getElementById("restart-btn").addEventListener("touchend", function(e) {
-                e.preventDefault();
-                restartGame();
-            });
             
-            // Control buttons - both mouse and touch events
+            // Control buttons
             const leftBtn = document.getElementById("left-btn");
             const rightBtn = document.getElementById("right-btn");
-            const jumpBtn = document.getElementById("jump-btn");
-            
-            // Mouse controls
-            leftBtn.addEventListener("mousedown", function() {
-                susie.direction = -1;
-            });
-            
-            leftBtn.addEventListener("mouseup", function() {
-                if (susie.direction === -1) susie.direction = 0;
-            });
-            
-            leftBtn.addEventListener("mouseleave", function() {
-                if (susie.direction === -1) susie.direction = 0;
-            });
-            
-            rightBtn.addEventListener("mousedown", function() {
-                susie.direction = 1;
-            });
-            
-            rightBtn.addEventListener("mouseup", function() {
-                if (susie.direction === 1) susie.direction = 0;
-            });
-            
-            rightBtn.addEventListener("mouseleave", function() {
-                if (susie.direction === 1) susie.direction = 0;
-            });
-            
-            jumpBtn.addEventListener("mousedown", function() {
-                attemptJump();
-            });
             
             // Touch controls
-            leftBtn.addEventListener("touchstart", function(e) {
-                e.preventDefault();
+            leftBtn.addEventListener("touchstart", function() {
                 susie.direction = -1;
             });
             
-            leftBtn.addEventListener("touchend", function(e) {
-                e.preventDefault();
+            leftBtn.addEventListener("touchend", function() {
                 if (susie.direction === -1) susie.direction = 0;
             });
             
-            rightBtn.addEventListener("touchstart", function(e) {
-                e.preventDefault();
+            rightBtn.addEventListener("touchstart", function() {
                 susie.direction = 1;
             });
             
-            rightBtn.addEventListener("touchend", function(e) {
-                e.preventDefault();
+            rightBtn.addEventListener("touchend", function() {
                 if (susie.direction === 1) susie.direction = 0;
-            });
-            
-            jumpBtn.addEventListener("touchstart", function(e) {
-                e.preventDefault();
-                attemptJump();
             });
             
             // Keyboard controls
@@ -369,27 +307,7 @@
             // Hide game UI elements initially
             document.getElementById("left-btn").style.display = "none";
             document.getElementById("right-btn").style.display = "none";
-            document.getElementById("jump-btn").style.display = "none";
             document.getElementById("score-display").style.display = "none";
-            
-            // Fix for iOS Safari - prevent zoom on double-tap
-            document.addEventListener('touchmove', function(event) {
-                if (event.scale !== 1) { event.preventDefault(); }
-            }, { passive: false });
-            
-            // Prevent default on all touch events for game controls
-            const gameControls = document.querySelectorAll('.control-btn');
-            gameControls.forEach(control => {
-                control.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                });
-                control.addEventListener('touchmove', function(e) {
-                    e.preventDefault();
-                });
-                control.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                });
-            });
             
             // Populate initial leaderboard
             updateLeaderboardDisplay("welcome-leaderboard");
@@ -413,7 +331,6 @@
             document.getElementById("welcome-screen").style.display = "none";
             document.getElementById("left-btn").style.display = "flex";
             document.getElementById("right-btn").style.display = "flex";
-            document.getElementById("jump-btn").style.display = "flex";
             document.getElementById("score-display").style.display = "block";
             
             resetGame();
