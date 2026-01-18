@@ -1,0 +1,10 @@
+export const CONFIG = {
+    PLATFORM_SPEED: 2,
+    GRAVITY: 0.5,
+    JUMP_FORCE: 15,
+    ACCELERATION: 0.8,
+    FRICTION: 0.9,
+    MAX_SPEED: 8,
+    SQUISH_SPEED: 0.05,
+    SQUISH_RECOVERY: 0.1
+};

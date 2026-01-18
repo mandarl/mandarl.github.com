@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    touch-action: manipulation;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #7db9e8, #1e5799);
+    height: 100vh;
+    width: 100vw;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#game-canvas {
+    display: block;
+    background-color: transparent;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #7db9e8, #1e5799);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#welcome-screen {
+    z-index: 10;
+}
+
+#game-over-screen {
+    z-index: 5;
+    display: none;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+}
+
+button {
+    padding: 12px 24px;
+    margin: 15px 0;
+    font-size: 20px;
+    background-color: #ff5e9f;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.control-btn {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5e9f;
+    user-select: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#left-btn {
+    left: 30px;
+}
+
+#right-btn {
+    right: 30px;
+}
+
+.leaderboard {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    width: 90%;
+    max-width: 350px;
+    margin-top: 20px;
+}
+
+.leaderboard h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.leaderboard-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.leaderboard-item {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: space-between;
+}
+
+.score-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff5e9f;
+}
+
+#character-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+#mobile-warning {
+    display: none;
+    z-index: 1000;
+    background: #1e5799;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    #mobile-warning {
+        display: none;
+        /* Changed: we want desktop users to see the game now too */
+    }
+
+    #game-container {
+        display: block;
+        /* Changed: allow game on desktop */
+        max-width: 500px;
+        margin: 0 auto;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    }
+}
