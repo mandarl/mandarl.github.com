@@ -72,8 +72,25 @@
     margin: 0 auto;
   }
 
+  .about-name {
+    font-size: $font-size-h2;
+  }
+
   .about-social {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .about-social {
+    flex-direction: column;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
   }
 }
 

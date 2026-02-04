@@ -77,6 +77,11 @@
   padding: $spacing-xl;
   border-radius: $border-radius-lg;
   margin: $spacing-2xl 0;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-lg;
+    margin: $spacing-xl 0;
+  }
 }
 
 .newsletter-title {

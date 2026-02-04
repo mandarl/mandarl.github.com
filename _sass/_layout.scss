@@ -18,6 +18,10 @@
   max-width: $content-width;
   margin: 0 auto;
   padding: 0 $spacing-lg;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 0 $spacing-md;
+  }
 }
 
 .content-container-wide {
@@ -43,6 +47,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 0 $spacing-md;
+  }
 }
 
 .site-title {
@@ -151,6 +159,10 @@
   align-items: center;
   flex-wrap: wrap;
   gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 0 $spacing-md;
+  }
 }
 
 .footer-text {
