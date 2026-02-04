@@ -18,19 +18,9 @@
     <button type="submit" class="btn btn-primary">Subscribe</button>
   </form>
   {% else %}
-  <!-- Placeholder form - configure newsletter_form_action in _config.yml -->
-  <form class="newsletter-form" onsubmit="alert('Configure newsletter_form_action in _config.yml'); return false;">
-    <input 
-      type="email" 
-      class="newsletter-input" 
-      placeholder="your@email.com" 
-      required
-      aria-label="Email address"
-    >
-    <button type="submit" class="btn btn-primary">Subscribe</button>
-  </form>
-  <p style="font-size: 0.75rem; color: #6c757d; margin-top: 0.5rem;">
-    <em>Newsletter signup coming soon.</em>
-  </p>
+  <!-- Mailto fallback - opens email client with pre-filled subject -->
+  <a href="mailto:{{ site.email }}?subject=Subscribe%20to%20{{ site.title | url_encode }}&body=Hi%20Mandar%2C%0A%0AI'd%20like%20to%20subscribe%20to%20your%20newsletter.%0A%0AThanks!" class="btn btn-primary newsletter-mailto-btn">
+    Subscribe via Email
+  </a>
   {% endif %}
 </div>
