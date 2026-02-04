@@ -14,8 +14,10 @@ layout: default
         <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
           {{ post.date | date: "%b %d, %Y" }}
         </time>
-        {% if post.reading_time %}
-        <span class="reading-time">{{ post.reading_time }} min read</span>
+        {% assign words = post.content | number_of_words %}
+        {% assign minutes = words | divided_by: 200 %}
+        {% if minutes >= 1 %}
+        <span class="reading-time">{{ minutes }} min read</span>
         {% endif %}
       </div>
       
@@ -28,8 +30,6 @@ layout: default
         {{ post.excerpt | strip_html | truncatewords: 40 }}
       </p>
       {% endif %}
-      
-      <a href="{{ post.url | relative_url }}" class="post-link">Read more &rarr;</a>
     </li>
     {% endfor %}
   </ul>

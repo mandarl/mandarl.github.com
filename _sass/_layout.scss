@@ -74,10 +74,16 @@
   color: $color-text-secondary;
   text-decoration: none;
   transition: color $transition-fast;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
 
-  &:hover,
+  &:hover {
+    color: $color-text-primary;
+  }
+
   &.active {
     color: $color-text-primary;
+    border-bottom-color: $color-accent;
   }
 }
 
@@ -185,8 +191,8 @@
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
 }
 

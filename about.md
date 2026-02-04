@@ -24,7 +24,7 @@ show_title: false
   </div>
 </div>
 
-<div class="about-content">
+<div class="about-content" markdown="1">
 
 ## Hello!
 
