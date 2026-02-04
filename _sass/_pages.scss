@@ -85,10 +85,11 @@
 @media (max-width: $breakpoint-sm) {
   .about-social {
     flex-direction: column;
-    width: 100%;
+    align-items: center;
 
     .btn {
-      width: 100%;
+      width: 80%;
+      max-width: 280px;
       justify-content: center;
     }
   }
