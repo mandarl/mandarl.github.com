@@ -48,9 +48,12 @@
   a {
     color: $color-text-primary;
     text-decoration: none;
+    display: inline-block;
+    transition: color 150ms ease, transform 150ms ease;
 
     &:hover {
       color: $color-accent;
+      transform: translateX(4px);
     }
   }
 }

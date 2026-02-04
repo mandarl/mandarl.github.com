@@ -1,0 +1,253 @@
+// =============================================================================
+// MICRO ANIMATIONS
+// =============================================================================
+// Subtle, delightful animations that enhance UX without overwhelming the
+// minimalist aesthetic. All animations respect prefers-reduced-motion.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Keyframes
+// -----------------------------------------------------------------------------
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Page Load Animations
+// -----------------------------------------------------------------------------
+
+.animate-fade-in {
+  animation: fadeIn $animation-duration-base $ease-out-cubic both;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp $animation-duration-base $ease-out-cubic both;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown $animation-duration-fast $ease-out-cubic both;
+}
+
+// Staggered animations for lists
+@for $i from 1 through 15 {
+  .animate-stagger-#{$i} {
+    animation-delay: #{$i * 50}ms;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hover Transitions - Links
+// -----------------------------------------------------------------------------
+
+// Smooth underline animation for navigation links
+.nav-link {
+  position: relative;
+  transition: color $transition-fast;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $color-accent;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform $animation-duration-fast $ease-out-cubic;
+  }
+  
+  &:hover::after,
+  &.active::after {
+    transform: scaleX(1);
+  }
+  
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hover Transitions - Post Titles
+// -----------------------------------------------------------------------------
+
+.post-title-link {
+  display: inline-block;
+  transition: color $transition-fast, transform $transition-fast;
+  
+  &:hover {
+    color: $color-accent;
+    transform: translateX(4px);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hover Transitions - Buttons
+// -----------------------------------------------------------------------------
+
+.btn {
+  transition: 
+    background-color $transition-fast,
+    border-color $transition-fast,
+    color $transition-fast,
+    transform $transition-fast,
+    box-shadow $transition-fast;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+}
+
+// Primary button with subtle glow on hover
+.btn-primary {
+  &:hover {
+    box-shadow: 0 4px 14px rgba($color-accent, 0.4);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hover Transitions - Cards & Posts
+// -----------------------------------------------------------------------------
+
+.post-item {
+  transition: transform $transition-base $ease-out-cubic;
+  
+  &:hover {
+    .post-title-link {
+      color: $color-accent;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hover Transitions - Social Icons
+// -----------------------------------------------------------------------------
+
+.social-icon {
+  transition: 
+    color $transition-fast,
+    transform $transition-fast;
+  
+  &:hover {
+    color: $color-accent;
+    transform: translateY(-3px);
+  }
+}
+
+// Footer social icons with subtle bounce
+.footer-social a {
+  display: inline-flex;
+  transition: 
+    color $transition-fast,
+    transform $transition-fast;
+  
+  &:hover {
+    color: $color-accent;
+    transform: translateY(-3px);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Newsletter Box Animation
+// -----------------------------------------------------------------------------
+
+.newsletter-signup {
+  animation: fadeInUp $animation-duration-slow $ease-out-cubic both;
+  animation-delay: 100ms;
+}
+
+// -----------------------------------------------------------------------------
+// Project Cards
+// -----------------------------------------------------------------------------
+
+.project-card {
+  transition: 
+    transform $transition-base $ease-out-cubic,
+    box-shadow $transition-base;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Image Hover Effects
+// -----------------------------------------------------------------------------
+
+.about-photo {
+  transition: transform $transition-base $ease-out-cubic;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Reduced Motion Support
+// -----------------------------------------------------------------------------
+// Respect user preferences for reduced motion
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -20,11 +20,28 @@
   border: none;
   cursor: pointer;
   text-decoration: none;
-  transition: all $transition-fast;
+  transition: 
+    background-color $transition-fast,
+    border-color $transition-fast,
+    color $transition-fast,
+    transform $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 }
 
@@ -35,6 +52,7 @@
   &:hover {
     background-color: $color-accent-hover;
     color: white;
+    box-shadow: 0 4px 14px rgba($color-accent, 0.4);
   }
 }
 

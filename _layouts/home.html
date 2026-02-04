@@ -4,12 +4,14 @@ layout: default
 
 <div class="content-container">
   {% if site.show_newsletter_on_home %}
-  {% include newsletter.html %}
+  <div class="animate-fade-in-up" style="animation-delay: 100ms;">
+    {% include newsletter.html %}
+  </div>
   {% endif %}
   
   <ul class="posts-list">
     {% for post in site.posts %}
-    <li class="post-item">
+    <li class="post-item animate-fade-in-up" style="animation-delay: {{ forloop.index | times: 50 | plus: 150 }}ms;">
       <div class="post-meta">
         <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
           {{ post.date | date: "%b %d, %Y" }}
@@ -35,7 +37,7 @@ layout: default
   </ul>
   
   {% if paginator %}
-  <nav class="pagination">
+  <nav class="pagination animate-fade-in" style="animation-delay: 600ms;">
     {% if paginator.previous_page %}
     <a href="{{ paginator.previous_page_path | relative_url }}" class="btn btn-secondary">&larr; Newer</a>
     {% endif %}
