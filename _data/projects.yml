@@ -14,13 +14,13 @@
 #   - external: true if link opens in new tab (optional)
 # =============================================================================
 
-- name: "Example Project"
-  description: "A brief description of what this project does and why it's interesting."
-  url: "/projects/example"
+- name: "Markets Heatmap"
+  description: "A visual heatmap displaying real-time market data and trends across different sectors and asset classes."
+  url: "/projects/markets-heatmap"
   tags:
-    - Python
-    - AI
-  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
+    - Finance
+    - Data Visualization
+  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
 
 # Add more projects below:
 # - name: "Another Project"
