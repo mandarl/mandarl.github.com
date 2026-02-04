@@ -96,7 +96,10 @@
 }
 
 .about-content {
+  color: $color-text-secondary;
+
   h2 {
+    color: $color-text-primary;
     margin-top: $spacing-2xl;
     padding-top: $spacing-lg;
     border-top: 1px solid $color-border-light;
@@ -106,6 +109,10 @@
       padding-top: 0;
       border-top: none;
     }
+  }
+
+  strong {
+    color: $color-text-primary;
   }
 }
 
