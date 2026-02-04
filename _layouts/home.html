@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<div class="content-container">
+  {% if site.show_newsletter_on_home %}
+  {% include newsletter.html %}
+  {% endif %}
+  
+  <ul class="posts-list">
+    {% for post in site.posts %}
+    <li class="post-item">
+      <div class="post-meta">
+        <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
+          {{ post.date | date: "%b %d, %Y" }}
+        </time>
+        {% if post.reading_time %}
+        <span class="reading-time">{{ post.reading_time }} min read</span>
+        {% endif %}
+      </div>
+      
+      <h2 class="post-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+      </h2>
+      
+      {% if post.excerpt %}
+      <p class="post-excerpt">
+        {{ post.excerpt | strip_html | truncatewords: 40 }}
+      </p>
+      {% endif %}
+      
+      <a href="{{ post.url | relative_url }}" class="post-link">Read more &rarr;</a>
+    </li>
+    {% endfor %}
+  </ul>
+  
+  {% if paginator %}
+  <nav class="pagination">
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}" class="btn btn-secondary">&larr; Newer</a>
+    {% endif %}
+    
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}" class="btn btn-secondary">Older &rarr;</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</div>

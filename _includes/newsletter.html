@@ -1,0 +1,36 @@
+<div class="newsletter-signup">
+  <h3 class="newsletter-title">{{ site.newsletter_title | default: "Stay updated" }}</h3>
+  <p class="newsletter-description">
+    {{ site.newsletter_description | default: "Subscribe to get new posts delivered to your inbox. No spam, unsubscribe anytime." }}
+  </p>
+  
+  {% if site.newsletter_form_action %}
+  <!-- Custom newsletter form (e.g., Buttondown, ConvertKit, Mailchimp) -->
+  <form class="newsletter-form" action="{{ site.newsletter_form_action }}" method="post" target="_blank">
+    <input 
+      type="email" 
+      name="email" 
+      class="newsletter-input" 
+      placeholder="your@email.com" 
+      required
+      aria-label="Email address"
+    >
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+  </form>
+  {% else %}
+  <!-- Placeholder form - configure newsletter_form_action in _config.yml -->
+  <form class="newsletter-form" onsubmit="alert('Configure newsletter_form_action in _config.yml'); return false;">
+    <input 
+      type="email" 
+      class="newsletter-input" 
+      placeholder="your@email.com" 
+      required
+      aria-label="Email address"
+    >
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+  </form>
+  <p style="font-size: 0.75rem; color: #6c757d; margin-top: 0.5rem;">
+    <em>Newsletter signup coming soon.</em>
+  </p>
+  {% endif %}
+</div>

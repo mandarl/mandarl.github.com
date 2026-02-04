@@ -1,0 +1,198 @@
+// =============================================================================
+// LAYOUT STYLES
+// =============================================================================
+// Site structure, header, footer, and main content area
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Site Container
+// -----------------------------------------------------------------------------
+
+.site-container {
+  max-width: $site-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.content-container {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.content-container-wide {
+  max-width: $content-width-wide;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+// -----------------------------------------------------------------------------
+// Site Header
+// -----------------------------------------------------------------------------
+
+.site-header {
+  padding: $spacing-lg 0;
+  border-bottom: 1px solid $color-border-light;
+  margin-bottom: $spacing-2xl;
+}
+
+.header-content {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-family: $font-family-heading;
+  font-size: 1.25rem;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Navigation
+// -----------------------------------------------------------------------------
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+}
+
+.nav-link {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover,
+  &.active {
+    color: $color-text-primary;
+  }
+}
+
+// Mobile navigation
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-sm;
+
+  @media (max-width: $breakpoint-md) {
+    display: block;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: $color-background;
+    flex-direction: column;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+    gap: $spacing-md;
+
+    &.is-open {
+      display: flex;
+    }
+  }
+
+  .header-content {
+    position: relative;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Main Content
+// -----------------------------------------------------------------------------
+
+.site-main {
+  flex: 1;
+  padding-bottom: $spacing-3xl;
+}
+
+// -----------------------------------------------------------------------------
+// Site Footer
+// -----------------------------------------------------------------------------
+
+.site-footer {
+  padding: $spacing-2xl 0;
+  border-top: 1px solid $color-border-light;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-lg;
+}
+
+.footer-text {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-muted;
+}
+
+.footer-links {
+  display: flex;
+  gap: $spacing-lg;
+}
+
+.footer-link {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-muted;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text-secondary;
+  }
+}
+
+// Social icons in footer
+.social-links {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.social-link {
+  color: $color-text-muted;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-accent;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}

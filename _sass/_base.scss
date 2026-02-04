@@ -1,0 +1,172 @@
+// =============================================================================
+// BASE STYLES
+// =============================================================================
+// Reset and foundational styles for the site
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// CSS Reset
+// -----------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: $font-size-base;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-family-body;
+  font-size: 1rem;
+  line-height: $line-height-base;
+  color: $color-text-primary;
+  background-color: $color-background;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// -----------------------------------------------------------------------------
+// Typography Base
+// -----------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-heading;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+h1 { font-size: $font-size-h1; }
+h2 { font-size: $font-size-h2; }
+h3 { font-size: $font-size-h3; }
+h4 { font-size: $font-size-h4; }
+
+p {
+  margin-bottom: $spacing-lg;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-accent-hover;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Lists
+// -----------------------------------------------------------------------------
+
+ul, ol {
+  margin-bottom: $spacing-lg;
+  padding-left: $spacing-xl;
+}
+
+li {
+  margin-bottom: $spacing-sm;
+}
+
+// -----------------------------------------------------------------------------
+// Code
+// -----------------------------------------------------------------------------
+
+code {
+  font-family: $font-family-mono;
+  font-size: 0.9em;
+  background-color: $color-background-alt;
+  padding: 0.2em 0.4em;
+  border-radius: $border-radius-sm;
+}
+
+pre {
+  font-family: $font-family-mono;
+  font-size: $font-size-small;
+  background-color: $color-background-alt;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  overflow-x: auto;
+  margin-bottom: $spacing-lg;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Blockquotes
+// -----------------------------------------------------------------------------
+
+blockquote {
+  border-left: 3px solid $color-accent;
+  padding-left: $spacing-lg;
+  margin: $spacing-xl 0;
+  font-style: italic;
+  color: $color-text-secondary;
+}
+
+// -----------------------------------------------------------------------------
+// Horizontal Rule
+// -----------------------------------------------------------------------------
+
+hr {
+  border: none;
+  border-top: 1px solid $color-border;
+  margin: $spacing-2xl 0;
+}
+
+// -----------------------------------------------------------------------------
+// Images
+// -----------------------------------------------------------------------------
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// -----------------------------------------------------------------------------
+// Tables
+// -----------------------------------------------------------------------------
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-lg;
+}
+
+th, td {
+  padding: $spacing-sm $spacing-md;
+  text-align: left;
+  border-bottom: 1px solid $color-border;
+}
+
+th {
+  font-family: $font-family-ui;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-small;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-secondary;
+}
+
+// -----------------------------------------------------------------------------
+// Selection
+// -----------------------------------------------------------------------------
+
+::selection {
+  background-color: $color-accent;
+  color: white;
+}

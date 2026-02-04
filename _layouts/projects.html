@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<div class="content-container-wide">
+  <header class="page-header">
+    <h1 class="page-title">{{ page.title | escape }}</h1>
+    {% if page.description %}
+    <p class="page-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+  
+  {{ content }}
+  
+  {% if site.data.projects %}
+  <div class="projects-grid">
+    {% for project in site.data.projects %}
+    <a href="{{ project.url }}" class="project-card" {% if project.external %}target="_blank" rel="noopener"{% endif %}>
+      {% if project.icon %}
+      <div class="project-icon">
+        {{ project.icon }}
+      </div>
+      {% endif %}
+      
+      <h3 class="project-name">{{ project.name }}</h3>
+      
+      {% if project.description %}
+      <p class="project-description">{{ project.description }}</p>
+      {% endif %}
+      
+      {% if project.tags %}
+      <div class="project-tags">
+        {% for tag in project.tags %}
+        <span class="project-tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

@@ -1,0 +1,61 @@
+---
+layout: default
+---
+
+<article class="post content-container">
+  <header class="post-header">
+    <div class="post-meta">
+      <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%B %d, %Y" }}
+      </time>
+      {% assign words = content | number_of_words %}
+      {% assign minutes = words | divided_by: 200 %}
+      {% if minutes < 1 %}{% assign minutes = 1 %}{% endif %}
+      <span class="reading-time">{{ minutes }} min read</span>
+    </div>
+    
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    
+    {% if page.tags.size > 0 %}
+    <ul class="tags-list">
+      {% for tag in page.tags %}
+      <li><span class="tag">{{ tag }}</span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+  
+  <div class="post-content">
+    {{ content }}
+  </div>
+  
+  {% include share-buttons.html %}
+  
+  {% if site.show_author_bio %}
+  {% include author-bio.html %}
+  {% endif %}
+  
+  <nav class="post-navigation">
+    {% if page.previous.url %}
+    <div class="post-nav-item prev">
+      <span class="post-nav-label">Previous</span>
+      <a href="{{ page.previous.url | relative_url }}" class="post-nav-title">{{ page.previous.title }}</a>
+    </div>
+    {% else %}
+    <div class="post-nav-item prev"></div>
+    {% endif %}
+    
+    {% if page.next.url %}
+    <div class="post-nav-item next">
+      <span class="post-nav-label">Next</span>
+      <a href="{{ page.next.url | relative_url }}" class="post-nav-title">{{ page.next.title }}</a>
+    </div>
+    {% endif %}
+  </nav>
+</article>
+
+{% if site.show_newsletter_on_posts %}
+<div class="content-container">
+  {% include newsletter.html %}
+</div>
+{% endif %}

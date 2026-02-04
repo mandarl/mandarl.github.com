@@ -1,0 +1,219 @@
+// =============================================================================
+// POST STYLES
+// =============================================================================
+// Styles for post listings and individual post pages
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Post List (Homepage)
+// -----------------------------------------------------------------------------
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-item {
+  padding: $spacing-xl 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.post-meta {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-muted;
+  margin-bottom: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.post-date {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.post-title {
+  font-size: $font-size-h3;
+  margin-bottom: $spacing-sm;
+
+  a {
+    color: $color-text-primary;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+.post-excerpt {
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  line-height: $line-height-tight;
+}
+
+.post-link {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  color: $color-accent;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Single Post
+// -----------------------------------------------------------------------------
+
+.post-header {
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.post-header .post-title {
+  font-size: $font-size-h1;
+  margin-bottom: $spacing-md;
+}
+
+.post-header .post-meta {
+  margin-bottom: 0;
+}
+
+.post-content {
+  // Prose styling for article content
+  h2 {
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-lg;
+  }
+
+  h3 {
+    margin-top: $spacing-xl;
+  }
+
+  p + p {
+    margin-top: 0;
+  }
+
+  img {
+    margin: $spacing-xl auto;
+    border-radius: $border-radius-md;
+  }
+
+  // Figures with captions
+  figure {
+    margin: $spacing-xl 0;
+
+    img {
+      margin: 0 auto;
+    }
+
+    figcaption {
+      font-family: $font-family-ui;
+      font-size: $font-size-small;
+      color: $color-text-muted;
+      text-align: center;
+      margin-top: $spacing-sm;
+    }
+  }
+
+  // Links in content
+  a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Post Navigation (Prev/Next)
+// -----------------------------------------------------------------------------
+
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $color-border-light;
+}
+
+.post-nav-item {
+  flex: 1;
+
+  &.next {
+    text-align: right;
+  }
+}
+
+.post-nav-label {
+  font-family: $font-family-ui;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: $spacing-xs;
+}
+
+.post-nav-title {
+  font-family: $font-family-heading;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .post-navigation {
+    flex-direction: column;
+  }
+
+  .post-nav-item.next {
+    text-align: left;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Featured Post (Optional)
+// -----------------------------------------------------------------------------
+
+.featured-post {
+  padding: $spacing-xl;
+  background-color: $color-background-alt;
+  border-radius: $border-radius-lg;
+  margin-bottom: $spacing-2xl;
+}
+
+.featured-label {
+  font-family: $font-family-ui;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-accent;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: $spacing-sm;
+}
+
+.featured-post .post-title {
+  font-size: $font-size-h2;
+}

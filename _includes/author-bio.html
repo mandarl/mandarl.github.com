@@ -1,0 +1,12 @@
+<div class="author-bio">
+  {% if site.author_image %}
+  <img src="{{ site.author_image | relative_url }}" alt="{{ site.author_name | default: site.title }}" class="author-avatar">
+  {% endif %}
+  
+  <div class="author-info">
+    <h4 class="author-name">{{ site.author_name | default: "About the Author" }}</h4>
+    <p class="author-description">
+      {{ site.author_bio | default: "Technology enthusiast writing about software, AI, and the future of tech." }}
+    </p>
+  </div>
+</div>

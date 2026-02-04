@@ -1,0 +1,79 @@
+---
+# Main stylesheet - Jekyll requires front matter for SCSS processing
+---
+
+// =============================================================================
+// MAIN STYLESHEET
+// =============================================================================
+// This file imports all SCSS partials in the correct order.
+// To switch themes, modify _variables.scss or import a different variables file.
+// =============================================================================
+
+// Variables must come first (design tokens)
+@import "variables";
+
+// Base styles (reset, typography foundations)
+@import "base";
+
+// Layout (header, footer, containers)
+@import "layout";
+
+// Components (buttons, cards, forms)
+@import "components";
+
+// Post styles (listings, single posts)
+@import "posts";
+
+// Page styles (about, projects, etc.)
+@import "pages";
+
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
+
+// Visibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Text alignment
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+// Spacing utilities
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: $spacing-md; }
+.mt-2 { margin-top: $spacing-xl; }
+.mt-3 { margin-top: $spacing-2xl; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: $spacing-md; }
+.mb-2 { margin-bottom: $spacing-xl; }
+.mb-3 { margin-bottom: $spacing-2xl; }
+
+// Display
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+
+// Flex utilities
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

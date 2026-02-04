@@ -1,0 +1,251 @@
+// =============================================================================
+// COMPONENT STYLES
+// =============================================================================
+// Reusable UI components: buttons, cards, forms, etc.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Buttons
+// -----------------------------------------------------------------------------
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-md;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background-color: $color-accent;
+  color: white;
+
+  &:hover {
+    background-color: $color-accent-hover;
+    color: white;
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
+
+  &:hover {
+    background-color: $color-background-alt;
+    color: $color-text-primary;
+  }
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: $color-accent;
+
+  &:hover {
+    background-color: $color-background-alt;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Newsletter Signup
+// -----------------------------------------------------------------------------
+
+.newsletter-signup {
+  background-color: $color-background-alt;
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  margin: $spacing-2xl 0;
+}
+
+.newsletter-title {
+  font-size: $font-size-h4;
+  margin-bottom: $spacing-sm;
+}
+
+.newsletter-description {
+  color: $color-text-secondary;
+  font-size: $font-size-small;
+  margin-bottom: $spacing-lg;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: $spacing-sm;
+
+  @media (max-width: $breakpoint-sm) {
+    flex-direction: column;
+  }
+}
+
+.newsletter-input {
+  flex: 1;
+  font-family: $font-family-ui;
+  font-size: 1rem;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  background-color: $color-background;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Cards
+// -----------------------------------------------------------------------------
+
+.card {
+  background-color: $color-background;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  transition: box-shadow $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Tags
+// -----------------------------------------------------------------------------
+
+.tag {
+  display: inline-block;
+  font-family: $font-family-ui;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  background-color: $color-background-alt;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $color-border;
+    color: $color-text-primary;
+  }
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Reading Time
+// -----------------------------------------------------------------------------
+
+.reading-time {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-muted;
+}
+
+// -----------------------------------------------------------------------------
+// Share Buttons
+// -----------------------------------------------------------------------------
+
+.share-buttons {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $color-border-light;
+}
+
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  background-color: $color-background-alt;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $color-border;
+    color: $color-text-primary;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Author Bio
+// -----------------------------------------------------------------------------
+
+.author-bio {
+  display: flex;
+  gap: $spacing-lg;
+  padding: $spacing-xl;
+  background-color: $color-background-alt;
+  border-radius: $border-radius-lg;
+  margin-top: $spacing-2xl;
+}
+
+.author-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.author-info {
+  flex: 1;
+}
+
+.author-name {
+  font-family: $font-family-heading;
+  font-size: $font-size-h4;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+}
+
+.author-description {
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  margin-bottom: 0;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .author-bio {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .author-avatar {
+    margin: 0 auto;
+  }
+}

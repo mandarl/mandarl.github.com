@@ -1,0 +1,212 @@
+// =============================================================================
+// PAGE STYLES
+// =============================================================================
+// Styles for static pages: About, Projects, etc.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Page Header
+// -----------------------------------------------------------------------------
+
+.page-header {
+  margin-bottom: $spacing-2xl;
+}
+
+.page-title {
+  font-size: $font-size-h1;
+  margin-bottom: $spacing-md;
+}
+
+.page-description {
+  font-size: 1.125rem;
+  color: $color-text-secondary;
+  max-width: 600px;
+}
+
+// -----------------------------------------------------------------------------
+// About Page
+// -----------------------------------------------------------------------------
+
+.about-header {
+  display: flex;
+  gap: $spacing-xl;
+  align-items: flex-start;
+  margin-bottom: $spacing-2xl;
+}
+
+.about-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.about-intro {
+  flex: 1;
+}
+
+.about-name {
+  font-size: $font-size-h1;
+  margin-bottom: $spacing-sm;
+}
+
+.about-tagline {
+  font-size: 1.125rem;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-lg;
+}
+
+.about-social {
+  display: flex;
+  gap: $spacing-md;
+}
+
+@media (max-width: $breakpoint-md) {
+  .about-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-photo {
+    margin: 0 auto;
+  }
+
+  .about-social {
+    justify-content: center;
+  }
+}
+
+.about-content {
+  h2 {
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $color-border-light;
+
+    &:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Projects Page
+// -----------------------------------------------------------------------------
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-xl;
+  margin-top: $spacing-xl;
+}
+
+.project-card {
+  background-color: $color-background;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  transition: all $transition-fast;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    border-color: $color-border;
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+.project-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: $spacing-md;
+  color: $color-accent;
+}
+
+.project-name {
+  font-family: $font-family-heading;
+  font-size: $font-size-h4;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.project-description {
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+  line-height: $line-height-tight;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.project-tag {
+  font-family: $font-family-ui;
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  background-color: $color-background-alt;
+  padding: 2px $spacing-sm;
+  border-radius: $border-radius-sm;
+}
+
+// Simple list view for projects (alternative)
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-list-item {
+  padding: $spacing-lg 0;
+  border-bottom: 1px solid $color-border-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-lg;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.project-list-info {
+  flex: 1;
+}
+
+.project-list-name {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.project-list-description {
+  font-size: $font-size-small;
+  color: $color-text-secondary;
+  margin: 0;
+}
+
+.project-list-link {
+  font-family: $font-family-ui;
+  font-size: $font-size-small;
+  color: $color-accent;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .project-list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
