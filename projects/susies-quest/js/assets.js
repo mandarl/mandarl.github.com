@@ -8,40 +8,37 @@ const loadImage = (src) => {
     });
 };
 
-// Asset paths
+// Asset paths - all PNG images with transparent backgrounds
 const ASSET_PATHS = {
     susie: 'susie.png',
+    susie_jump: 'susie_jump.png',
+    susie_fall: 'susie_fall.png',
     platform: 'platform.png',
     yarn: 'yarn.png',
     candy: 'candy.png',
-    // Power-up icons (will be generated as canvas)
-    powerup_shield: null,
-    powerup_magnet: null,
-    powerup_double: null,
-    // Enemy (will be generated as canvas)
-    enemy: null
+    enemy: 'enemy.png'
 };
 
 // Generate retro-style power-up icons
 const generatePowerUpIcon = (type) => {
     const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
+    canvas.width = 36;
+    canvas.height = 36;
     const ctx = canvas.getContext('2d');
     
     // Pixelated rendering
     ctx.imageSmoothingEnabled = false;
     
     if (type === 'shield') {
-        // Blue shield icon
+        // Blue shield icon with pixel art style
         ctx.fillStyle = '#4488ff';
         ctx.beginPath();
-        ctx.moveTo(16, 2);
-        ctx.lineTo(28, 8);
-        ctx.lineTo(28, 18);
-        ctx.lineTo(16, 30);
-        ctx.lineTo(4, 18);
-        ctx.lineTo(4, 8);
+        ctx.moveTo(18, 2);
+        ctx.lineTo(32, 10);
+        ctx.lineTo(32, 22);
+        ctx.lineTo(18, 34);
+        ctx.lineTo(4, 22);
+        ctx.lineTo(4, 10);
         ctx.closePath();
         ctx.fill();
         ctx.strokeStyle = '#2266cc';
@@ -50,88 +47,46 @@ const generatePowerUpIcon = (type) => {
         // Inner highlight
         ctx.fillStyle = '#66aaff';
         ctx.beginPath();
-        ctx.moveTo(16, 6);
-        ctx.lineTo(24, 10);
-        ctx.lineTo(24, 16);
-        ctx.lineTo(16, 24);
-        ctx.lineTo(8, 16);
-        ctx.lineTo(8, 10);
+        ctx.moveTo(18, 8);
+        ctx.lineTo(26, 12);
+        ctx.lineTo(26, 20);
+        ctx.lineTo(18, 28);
+        ctx.lineTo(10, 20);
+        ctx.lineTo(10, 12);
         ctx.closePath();
         ctx.fill();
+        // Star sparkle
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(16, 14, 4, 4);
     } else if (type === 'magnet') {
-        // Red magnet icon
+        // Red horseshoe magnet icon
         ctx.fillStyle = '#ff4444';
-        ctx.fillRect(4, 4, 8, 20);
-        ctx.fillRect(20, 4, 8, 20);
-        ctx.fillRect(4, 4, 24, 8);
+        ctx.fillRect(4, 6, 10, 24);
+        ctx.fillRect(22, 6, 10, 24);
+        ctx.fillRect(4, 6, 28, 10);
         ctx.fillStyle = '#cc2222';
-        ctx.fillRect(4, 20, 8, 8);
-        ctx.fillRect(20, 20, 8, 8);
+        ctx.fillRect(4, 24, 10, 8);
+        ctx.fillRect(22, 24, 10, 8);
         // Poles
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(6, 22, 4, 4);
+        ctx.fillRect(6, 26, 6, 4);
         ctx.fillStyle = '#888888';
-        ctx.fillRect(22, 22, 4, 4);
+        ctx.fillRect(24, 26, 6, 4);
     } else if (type === 'double') {
-        // Gold 2x icon
+        // Gold 2x coin icon
         ctx.fillStyle = '#ffcc00';
         ctx.beginPath();
-        ctx.arc(16, 16, 14, 0, Math.PI * 2);
+        ctx.arc(18, 18, 16, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = '#cc9900';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.stroke();
         ctx.fillStyle = '#884400';
-        ctx.font = 'bold 16px monospace';
+        ctx.font = 'bold 18px "Courier New", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('2X', 16, 16);
+        ctx.fillText('2X', 18, 18);
     }
-    
-    const img = new Image();
-    img.src = canvas.toDataURL();
-    return img;
-};
-
-// Generate retro-style enemy sprite
-const generateEnemySprite = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext('2d');
-    
-    ctx.imageSmoothingEnabled = false;
-    
-    // Spiky enemy ball (retro style)
-    ctx.fillStyle = '#8B0000';
-    ctx.beginPath();
-    ctx.arc(16, 16, 10, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Spikes
-    ctx.fillStyle = '#ff4444';
-    const spikes = 8;
-    for (let i = 0; i < spikes; i++) {
-        const angle = (i / spikes) * Math.PI * 2;
-        const x1 = 16 + Math.cos(angle) * 8;
-        const y1 = 16 + Math.sin(angle) * 8;
-        const x2 = 16 + Math.cos(angle) * 15;
-        const y2 = 16 + Math.sin(angle) * 15;
-        ctx.beginPath();
-        ctx.moveTo(x1 - 3, y1);
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x1 + 3, y1);
-        ctx.closePath();
-        ctx.fill();
-    }
-    
-    // Evil eyes
-    ctx.fillStyle = '#ffff00';
-    ctx.fillRect(11, 13, 4, 4);
-    ctx.fillRect(17, 13, 4, 4);
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(13, 14, 2, 2);
-    ctx.fillRect(19, 14, 2, 2);
     
     const img = new Image();
     img.src = canvas.toDataURL();
@@ -141,25 +96,25 @@ const generateEnemySprite = () => {
 // Generate heart icon for lives
 const generateHeartIcon = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 24;
-    canvas.height = 24;
+    canvas.width = 28;
+    canvas.height = 28;
     const ctx = canvas.getContext('2d');
     
     ctx.imageSmoothingEnabled = false;
     
     ctx.fillStyle = '#ff4466';
     ctx.beginPath();
-    ctx.moveTo(12, 20);
-    ctx.bezierCurveTo(4, 14, 2, 8, 6, 4);
-    ctx.bezierCurveTo(10, 2, 12, 6, 12, 6);
-    ctx.bezierCurveTo(12, 6, 14, 2, 18, 4);
-    ctx.bezierCurveTo(22, 8, 20, 14, 12, 20);
+    ctx.moveTo(14, 24);
+    ctx.bezierCurveTo(4, 16, 2, 10, 7, 5);
+    ctx.bezierCurveTo(11, 2, 14, 7, 14, 7);
+    ctx.bezierCurveTo(14, 7, 17, 2, 21, 5);
+    ctx.bezierCurveTo(26, 10, 24, 16, 14, 24);
     ctx.fill();
     
     // Highlight
     ctx.fillStyle = '#ff8899';
     ctx.beginPath();
-    ctx.arc(8, 7, 2, 0, Math.PI * 2);
+    ctx.arc(9, 9, 3, 0, Math.PI * 2);
     ctx.fill();
     
     const img = new Image();
@@ -170,20 +125,23 @@ const generateHeartIcon = () => {
 // Generate empty heart icon
 const generateEmptyHeartIcon = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 24;
-    canvas.height = 24;
+    canvas.width = 28;
+    canvas.height = 28;
     const ctx = canvas.getContext('2d');
     
     ctx.imageSmoothingEnabled = false;
     
-    ctx.strokeStyle = '#ff4466';
-    ctx.lineWidth = 2;
+    ctx.fillStyle = '#333333';
     ctx.beginPath();
-    ctx.moveTo(12, 20);
-    ctx.bezierCurveTo(4, 14, 2, 8, 6, 4);
-    ctx.bezierCurveTo(10, 2, 12, 6, 12, 6);
-    ctx.bezierCurveTo(12, 6, 14, 2, 18, 4);
-    ctx.bezierCurveTo(22, 8, 20, 14, 12, 20);
+    ctx.moveTo(14, 24);
+    ctx.bezierCurveTo(4, 16, 2, 10, 7, 5);
+    ctx.bezierCurveTo(11, 2, 14, 7, 14, 7);
+    ctx.bezierCurveTo(14, 7, 17, 2, 21, 5);
+    ctx.bezierCurveTo(26, 10, 24, 16, 14, 24);
+    ctx.fill();
+    
+    ctx.strokeStyle = '#666666';
+    ctx.lineWidth = 2;
     ctx.stroke();
     
     const img = new Image();
@@ -194,16 +152,15 @@ const generateEmptyHeartIcon = () => {
 // Main assets object
 export const ASSETS = {
     susie: null,
+    susie_jump: null,
+    susie_fall: null,
     platform: null,
     yarn: null,
     candy: null,
-    candy_lollipop: null,
-    candy_hard: null,
-    candy_choc: null,
+    enemy: null,
     powerup_shield: null,
     powerup_magnet: null,
     powerup_double: null,
-    enemy: null,
     heart: null,
     heart_empty: null,
     loaded: false
@@ -212,30 +169,29 @@ export const ASSETS = {
 // Load all assets
 export const loadAssets = async () => {
     try {
-        // Load PNG images
-        const [susie, platform, yarn, candy] = await Promise.all([
+        // Load all PNG images with transparent backgrounds
+        const [susie, susie_jump, susie_fall, platform, yarn, candy, enemy] = await Promise.all([
             loadImage(ASSET_PATHS.susie),
+            loadImage(ASSET_PATHS.susie_jump),
+            loadImage(ASSET_PATHS.susie_fall),
             loadImage(ASSET_PATHS.platform),
             loadImage(ASSET_PATHS.yarn),
-            loadImage(ASSET_PATHS.candy)
+            loadImage(ASSET_PATHS.candy),
+            loadImage(ASSET_PATHS.enemy)
         ]);
         
         ASSETS.susie = susie;
+        ASSETS.susie_jump = susie_jump;
+        ASSETS.susie_fall = susie_fall;
         ASSETS.platform = platform;
         ASSETS.yarn = yarn;
         ASSETS.candy = candy;
-        // Use candy for all candy types (they all look like lollipops now)
-        ASSETS.candy_lollipop = candy;
-        ASSETS.candy_hard = candy;
-        ASSETS.candy_choc = candy;
+        ASSETS.enemy = enemy;
         
         // Generate power-up icons
         ASSETS.powerup_shield = generatePowerUpIcon('shield');
         ASSETS.powerup_magnet = generatePowerUpIcon('magnet');
         ASSETS.powerup_double = generatePowerUpIcon('double');
-        
-        // Generate enemy sprite
-        ASSETS.enemy = generateEnemySprite();
         
         // Generate heart icons
         ASSETS.heart = generateHeartIcon();

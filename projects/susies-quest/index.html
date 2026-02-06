@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1a1a2e">
+    <meta name="theme-color" content="#87CEEB">
     <meta name="description" content="Susie's Quest - A retro-style jumping game. Help Susie collect yarn and candy while avoiding enemies!">
     
     <title>Susie's Quest</title>
@@ -22,6 +22,9 @@
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="screen">
+        <div class="character-preview" style="animation-delay: 0s;">
+            <img src="susie.png" alt="Susie" style="opacity: 0.8;">
+        </div>
         <h1>Loading...</h1>
         <div class="loading-spinner"></div>
     </div>
@@ -34,13 +37,22 @@
     </div>
 
     <div id="game-container">
-        <!-- Welcome Screen -->
+        <!-- Welcome Screen with Parallax Background -->
         <div id="welcome-screen" class="screen">
+            <!-- Hills background layer -->
+            <div class="welcome-hills"></div>
+            
+            <!-- Floating decorative elements -->
+            <img src="yarn.png" class="floating-decor" style="width: 40px; top: 15%; left: 10%; animation-delay: 0s;" alt="">
+            <img src="candy.png" class="floating-decor" style="width: 35px; top: 20%; right: 15%; animation-delay: 0.5s;" alt="">
+            <img src="yarn.png" class="floating-decor" style="width: 30px; top: 35%; left: 5%; animation-delay: 1s;" alt="">
+            
+            <!-- Main content -->
             <div class="character-preview">
                 <img src="susie.png" alt="Susie">
             </div>
             
-            <h1 class="retro-glow">Susie's Quest</h1>
+            <h1 class="title-main retro-glow">Susie's Quest</h1>
             <p>Help Susie collect yarn and candy as she jumps through her colorful world!</p>
             
             <input type="text" id="player-name" placeholder="Enter your name" maxlength="12" autocomplete="off">
@@ -49,7 +61,7 @@
             
             <button id="tutorial-btn" class="secondary">❓ HOW TO PLAY</button>
             
-            <p style="font-size: 9px; opacity: 0.7; margin-top: 5px;">
+            <p style="font-size: 9px; opacity: 0.8; margin-top: 5px; color: #5a4030;">
                 Desktop: Arrow keys / WASD | P to pause
             </p>
 
@@ -64,7 +76,7 @@
         <!-- Tutorial Screen -->
         <div id="tutorial-screen" class="screen">
             <div class="tutorial-content">
-                <h1>How to Play</h1>
+                <h1 style="color: #FFD700;">How to Play</h1>
                 
                 <div class="tutorial-section">
                     <h3>🎮 Controls</h3>
@@ -172,7 +184,7 @@
 
         <!-- Pause Screen -->
         <div id="pause-screen" class="screen">
-            <h1>⏸ PAUSED</h1>
+            <h1 style="color: #FFD700;">⏸ PAUSED</h1>
             <div class="pause-buttons">
                 <button id="resume-btn">▶ RESUME</button>
                 <button onclick="location.reload()" class="secondary">🏠 MAIN MENU</button>
@@ -181,8 +193,8 @@
 
         <!-- Game Over Screen -->
         <div id="game-over-screen" class="screen">
-            <h1>💔 Game Over</h1>
-            <p id="final-score" style="font-size: 16px; color: #ffcc00;">Score: 0</p>
+            <h1 style="color: #ff6b6b;">💔 Game Over</h1>
+            <p id="final-score" style="font-size: 16px; color: #FFD700;">Score: 0</p>
             <p id="high-score-message" style="color: #88ff88;"></p>
             
             <div id="stats-display">

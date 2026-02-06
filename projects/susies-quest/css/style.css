@@ -41,6 +41,60 @@ body {
 }
 
 /* ========================================
+   PARALLAX BACKGROUND LAYERS
+   ======================================== */
+
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bg-sky {
+    background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #98D8F0 20%,
+        #B0E2F5 40%,
+        #C8ECFA 60%,
+        #E0F4FC 80%,
+        #FFF8E7 95%,
+        #FFE4B5 100%);
+    z-index: 0;
+}
+
+.bg-clouds {
+    background-image: url('../bg_clouds.png');
+    background-size: 600px auto;
+    background-repeat: repeat;
+    opacity: 0.7;
+    z-index: 1;
+    animation: cloudScroll 60s linear infinite;
+}
+
+.bg-hills {
+    background-image: url('../bg_hills.png');
+    background-size: 800px auto;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    z-index: 2;
+    animation: hillScroll 120s linear infinite;
+}
+
+@keyframes cloudScroll {
+    from { background-position: 0 0; }
+    to { background-position: 600px 0; }
+}
+
+@keyframes hillScroll {
+    from { background-position: 0 bottom; }
+    to { background-position: 800px bottom; }
+}
+
+/* ========================================
    SCREENS
    ======================================== */
 
@@ -54,23 +108,88 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(180deg, #4a90d9 0%, #3d7fc7 50%, #2d5f9e 100%);
     color: white;
     text-align: center;
     padding: 20px;
     z-index: 10;
 }
 
+/* Welcome Screen with Retro Styling */
+#welcome-screen {
+    z-index: 10;
+    background: transparent;
+}
+
+#welcome-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #98D8F0 20%,
+        #B0E2F5 40%,
+        #C8ECFA 60%,
+        #E0F4FC 80%,
+        #FFF8E7 95%,
+        #FFE4B5 100%);
+    z-index: -3;
+}
+
+#welcome-screen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../bg_clouds.png');
+    background-size: 500px auto;
+    background-repeat: repeat;
+    opacity: 0.5;
+    animation: cloudScroll 45s linear infinite;
+    z-index: -2;
+}
+
+.welcome-hills {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-image: url('../bg_hills.png');
+    background-size: 600px auto;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    z-index: -1;
+}
+
 /* Loading Screen */
 #loading-screen {
     z-index: 100;
-    background: #1a1a2e;
+    background: linear-gradient(180deg, #2c1654 0%, #1a0a30 100%);
+}
+
+#loading-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 94, 159, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(100, 200, 255, 0.1) 0%, transparent 40%);
+    z-index: -1;
 }
 
 #loading-screen h1 {
     font-size: 18px;
     margin-bottom: 30px;
     animation: pulse 1s ease-in-out infinite;
+    color: #ff88b4;
 }
 
 .loading-spinner {
@@ -92,26 +211,30 @@ body {
     50% { opacity: 0.5; }
 }
 
-/* Welcome Screen */
-#welcome-screen {
-    z-index: 10;
-}
-
+/* Game Over Screen */
 #game-over-screen {
     z-index: 15;
     display: none;
+    background: linear-gradient(180deg, 
+        rgba(44, 22, 84, 0.95) 0%, 
+        rgba(26, 10, 48, 0.98) 100%);
 }
 
+/* Pause Screen */
 #pause-screen {
     z-index: 20;
     display: none;
     background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
 }
 
+/* Tutorial Screen */
 #tutorial-screen {
     z-index: 25;
     display: none;
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(180deg, 
+        rgba(44, 22, 84, 0.98) 0%, 
+        rgba(26, 10, 48, 0.98) 100%);
     overflow-y: auto;
 }
 
@@ -129,15 +252,34 @@ body {
 h1 {
     font-size: 24px;
     margin-bottom: 15px;
-    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5),
-                 0 0 10px rgba(255, 94, 159, 0.5);
-    letter-spacing: 2px;
+    text-shadow: 
+        4px 4px 0px #8B4513,
+        5px 5px 0px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 200, 100, 0.5);
+    letter-spacing: 3px;
+    color: #FFD700;
+}
+
+.title-main {
+    font-size: 28px;
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 50%, #FF6B00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(3px 3px 0px #8B4513) drop-shadow(4px 4px 0px rgba(0,0,0,0.5));
+    animation: titleBounce 2s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.02); }
 }
 
 h2 {
     font-size: 16px;
     margin: 15px 0 10px;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    color: #FFD700;
 }
 
 p {
@@ -145,6 +287,8 @@ p {
     line-height: 1.6;
     margin: 8px 0;
     max-width: 300px;
+    color: #4a3520;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
 }
 
 /* ========================================
@@ -152,10 +296,11 @@ p {
    ======================================== */
 
 .character-preview {
-    width: 80px;
-    height: 100px;
+    width: 100px;
+    height: 120px;
     margin-bottom: 15px;
-    animation: bounce 0.6s ease-in-out infinite;
+    animation: characterFloat 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
 }
 
 .character-preview img {
@@ -165,9 +310,11 @@ p {
     image-rendering: pixelated;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+@keyframes characterFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    25% { transform: translateY(-8px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+    75% { transform: translateY(-8px) rotate(0deg); }
 }
 
 /* ========================================
@@ -175,23 +322,35 @@ p {
    ======================================== */
 
 input[type="text"] {
-    padding: 12px 15px;
-    margin: 10px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
     font-family: 'Courier New', monospace;
     font-size: 14px;
     width: 85%;
     max-width: 280px;
-    border-radius: 8px;
-    border: 3px solid #ff5e9f;
-    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    border: 4px solid #8B4513;
+    background: linear-gradient(180deg, #FFF8DC 0%, #FAEBD7 100%);
     text-align: center;
     outline: none;
     transition: all 0.2s;
+    box-shadow: 
+        0 4px 0 #654321,
+        0 6px 15px rgba(0, 0, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+    color: #4a3520;
 }
 
 input[type="text"]:focus {
-    border-color: #ff88b4;
-    box-shadow: 0 0 15px rgba(255, 94, 159, 0.5);
+    border-color: #ff5e9f;
+    box-shadow: 
+        0 4px 0 #a02050,
+        0 6px 15px rgba(255, 94, 159, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+input[type="text"]::placeholder {
+    color: #a08060;
 }
 
 /* ========================================
@@ -199,37 +358,46 @@ input[type="text"]:focus {
    ======================================== */
 
 button, .btn {
-    padding: 14px 28px;
+    padding: 16px 32px;
     margin: 10px 5px;
     font-family: 'Press Start 2P', 'Courier New', monospace;
     font-size: 12px;
-    background: linear-gradient(180deg, #ff5e9f 0%, #e04080 100%);
+    background: linear-gradient(180deg, #ff6ba8 0%, #ff5e9f 50%, #e04080 100%);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 25px;
     cursor: pointer;
     transition: all 0.1s;
-    box-shadow: 0 4px 0 #a02050,
-                0 6px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 6px 0 #a02050,
+        0 8px 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 button:active, .btn:active {
     transform: translateY(4px);
-    box-shadow: 0 0 0 #a02050,
-                0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 2px 0 #a02050,
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 button.secondary {
-    background: linear-gradient(180deg, #6699cc 0%, #4477aa 100%);
-    box-shadow: 0 4px 0 #335588,
-                0 6px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(180deg, #7ec8e3 0%, #6699cc 50%, #4477aa 100%);
+    box-shadow: 
+        0 6px 0 #335588,
+        0 8px 15px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 button.secondary:active {
-    box-shadow: 0 0 0 #335588,
-                0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 2px 0 #335588,
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* ========================================
@@ -238,16 +406,16 @@ button.secondary:active {
 
 .control-btn {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 85px;
+    height: 85px;
     bottom: 25px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 100%);
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 100%);
+    border: 4px solid rgba(255, 255, 255, 0.6);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -256,12 +424,20 @@ button.secondary:active {
     touch-action: manipulation;
     transition: all 0.1s;
     z-index: 5;
+    box-shadow: 
+        0 4px 0 rgba(0, 0, 0, 0.2),
+        0 6px 15px rgba(0, 0, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 .control-btn.active {
-    background: linear-gradient(180deg, rgba(255, 94, 159, 0.6) 0%, rgba(255, 94, 159, 0.3) 100%);
+    background: linear-gradient(180deg, rgba(255, 94, 159, 0.7) 0%, rgba(255, 94, 159, 0.4) 100%);
     border-color: #ff5e9f;
-    transform: scale(0.95);
+    transform: translateY(3px) scale(0.95);
+    box-shadow: 
+        0 1px 0 rgba(0, 0, 0, 0.2),
+        0 3px 8px rgba(0, 0, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
 #left-btn {
@@ -278,39 +454,42 @@ button.secondary:active {
 
 .score-display {
     position: absolute;
-    top: 45px;
+    top: 50px;
     right: 15px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%);
-    padding: 8px 15px;
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.9) 0%, rgba(101, 67, 33, 0.9) 100%);
+    padding: 10px 18px;
     border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid #FFD700;
     font-family: 'Press Start 2P', 'Courier New', monospace;
     font-size: 12px;
     font-weight: bold;
-    color: #ffcc00;
+    color: #FFD700;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
     z-index: 5;
     transition: transform 0.1s;
+    box-shadow: 
+        0 3px 0 #4a2810,
+        0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 #lives-display {
     position: absolute;
-    top: 45px;
+    top: 50px;
     left: 15px;
     display: flex;
-    gap: 3px;
+    gap: 4px;
     z-index: 5;
 }
 
 .heart {
-    font-size: 18px;
+    font-size: 20px;
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s;
 }
 
 #powerup-display {
     position: absolute;
-    top: 85px;
+    top: 90px;
     left: 15px;
     display: flex;
     flex-direction: column;
@@ -322,10 +501,10 @@ button.secondary:active {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 5px 10px;
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.8) 0%, rgba(101, 67, 33, 0.8) 100%);
+    padding: 6px 12px;
     border-radius: 15px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.5);
 }
 
 .powerup-icon {
@@ -334,16 +513,17 @@ button.secondary:active {
 
 .powerup-bar {
     width: 60px;
-    height: 8px;
+    height: 10px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
+    border-radius: 5px;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .powerup-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ffcc00, #ff9900);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B00);
+    border-radius: 5px;
     transition: width 0.1s linear;
 }
 
@@ -352,8 +532,8 @@ button.secondary:active {
     position: absolute;
     top: 10px;
     right: 15px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     font-size: 18px;
     border-radius: 50%;
@@ -361,6 +541,11 @@ button.secondary:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.9) 0%, rgba(101, 67, 33, 0.9) 100%);
+    border: 3px solid #FFD700;
+    box-shadow: 
+        0 3px 0 #4a2810,
+        0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Sound Controls */
@@ -374,21 +559,23 @@ button.secondary:active {
 }
 
 .sound-btn {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     font-size: 16px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.8) 0%, rgba(101, 67, 33, 0.8) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: none;
+    box-shadow: 
+        0 2px 0 #4a2810,
+        0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .sound-btn:active {
-    transform: scale(0.95);
+    transform: translateY(2px) scale(0.95);
 }
 
 /* ========================================
@@ -396,19 +583,22 @@ button.secondary:active {
    ======================================== */
 
 .leaderboard {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 15px;
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.9) 0%, rgba(101, 67, 33, 0.9) 100%);
+    border: 4px solid #FFD700;
+    border-radius: 20px;
+    padding: 18px;
     width: 90%;
     max-width: 320px;
     margin-top: 15px;
+    box-shadow: 
+        0 4px 0 #4a2810,
+        0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .leaderboard h2 {
     margin-top: 0;
     font-size: 12px;
-    color: #ffcc00;
+    color: #FFD700;
 }
 
 .leaderboard-list {
@@ -419,11 +609,12 @@ button.secondary:active {
 }
 
 .leaderboard-item {
-    padding: 8px 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 8px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.2);
     display: flex;
     justify-content: space-between;
     font-size: 10px;
+    color: #FFF8DC;
 }
 
 .leaderboard-item:last-child {
@@ -437,18 +628,20 @@ button.secondary:active {
 #stats-display {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 10px;
     margin: 15px 0;
     width: 90%;
     max-width: 300px;
 }
 
 .stat-item {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 8px 12px;
-    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(139, 69, 19, 0.8) 0%, rgba(101, 67, 33, 0.8) 100%);
+    padding: 10px 14px;
+    border-radius: 12px;
     font-size: 9px;
     text-align: center;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    color: #FFF8DC;
 }
 
 /* ========================================
@@ -467,7 +660,7 @@ button.secondary:active {
 
 .tutorial-section h3 {
     font-size: 12px;
-    color: #ffcc00;
+    color: #FFD700;
     margin-bottom: 10px;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
 }
@@ -476,13 +669,14 @@ button.secondary:active {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 10px;
+    color: #FFF8DC;
 }
 
 .tutorial-icon {
-    font-size: 24px;
-    min-width: 40px;
+    font-size: 28px;
+    min-width: 45px;
     text-align: center;
 }
 
@@ -525,11 +719,30 @@ button.secondary:active {
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff5e9f, 0 0 20px #ff5e9f;
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FFD700, 0 0 20px #FFD700;
     }
     to {
-        text-shadow: 0 0 10px #fff, 0 0 20px #ff5e9f, 0 0 30px #ff5e9f, 0 0 40px #ff5e9f;
+        text-shadow: 0 0 10px #fff, 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 40px #FFA500;
     }
+}
+
+/* Scanline effect for retro feel */
+.scanlines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.03) 0px,
+        rgba(0, 0, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 100;
 }
 
 /* ========================================
@@ -538,23 +751,23 @@ button.secondary:active {
 
 /* Small phones */
 @media (max-height: 600px) {
-    h1 {
+    h1, .title-main {
         font-size: 20px;
         margin-bottom: 10px;
     }
     
     .character-preview {
-        width: 60px;
-        height: 75px;
+        width: 70px;
+        height: 85px;
     }
     
     button {
-        padding: 10px 20px;
+        padding: 12px 24px;
         font-size: 10px;
     }
     
     .leaderboard {
-        padding: 10px;
+        padding: 12px;
         margin-top: 10px;
     }
     
@@ -563,31 +776,40 @@ button.secondary:active {
         height: 70px;
         font-size: 28px;
     }
+    
+    .welcome-hills {
+        height: 120px;
+    }
 }
 
 /* Large phones */
 @media (min-height: 800px) {
-    h1 {
-        font-size: 28px;
+    h1, .title-main {
+        font-size: 32px;
     }
     
     .character-preview {
-        width: 100px;
-        height: 125px;
+        width: 120px;
+        height: 145px;
     }
     
     .control-btn {
-        width: 90px;
-        height: 90px;
+        width: 95px;
+        height: 95px;
         bottom: 35px;
+    }
+    
+    .welcome-hills {
+        height: 250px;
     }
 }
 
 /* Desktop */
 @media (min-width: 768px) {
     #game-container {
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5),
-                    0 0 100px rgba(255, 94, 159, 0.2);
+        box-shadow: 
+            0 0 50px rgba(0, 0, 0, 0.5),
+            0 0 100px rgba(255, 200, 100, 0.2);
         border-radius: 20px;
         overflow: hidden;
         margin-top: 20px;
@@ -622,4 +844,17 @@ button.secondary:active {
 
 .leaderboard {
     animation: slideUp 0.4s ease-out 0.2s both;
+}
+
+/* Decorative floating elements */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.floating-decor {
+    position: absolute;
+    animation: float 3s ease-in-out infinite;
+    opacity: 0.8;
+    pointer-events: none;
 }

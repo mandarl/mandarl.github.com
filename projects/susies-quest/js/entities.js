@@ -101,7 +101,25 @@ export class Susie {
         ctx.scale(this.scaleX, this.scaleY);
 
         const assets = window.gameAssets || {};
-        const img = assets.susie;
+        
+        // Choose sprite based on velocity state
+        let img;
+        if (this.vy < -2) {
+            // Jumping up
+            img = assets.susie_jump || assets.susie;
+        } else if (this.vy > 2) {
+            // Falling down
+            img = assets.susie_fall || assets.susie;
+        } else {
+            // Idle/standing
+            img = assets.susie;
+        }
+        
+        // Flip sprite based on horizontal movement direction
+        if (this.vx < -0.5) {
+            ctx.scale(-1, 1);
+        }
+        
         if (img) {
             ctx.drawImage(img, -this.width / 2, -this.height, this.width, this.height);
         } else {

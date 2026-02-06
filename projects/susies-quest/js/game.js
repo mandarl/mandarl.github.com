@@ -494,16 +494,8 @@ class Game {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Retro gradient background
-        const grad = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        grad.addColorStop(0, "#4a90d9");
-        grad.addColorStop(0.5, "#6ba3e0");
-        grad.addColorStop(1, "#3d7fc7");
-        this.ctx.fillStyle = grad;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw retro clouds
-        this.drawClouds();
+        // Draw parallax background
+        this.drawParallaxBackground();
         
         // Draw game objects
         this.platforms.forEach(p => p.draw(this.ctx));
@@ -535,21 +527,80 @@ class Game {
         this.ctx.fillText(`SPEED: ${Math.round(this.state.difficultyMultiplier * 100)}%`, 15, 25);
     }
 
-    drawClouds() {
-        this.ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
-        const clouds = [
-            { x: 30, y: 80, s: 35 },
-            { x: this.canvas.width - 120, y: 150, s: 50 },
-            { x: this.canvas.width / 2 - 80, y: 250, s: 25 },
-            { x: 60, y: 400, s: 40 },
-            { x: this.canvas.width - 100, y: 500, s: 30 }
+    drawParallaxBackground() {
+        // Sky gradient - warm sunset/sunrise feel
+        const grad = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+        grad.addColorStop(0, '#87CEEB');    // Light sky blue
+        grad.addColorStop(0.3, '#98D8F0');  // Soft blue
+        grad.addColorStop(0.5, '#B0E2F5');  // Lighter
+        grad.addColorStop(0.7, '#C8ECFA');  // Very light
+        grad.addColorStop(0.85, '#E0F4FC'); // Almost white
+        grad.addColorStop(0.95, '#FFF8E7'); // Warm cream
+        grad.addColorStop(1, '#FFE4B5');    // Moccasin/warm
+        this.ctx.fillStyle = grad;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Parallax clouds layer (moves slower)
+        if (!this.cloudOffset) this.cloudOffset = 0;
+        this.cloudOffset += 0.3;
+        if (this.cloudOffset > 600) this.cloudOffset = 0;
+        
+        // Draw procedural pixel clouds
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        const cloudPositions = [
+            { x: 30, y: 60, s: 40 },
+            { x: 180, y: 100, s: 55 },
+            { x: 350, y: 50, s: 45 },
+            { x: 80, y: 180, s: 35 },
+            { x: 280, y: 160, s: 50 },
+            { x: 420, y: 130, s: 38 }
         ];
-        clouds.forEach(c => {
-            // Pixelated blocky clouds for retro feel
-            this.ctx.fillRect(c.x, c.y, c.s * 2, c.s);
-            this.ctx.fillRect(c.x + c.s * 0.5, c.y - c.s * 0.4, c.s, c.s * 0.8);
-            this.ctx.fillRect(c.x - c.s * 0.3, c.y + c.s * 0.2, c.s * 0.8, c.s * 0.6);
+        
+        cloudPositions.forEach(c => {
+            const offsetX = ((c.x + this.cloudOffset) % (this.canvas.width + 100)) - 50;
+            // Fluffy pixel cloud shape
+            this.ctx.fillRect(offsetX, c.y, c.s * 1.8, c.s * 0.7);
+            this.ctx.fillRect(offsetX + c.s * 0.3, c.y - c.s * 0.3, c.s * 1.2, c.s * 0.5);
+            this.ctx.fillRect(offsetX + c.s * 0.6, c.y - c.s * 0.5, c.s * 0.6, c.s * 0.4);
+            this.ctx.fillRect(offsetX - c.s * 0.2, c.y + c.s * 0.3, c.s * 0.8, c.s * 0.4);
+            this.ctx.fillRect(offsetX + c.s * 1.2, c.y + c.s * 0.2, c.s * 0.6, c.s * 0.5);
         });
+
+        // Hills layer at bottom (moves even slower)
+        if (!this.hillOffset) this.hillOffset = 0;
+        this.hillOffset += 0.15;
+        if (this.hillOffset > 400) this.hillOffset = 0;
+        
+        // Draw procedural pixel hills
+        const hillHeight = 120;
+        const hillY = this.canvas.height - hillHeight;
+        
+        // Back hills (darker, slower)
+        this.ctx.fillStyle = '#7CB342';
+        this.drawPixelHill((-this.hillOffset * 0.5) % 200 - 100, hillY + 30, 200, 90);
+        this.drawPixelHill((100 - this.hillOffset * 0.5) % 200 + 100, hillY + 20, 180, 100);
+        this.drawPixelHill((250 - this.hillOffset * 0.5) % 200 + 200, hillY + 35, 220, 85);
+        this.drawPixelHill((400 - this.hillOffset * 0.5) % 200 + 300, hillY + 25, 190, 95);
+        
+        // Front hills (lighter, faster)
+        this.ctx.fillStyle = '#8BC34A';
+        this.drawPixelHill(-this.hillOffset % 250 - 50, hillY + 50, 160, 70);
+        this.drawPixelHill((150 - this.hillOffset) % 250 + 80, hillY + 45, 180, 75);
+        this.drawPixelHill((350 - this.hillOffset) % 250 + 220, hillY + 55, 150, 65);
+        this.drawPixelHill((500 - this.hillOffset) % 250 + 350, hillY + 48, 170, 72);
+    }
+
+    drawPixelHill(x, y, width, height) {
+        // Draw a simple rounded hill shape with pixel-style steps
+        const steps = 8;
+        const stepWidth = width / steps;
+        
+        for (let i = 0; i < steps; i++) {
+            // Parabolic curve for hill shape
+            const t = (i - steps / 2) / (steps / 2);
+            const h = height * (1 - t * t);
+            this.ctx.fillRect(x + i * stepWidth, y + (height - h), stepWidth + 1, h + 50);
+        }
     }
 
     drawShieldEffect() {
