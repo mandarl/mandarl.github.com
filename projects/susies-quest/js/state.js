@@ -2,6 +2,8 @@ import { CONFIG } from './config.js';
 
 // Remote Leaderboard API URL
 const LEADERBOARD_API_URL = 'https://dipoletech.com/projects/susies-quest/leaderboard.php';
+const FETCH_TIMEOUT_MS = 8000;  // 8 second timeout for API calls
+const MAX_RETRIES = 1;          // Retry once on failure
 
 export class GameState {
     constructor() {
@@ -31,14 +33,15 @@ export class GameState {
         // Tutorial state
         this.tutorialShown = localStorage.getItem('susies-quest-tutorial-shown') === 'true';
         
-        // Leaderboard - local cache with fallback data
-        this.leaderboard = JSON.parse(localStorage.getItem('susies-quest-leaderboard')) || [
-            { name: "Mandar", score: 4250 }
-        ];
+        // Leaderboard - local cache
+        this.leaderboard = JSON.parse(localStorage.getItem('susies-quest-leaderboard')) || [];
         
-        // Track if we're using remote or local leaderboard
+        // Remote leaderboard state
         this.useRemoteLeaderboard = true;
         this.lastRank = null;
+        this.lastError = null;      // Track last error for user feedback
+        this.isSubmitting = false;   // Prevent double submissions
+        this.isFetching = false;     // Prevent concurrent fetches
     }
 
     reset() {
@@ -62,6 +65,8 @@ export class GameState {
         this.highestCombo = 0;
         this.currentCombo = 0;
         this.lastRank = null;
+        this.lastError = null;
+        this.isSubmitting = false;
     }
 
     updateDifficulty() {
@@ -159,53 +164,103 @@ export class GameState {
         localStorage.removeItem('susies-quest-tutorial-shown');
     }
 
-    /**
-     * Fetch leaderboard from remote API
-     * Falls back to local storage if API fails
-     */
-    async fetchLeaderboard() {
+    // ============================================================
+    // Fetch with timeout helper
+    // ============================================================
+    async fetchWithTimeout(url, options, timeoutMs = FETCH_TIMEOUT_MS) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        
         try {
-            const response = await fetch(LEADERBOARD_API_URL, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                throw new Error('Request timed out');
+            }
+            throw error;
+        }
+    }
+
+    // ============================================================
+    // Fetch leaderboard from remote API with retry
+    // ============================================================
+    async fetchLeaderboard(retryCount = 0) {
+        // Prevent concurrent fetches
+        if (this.isFetching) {
+            return this.leaderboard;
+        }
+        
+        this.isFetching = true;
+        this.lastError = null;
+        
+        try {
+            const response = await this.fetchWithTimeout(LEADERBOARD_API_URL, {
+                method: 'GET'
             });
             
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`Server error: ${response.status}`);
             }
             
             const data = await response.json();
             
-            if (data.success && data.leaderboard) {
+            if (data.success && Array.isArray(data.leaderboard)) {
                 this.leaderboard = data.leaderboard;
                 this.useRemoteLeaderboard = true;
                 // Cache locally as backup
                 localStorage.setItem('susies-quest-leaderboard', JSON.stringify(this.leaderboard));
                 return this.leaderboard;
             } else {
-                throw new Error(data.error || 'Invalid response');
+                throw new Error(data.error || 'Invalid response format');
             }
         } catch (error) {
-            console.warn('Failed to fetch remote leaderboard, using local cache:', error);
+            console.warn(`Leaderboard fetch failed (attempt ${retryCount + 1}):`, error.message);
+            
+            // Retry once
+            if (retryCount < MAX_RETRIES) {
+                this.isFetching = false;
+                // Wait 1 second before retry
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return this.fetchLeaderboard(retryCount + 1);
+            }
+            
+            this.lastError = 'Could not reach leaderboard server. Showing cached scores.';
             this.useRemoteLeaderboard = false;
-            // Return cached local data
             return this.leaderboard;
+        } finally {
+            this.isFetching = false;
         }
     }
 
-    /**
-     * Submit score to remote API
-     * Also saves locally as backup
-     */
-    async saveScore() {
+    // ============================================================
+    // Submit score to remote API with retry
+    // ============================================================
+    async saveScore(retryCount = 0) {
+        // Prevent double submissions
+        if (this.isSubmitting) {
+            return false;
+        }
+        
         // Always save locally first as backup
         this.saveScoreLocally();
         
-        // Try to submit to remote API
+        // Don't submit trivially low scores
+        if (this.score < 10) {
+            this.lastError = null;
+            return false;
+        }
+        
+        this.isSubmitting = true;
+        this.lastError = null;
+        
         try {
-            const response = await fetch(LEADERBOARD_API_URL, {
+            const response = await this.fetchWithTimeout(LEADERBOARD_API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -216,8 +271,15 @@ export class GameState {
                 })
             });
             
+            if (response.status === 429) {
+                // Rate limited - not an error, just wait
+                this.lastError = 'Submitted too quickly. Score saved locally.';
+                this.isSubmitting = false;
+                return this.isHighScore();
+            }
+            
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`Server error: ${response.status}`);
             }
             
             const data = await response.json();
@@ -225,74 +287,116 @@ export class GameState {
             if (data.success) {
                 this.lastRank = data.rank;
                 this.useRemoteLeaderboard = true;
-                // Refresh leaderboard after submission
-                await this.fetchLeaderboard();
-                return data.rank <= 10; // Return true if in top 10
+                
+                // If server returned the updated leaderboard, use it directly
+                if (Array.isArray(data.leaderboard)) {
+                    this.leaderboard = data.leaderboard;
+                    localStorage.setItem('susies-quest-leaderboard', JSON.stringify(this.leaderboard));
+                } else {
+                    // Otherwise fetch fresh leaderboard
+                    await this.fetchLeaderboard();
+                }
+                
+                this.isSubmitting = false;
+                return data.rank <= 10;
             } else {
                 throw new Error(data.error || 'Failed to submit score');
             }
         } catch (error) {
-            console.warn('Failed to submit score to remote API:', error);
+            console.warn(`Score submission failed (attempt ${retryCount + 1}):`, error.message);
+            
+            // Retry once
+            if (retryCount < MAX_RETRIES) {
+                this.isSubmitting = false;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                return this.saveScore(retryCount + 1);
+            }
+            
+            this.lastError = 'Could not submit score online. Saved locally.';
             this.useRemoteLeaderboard = false;
-            // Check local leaderboard for high score
+            this.isSubmitting = false;
             return this.isHighScore();
         }
     }
 
-    /**
-     * Save score to local storage (backup/fallback)
-     */
+    // ============================================================
+    // Save score to local storage (backup/fallback)
+    // Deduplicates by name, keeps highest score
+    // ============================================================
     saveScoreLocally() {
-        const existingIndex = this.leaderboard.findIndex(entry => entry.name === this.playerName);
+        const nameLower = this.playerName.toLowerCase();
+        const existingIndex = this.leaderboard.findIndex(
+            entry => (entry.name || '').toLowerCase() === nameLower
+        );
+        
         if (existingIndex !== -1) {
+            // Only update if new score is higher
             if (this.score > this.leaderboard[existingIndex].score) {
                 this.leaderboard[existingIndex].score = this.score;
+                this.leaderboard[existingIndex].date = new Date().toISOString();
             }
         } else {
-            this.leaderboard.push({ name: this.playerName, score: this.score });
+            this.leaderboard.push({
+                name: this.playerName,
+                score: this.score,
+                date: new Date().toISOString()
+            });
         }
 
         this.leaderboard.sort((a, b) => b.score - a.score);
-        this.leaderboard = this.leaderboard.slice(0, 10); // Keep top 10
+        this.leaderboard = this.leaderboard.slice(0, 50); // Keep top 50 locally
 
         localStorage.setItem('susies-quest-leaderboard', JSON.stringify(this.leaderboard));
     }
 
-    /**
-     * Check if current score is a high score (local check)
-     */
+    // ============================================================
+    // Check if current score qualifies as a high score
+    // ============================================================
     isHighScore() {
         if (this.leaderboard.length < 10) {
             return true;
         }
-        const lowestScore = this.leaderboard[this.leaderboard.length - 1].score;
+        const topTen = this.leaderboard.slice(0, 10);
+        const lowestScore = topTen[topTen.length - 1].score;
         return this.score > lowestScore;
     }
 
-    /**
-     * Get the leaderboard (cached data)
-     */
+    // ============================================================
+    // Get the leaderboard (cached data)
+    // ============================================================
     getLeaderboard() {
         return this.leaderboard;
     }
 
+    // ============================================================
+    // Get status message for the user
+    // ============================================================
     getHighScoreMessage() {
         if (this.lastRank !== null) {
             if (this.lastRank === 1) {
-                return "🎉 NEW HIGH SCORE! You're #1! 🎉";
+                return "NEW HIGH SCORE! You're #1!";
             } else if (this.lastRank <= 10) {
                 return `You're #${this.lastRank} on the global leaderboard!`;
+            } else {
+                return `You ranked #${this.lastRank} globally.`;
             }
         }
         
         // Fallback to local check
-        const index = this.leaderboard.findIndex(entry => entry.name === this.playerName);
+        const nameLower = this.playerName.toLowerCase();
+        const index = this.leaderboard.findIndex(
+            entry => (entry.name || '').toLowerCase() === nameLower
+        );
         if (index === 0) {
             return "NEW HIGH SCORE! You're #1!";
-        } else if (index !== -1) {
+        } else if (index !== -1 && index < 10) {
             return `You're #${index + 1} on the leaderboard!`;
         }
         return "";
+    }
+
+    getErrorMessage() {
+        return this.lastError;
     }
 
     getStats() {

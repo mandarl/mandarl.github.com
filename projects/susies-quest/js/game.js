@@ -800,21 +800,47 @@ class Game {
         const list = document.getElementById(elementId);
         list.innerHTML = '';
 
+        // Show error/offline indicator if applicable
+        const errorMsg = this.state.getErrorMessage();
+        if (errorMsg) {
+            const errorLi = document.createElement('li');
+            errorLi.style.cssText = 'text-align: center; opacity: 0.6; font-size: 8px; color: #ffaa44; padding: 4px;';
+            errorLi.textContent = errorMsg;
+            list.appendChild(errorLi);
+        }
+
         if (leaderboard.length === 0) {
-            list.innerHTML = '<li style="text-align: center; opacity: 0.7;">No scores yet!</li>';
+            const emptyLi = document.createElement('li');
+            emptyLi.style.cssText = 'text-align: center; opacity: 0.7;';
+            emptyLi.textContent = 'No scores yet! Be the first!';
+            list.appendChild(emptyLi);
             return;
         }
 
         const medals = ['🥇', '🥈', '🥉'];
-        leaderboard.slice(0, 5).forEach((entry, index) => {
+        const currentPlayerName = this.state.playerName.toLowerCase();
+        const displayCount = Math.min(leaderboard.length, 10);
+        
+        for (let index = 0; index < displayCount; index++) {
+            const entry = leaderboard[index];
             const li = document.createElement('li');
             li.className = 'leaderboard-entry';
             li.style.cursor = 'pointer';
             
+            // Highlight current player's entry
+            const isCurrentPlayer = currentPlayerName && (entry.name || '').toLowerCase() === currentPlayerName;
+            if (isCurrentPlayer) {
+                li.style.background = 'rgba(255, 215, 0, 0.15)';
+                li.style.borderLeft = '3px solid #FFD700';
+                li.style.paddingLeft = '8px';
+            }
+            
             const medal = medals[index] || `${index + 1}.`;
-            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${index + 1}. ${entry.name}</span> <span class="leaderboard-score">${entry.score}</span>`;
+            const nameDisplay = entry.name || 'Anonymous';
+            const scoreDisplay = (entry.score || 0).toLocaleString();
+            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${index + 1}. ${nameDisplay}</span> <span class="leaderboard-score">${scoreDisplay}</span>`;
             list.appendChild(li);
-        });
+        }
     }
 
     async gameOver() {
@@ -822,8 +848,17 @@ class Game {
         Sound.stopMusic();
         Sound.playGameOver();
         
-        document.getElementById("final-score").textContent = `Score: ${this.state.score}`;
-        document.getElementById("high-score-message").textContent = "Submitting score...";
+        const scoreText = this.state.score.toLocaleString();
+        document.getElementById("final-score").textContent = `Score: ${scoreText}`;
+        
+        // Show "Submitting..." only if score is worth submitting
+        const highScoreMsg = document.getElementById("high-score-message");
+        if (this.state.score >= 10) {
+            highScoreMsg.textContent = "Submitting score...";
+            highScoreMsg.style.color = '#88ff88';
+        } else {
+            highScoreMsg.textContent = "";
+        }
         
         // Show stats
         const statsEl = document.getElementById("stats-display");
@@ -840,15 +875,30 @@ class Game {
         // Submit score to remote API (async)
         try {
             await this.state.saveScore();
-            const highScoreMessage = this.state.getHighScoreMessage();
-            document.getElementById("high-score-message").textContent = highScoreMessage;
+            
+            // Show rank message
+            const rankMessage = this.state.getHighScoreMessage();
+            if (rankMessage) {
+                highScoreMsg.textContent = rankMessage;
+                highScoreMsg.style.color = '#88ff88';
+            } else {
+                highScoreMsg.textContent = '';
+            }
+            
+            // Show error/warning if any (e.g., offline, rate limited)
+            const errorMsg = this.state.getErrorMessage();
+            if (errorMsg) {
+                highScoreMsg.textContent = (highScoreMsg.textContent ? highScoreMsg.textContent + ' ' : '') + `(${errorMsg})`;
+                highScoreMsg.style.color = '#ffaa44';
+            }
         } catch (error) {
             console.warn('Failed to submit score:', error);
-            document.getElementById("high-score-message").textContent = "";
+            highScoreMsg.textContent = 'Score saved locally.';
+            highScoreMsg.style.color = '#ffaa44';
         }
         
-        // Refresh leaderboard display
-        await this.fetchAndDisplayLeaderboard("gameover-leaderboard");
+        // Update leaderboard display (use cached data from saveScore if available)
+        this.updateLeaderboardDisplay("gameover-leaderboard");
     }
 }
 
