@@ -39,6 +39,7 @@ export class GameState {
         // Remote leaderboard state
         this.useRemoteLeaderboard = true;
         this.lastRank = null;
+        this.lastIsNewHighScore = false;
         this.lastError = null;      // Track last error for user feedback
         this.isSubmitting = false;   // Prevent double submissions
         this.isFetching = false;     // Prevent concurrent fetches
@@ -65,6 +66,7 @@ export class GameState {
         this.highestCombo = 0;
         this.currentCombo = 0;
         this.lastRank = null;
+        this.lastIsNewHighScore = false;
         this.lastError = null;
         this.isSubmitting = false;
     }
@@ -286,6 +288,7 @@ export class GameState {
             
             if (data.success) {
                 this.lastRank = data.rank;
+                this.lastIsNewHighScore = data.isNewHighScore || false;
                 this.useRemoteLeaderboard = true;
                 
                 // If server returned the updated leaderboard, use it directly
@@ -373,10 +376,14 @@ export class GameState {
     // ============================================================
     getHighScoreMessage() {
         if (this.lastRank !== null) {
-            if (this.lastRank === 1) {
+            if (this.lastRank === 1 && this.lastIsNewHighScore) {
                 return "NEW HIGH SCORE! You're #1!";
+            } else if (this.lastRank === 1) {
+                return "You're #1 on the global leaderboard!";
+            } else if (this.lastRank <= 10 && this.lastIsNewHighScore) {
+                return `NEW PERSONAL BEST! You're #${this.lastRank} globally!`;
             } else if (this.lastRank <= 10) {
-                return `You're #${this.lastRank} on the global leaderboard!`;
+                return `You're #${this.lastRank} on the global leaderboard.`;
             } else {
                 return `You ranked #${this.lastRank} globally.`;
             }
@@ -388,7 +395,7 @@ export class GameState {
             entry => (entry.name || '').toLowerCase() === nameLower
         );
         if (index === 0) {
-            return "NEW HIGH SCORE! You're #1!";
+            return "You're #1 on the leaderboard!";
         } else if (index !== -1 && index < 10) {
             return `You're #${index + 1} on the leaderboard!`;
         }
