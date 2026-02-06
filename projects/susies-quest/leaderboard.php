@@ -17,14 +17,21 @@ header('Access-Control-Allow-Headers: Content-Type, X-Requested-With');
 header('Access-Control-Max-Age: 86400'); // Cache preflight for 24 hours
 header('Content-Type: application/json; charset=utf-8');
 
+// Disable caching to ensure fresh data
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
+header('Expires: Thu, 01 Jan 1970 00:00:00 GMT');
+
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Configuration
-define('DATA_FILE', __DIR__ . '/leaderboard_data.json');
+// Configuration - Use the same directory as this PHP file
+$scriptDir = dirname(__FILE__);
+define('DATA_FILE', $scriptDir . '/leaderboard_data.json');
 define('MAX_ENTRIES', 100);      // Maximum entries to store
 define('MAX_NAME_LENGTH', 20);   // Maximum player name length
 define('MAX_SCORE', 9999999);    // Maximum valid score
@@ -33,16 +40,39 @@ define('MAX_SCORE', 9999999);    // Maximum valid score
  * Load leaderboard data from JSON file
  */
 function loadLeaderboard() {
+    // Check if file exists
     if (!file_exists(DATA_FILE)) {
+        // Try to create an empty file
+        file_put_contents(DATA_FILE, '[]');
+        return [];
+    }
+    
+    // Check if file is readable
+    if (!is_readable(DATA_FILE)) {
+        error_log("Leaderboard file not readable: " . DATA_FILE);
         return [];
     }
     
     $json = file_get_contents(DATA_FILE);
     if ($json === false) {
+        error_log("Failed to read leaderboard file: " . DATA_FILE);
+        return [];
+    }
+    
+    // Handle empty file
+    $json = trim($json);
+    if (empty($json)) {
         return [];
     }
     
     $data = json_decode($json, true);
+    
+    // Check for JSON decode errors
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("JSON decode error: " . json_last_error_msg() . " in file: " . DATA_FILE);
+        return [];
+    }
+    
     return is_array($data) ? $data : [];
 }
 
@@ -58,15 +88,30 @@ function saveLeaderboard($data) {
     // Keep only top entries
     $data = array_slice($data, 0, MAX_ENTRIES);
     
-    // Save to file
-    $json = json_encode($data, JSON_PRETTY_PRINT);
-    return file_put_contents(DATA_FILE, $json) !== false;
+    // Save to file with proper encoding
+    $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    
+    if ($json === false) {
+        error_log("JSON encode error: " . json_last_error_msg());
+        return false;
+    }
+    
+    $result = file_put_contents(DATA_FILE, $json, LOCK_EX);
+    
+    if ($result === false) {
+        error_log("Failed to write leaderboard file: " . DATA_FILE);
+        return false;
+    }
+    
+    return true;
 }
 
 /**
  * Sanitize player name
  */
 function sanitizeName($name) {
+    // Convert to string if not already
+    $name = strval($name);
     // Remove any HTML/script tags
     $name = strip_tags($name);
     // Remove special characters except alphanumeric, spaces, and basic punctuation
@@ -74,7 +119,7 @@ function sanitizeName($name) {
     // Trim and limit length
     $name = trim(substr($name, 0, MAX_NAME_LENGTH));
     // Default name if empty
-    return $name ?: 'Anonymous';
+    return $name !== '' ? $name : 'Anonymous';
 }
 
 /**
@@ -86,6 +131,20 @@ function validateScore($score) {
         return false;
     }
     return $score;
+}
+
+// Debug endpoint - add ?debug=1 to see file info
+if (isset($_GET['debug']) && $_GET['debug'] == '1') {
+    echo json_encode([
+        'data_file' => DATA_FILE,
+        'file_exists' => file_exists(DATA_FILE),
+        'is_readable' => is_readable(DATA_FILE),
+        'is_writable' => is_writable(dirname(DATA_FILE)),
+        'file_size' => file_exists(DATA_FILE) ? filesize(DATA_FILE) : 0,
+        'script_dir' => $scriptDir,
+        'raw_content' => file_exists(DATA_FILE) ? file_get_contents(DATA_FILE) : null
+    ], JSON_PRETTY_PRINT);
+    exit();
 }
 
 // Handle GET request - Fetch leaderboard
@@ -114,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($input, true);
     
     // Fallback to POST parameters if JSON parsing fails
-    if (!$data) {
+    if (!$data || !is_array($data)) {
         $data = $_POST;
     }
     
@@ -160,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $leaderboard = loadLeaderboard();
         $rank = 1;
         foreach ($leaderboard as $entry) {
-            if ($entry['id'] === $newEntry['id']) {
+            if (isset($entry['id']) && $entry['id'] === $newEntry['id']) {
                 break;
             }
             $rank++;

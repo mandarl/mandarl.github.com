@@ -787,7 +787,7 @@ class Game {
         list.innerHTML = '<li style="text-align: center; opacity: 0.7;">Loading...</li>';
         
         try {
-            await this.state.fetchLeaderboard(10);
+            await this.state.fetchLeaderboard();
         } catch (error) {
             console.warn('Failed to fetch leaderboard:', error);
         }

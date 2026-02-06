@@ -163,9 +163,9 @@ export class GameState {
      * Fetch leaderboard from remote API
      * Falls back to local storage if API fails
      */
-    async fetchLeaderboard(limit = 10) {
+    async fetchLeaderboard() {
         try {
-            const response = await fetch(`${LEADERBOARD_API_URL}?limit=${limit}`, {
+            const response = await fetch(LEADERBOARD_API_URL, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
