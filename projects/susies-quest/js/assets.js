@@ -16,7 +16,9 @@ const ASSET_PATHS = {
     platform: 'platform.png',
     yarn: 'yarn.png',
     candy: 'candy.png',
-    enemy: 'enemy.png'
+    enemy: 'enemy.png',
+    bg_mountains: 'bg_mountains.png',
+    bg_trees: 'bg_trees.png'
 };
 
 // Generate retro-style power-up icons
@@ -158,6 +160,8 @@ export const ASSETS = {
     yarn: null,
     candy: null,
     enemy: null,
+    bg_mountains: null,
+    bg_trees: null,
     powerup_shield: null,
     powerup_magnet: null,
     powerup_double: null,
@@ -170,14 +174,16 @@ export const ASSETS = {
 export const loadAssets = async () => {
     try {
         // Load all PNG images with transparent backgrounds
-        const [susie, susie_jump, susie_fall, platform, yarn, candy, enemy] = await Promise.all([
+        const [susie, susie_jump, susie_fall, platform, yarn, candy, enemy, bg_mountains, bg_trees] = await Promise.all([
             loadImage(ASSET_PATHS.susie),
             loadImage(ASSET_PATHS.susie_jump),
             loadImage(ASSET_PATHS.susie_fall),
             loadImage(ASSET_PATHS.platform),
             loadImage(ASSET_PATHS.yarn),
             loadImage(ASSET_PATHS.candy),
-            loadImage(ASSET_PATHS.enemy)
+            loadImage(ASSET_PATHS.enemy),
+            loadImage(ASSET_PATHS.bg_mountains),
+            loadImage(ASSET_PATHS.bg_trees)
         ]);
         
         ASSETS.susie = susie;
@@ -187,6 +193,8 @@ export const loadAssets = async () => {
         ASSETS.yarn = yarn;
         ASSETS.candy = candy;
         ASSETS.enemy = enemy;
+        ASSETS.bg_mountains = bg_mountains;
+        ASSETS.bg_trees = bg_trees;
         
         // Generate power-up icons
         ASSETS.powerup_shield = generatePowerUpIcon('shield');

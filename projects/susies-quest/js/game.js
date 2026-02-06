@@ -30,6 +30,11 @@ class Game {
         // Retro effects
         this.scanlinePattern = null;
         
+        // Screen shake effect
+        this.screenShake = 0;
+        this.screenShakeX = 0;
+        this.screenShakeY = 0;
+        
         this.init();
     }
 
@@ -371,12 +376,14 @@ class Game {
                     this.updateLivesDisplay();
                     
                     if (gameOver) {
+                        this.triggerScreenShake(12);
                         this.gameOver();
                         return;
                     } else {
                         Sound.playHit();
                         this.susie.makeInvincible(90);
                         this.createHitParticles();
+                        this.triggerScreenShake(8);
                     }
                 }
                 this.enemies.splice(index, 1);
@@ -408,12 +415,14 @@ class Game {
         if (this.susie.y > this.canvas.height) {
             const gameOver = this.state.loseLife();
             if (gameOver) {
+                this.triggerScreenShake(15);
                 this.gameOver();
             } else {
                 Sound.playHit();
                 this.susie.reset(this.canvas.width, this.canvas.height);
                 this.susie.makeInvincible(120);
                 this.updateLivesDisplay();
+                this.triggerScreenShake(6);
             }
         }
     }
@@ -494,6 +503,21 @@ class Game {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Update screen shake
+        if (this.screenShake > 0) {
+            this.screenShakeX = (Math.random() - 0.5) * this.screenShake;
+            this.screenShakeY = (Math.random() - 0.5) * this.screenShake;
+            this.screenShake *= 0.9;
+            if (this.screenShake < 0.5) this.screenShake = 0;
+        } else {
+            this.screenShakeX = 0;
+            this.screenShakeY = 0;
+        }
+
+        // Apply screen shake
+        this.ctx.save();
+        this.ctx.translate(this.screenShakeX, this.screenShakeY);
+
         // Draw parallax background
         this.drawParallaxBackground();
         
@@ -521,73 +545,77 @@ class Game {
             this.drawVignette();
         }
 
-        // HUD
+        // Restore from screen shake
+        this.ctx.restore();
+
+        // HUD (drawn without shake)
         this.ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
         this.ctx.font = "bold 12px 'Courier New', monospace";
         this.ctx.fillText(`SPEED: ${Math.round(this.state.difficultyMultiplier * 100)}%`, 15, 25);
+    }
+
+    triggerScreenShake(intensity = 5) {
+        this.screenShake = intensity;
     }
 
     drawParallaxBackground() {
         // Sky gradient - warm sunset/sunrise feel
         const grad = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
         grad.addColorStop(0, '#87CEEB');    // Light sky blue
-        grad.addColorStop(0.3, '#98D8F0');  // Soft blue
-        grad.addColorStop(0.5, '#B0E2F5');  // Lighter
-        grad.addColorStop(0.7, '#C8ECFA');  // Very light
-        grad.addColorStop(0.85, '#E0F4FC'); // Almost white
+        grad.addColorStop(0.3, '#B8D4E8');  // Soft blue-lavender
+        grad.addColorStop(0.5, '#D4C4E8');  // Light purple
+        grad.addColorStop(0.7, '#E8D4E0');  // Pink tint
+        grad.addColorStop(0.85, '#F0E8E0'); // Warm light
         grad.addColorStop(0.95, '#FFF8E7'); // Warm cream
         grad.addColorStop(1, '#FFE4B5');    // Moccasin/warm
         this.ctx.fillStyle = grad;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Parallax clouds layer (moves slower)
-        if (!this.cloudOffset) this.cloudOffset = 0;
-        this.cloudOffset += 0.3;
-        if (this.cloudOffset > 600) this.cloudOffset = 0;
+        // Initialize parallax offsets
+        if (!this.mountainOffset) this.mountainOffset = 0;
+        if (!this.treeOffset) this.treeOffset = 0;
         
-        // Draw procedural pixel clouds
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-        const cloudPositions = [
-            { x: 30, y: 60, s: 40 },
-            { x: 180, y: 100, s: 55 },
-            { x: 350, y: 50, s: 45 },
-            { x: 80, y: 180, s: 35 },
-            { x: 280, y: 160, s: 50 },
-            { x: 420, y: 130, s: 38 }
-        ];
+        // Update parallax offsets
+        this.mountainOffset += 0.2;
+        this.treeOffset += 0.5;
         
-        cloudPositions.forEach(c => {
-            const offsetX = ((c.x + this.cloudOffset) % (this.canvas.width + 100)) - 50;
-            // Fluffy pixel cloud shape
-            this.ctx.fillRect(offsetX, c.y, c.s * 1.8, c.s * 0.7);
-            this.ctx.fillRect(offsetX + c.s * 0.3, c.y - c.s * 0.3, c.s * 1.2, c.s * 0.5);
-            this.ctx.fillRect(offsetX + c.s * 0.6, c.y - c.s * 0.5, c.s * 0.6, c.s * 0.4);
-            this.ctx.fillRect(offsetX - c.s * 0.2, c.y + c.s * 0.3, c.s * 0.8, c.s * 0.4);
-            this.ctx.fillRect(offsetX + c.s * 1.2, c.y + c.s * 0.2, c.s * 0.6, c.s * 0.5);
-        });
-
-        // Hills layer at bottom (moves even slower)
-        if (!this.hillOffset) this.hillOffset = 0;
-        this.hillOffset += 0.15;
-        if (this.hillOffset > 400) this.hillOffset = 0;
+        const assets = window.gameAssets;
         
-        // Draw procedural pixel hills
-        const hillHeight = 120;
-        const hillY = this.canvas.height - hillHeight;
+        // Draw mountains layer (far background - slowest)
+        if (assets && assets.bg_mountains) {
+            const mountainImg = assets.bg_mountains;
+            const mountainScale = this.canvas.height * 0.5 / mountainImg.height;
+            const mountainWidth = mountainImg.width * mountainScale;
+            const mountainY = this.canvas.height * 0.3;
+            
+            // Tile the mountains
+            const mountainOffsetX = -(this.mountainOffset % mountainWidth);
+            for (let x = mountainOffsetX; x < this.canvas.width + mountainWidth; x += mountainWidth) {
+                this.ctx.drawImage(
+                    mountainImg,
+                    x, mountainY,
+                    mountainWidth, this.canvas.height * 0.5
+                );
+            }
+        }
         
-        // Back hills (darker, slower)
-        this.ctx.fillStyle = '#7CB342';
-        this.drawPixelHill((-this.hillOffset * 0.5) % 200 - 100, hillY + 30, 200, 90);
-        this.drawPixelHill((100 - this.hillOffset * 0.5) % 200 + 100, hillY + 20, 180, 100);
-        this.drawPixelHill((250 - this.hillOffset * 0.5) % 200 + 200, hillY + 35, 220, 85);
-        this.drawPixelHill((400 - this.hillOffset * 0.5) % 200 + 300, hillY + 25, 190, 95);
-        
-        // Front hills (lighter, faster)
-        this.ctx.fillStyle = '#8BC34A';
-        this.drawPixelHill(-this.hillOffset % 250 - 50, hillY + 50, 160, 70);
-        this.drawPixelHill((150 - this.hillOffset) % 250 + 80, hillY + 45, 180, 75);
-        this.drawPixelHill((350 - this.hillOffset) % 250 + 220, hillY + 55, 150, 65);
-        this.drawPixelHill((500 - this.hillOffset) % 250 + 350, hillY + 48, 170, 72);
+        // Draw trees layer (mid background - medium speed)
+        if (assets && assets.bg_trees) {
+            const treeImg = assets.bg_trees;
+            const treeScale = this.canvas.height * 0.35 / treeImg.height;
+            const treeWidth = treeImg.width * treeScale;
+            const treeY = this.canvas.height * 0.55;
+            
+            // Tile the trees
+            const treeOffsetX = -(this.treeOffset % treeWidth);
+            for (let x = treeOffsetX; x < this.canvas.width + treeWidth; x += treeWidth) {
+                this.ctx.drawImage(
+                    treeImg,
+                    x, treeY,
+                    treeWidth, this.canvas.height * 0.45
+                );
+            }
+        }
     }
 
     drawPixelHill(x, y, width, height) {
