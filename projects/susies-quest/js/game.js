@@ -285,7 +285,36 @@ class Game {
 
     createPlatformAt(y) {
         const width = Math.random() * 60 + 80;
-        const x = Math.random() * (this.canvas.width - width);
+        
+        // Find the most recent platform to ensure reachability
+        const maxHorizontalReach = 160; // Max horizontal distance Susie can cover in one jump
+        let x;
+        
+        // Get the last few platforms that are still on screen and above this y position
+        const recentPlatforms = this.platforms
+            .filter(p => p.y < this.canvas.height && p.y > y)
+            .sort((a, b) => b.y - a.y); // Sort by y descending (closest above)
+        
+        if (recentPlatforms.length > 0) {
+            // Place new platform within reachable horizontal distance of the nearest platform
+            const nearest = recentPlatforms[0];
+            const nearestCenter = nearest.x + nearest.width / 2;
+            
+            // Calculate reachable range (with some randomness)
+            const minX = Math.max(0, nearestCenter - maxHorizontalReach - width / 2);
+            const maxX = Math.min(this.canvas.width - width, nearestCenter + maxHorizontalReach - width / 2);
+            
+            if (minX < maxX) {
+                x = minX + Math.random() * (maxX - minX);
+            } else {
+                x = Math.max(0, Math.min(this.canvas.width - width, nearestCenter - width / 2));
+            }
+        } else {
+            // No recent platforms to reference, use random but prefer center area
+            const centerBias = this.canvas.width / 2 - width / 2;
+            x = centerBias + (Math.random() - 0.5) * (this.canvas.width * 0.6);
+            x = Math.max(0, Math.min(this.canvas.width - width, x));
+        }
 
         // Choose platform type based on difficulty and weights
         const type = this.choosePlatformType();
