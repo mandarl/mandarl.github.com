@@ -1,11 +1,11 @@
 export const CONFIG = {
-    // Physics - tuned for smooth, responsive mobile gameplay
-    PLATFORM_SPEED: 1.8,
-    GRAVITY: 0.45,
-    JUMP_FORCE: 14,
-    ACCELERATION: 1.0,      // Faster response
+    // Physics - tuned for smooth, playable mobile gameplay
+    PLATFORM_SPEED: 1.2,
+    GRAVITY: 0.35,
+    JUMP_FORCE: 11.5,
+    ACCELERATION: 0.7,      // Moderate response
     FRICTION: 0.88,         // Slightly more slide
-    MAX_SPEED: 7,
+    MAX_SPEED: 5,
     SQUISH_SPEED: 0.05,
     SQUISH_RECOVERY: 0.1,
     
@@ -20,7 +20,7 @@ export const CONFIG = {
     
     // Enemies
     ENEMY_SPAWN_CHANCE: 0.12, // 12% chance per platform (increases with difficulty)
-    ENEMY_SPEED: 1.2,
+    ENEMY_SPEED: 0.8,
     
     // Platform types
     PLATFORM_TYPES: {
@@ -40,9 +40,9 @@ export const CONFIG = {
     SCORE_PLATFORM_PASS: 10,
     SCORE_ENEMY_AVOID: 25,
     
-    // Difficulty scaling - more gradual
-    DIFFICULTY_SCORE_DIVISOR: 6000,
-    MAX_DIFFICULTY_MULTIPLIER: 2.2,
+    // Difficulty scaling - very gradual for playability
+    DIFFICULTY_SCORE_DIVISOR: 10000,
+    MAX_DIFFICULTY_MULTIPLIER: 1.8,
     
     // Retro effects
     SCANLINE_OPACITY: 0.02,
