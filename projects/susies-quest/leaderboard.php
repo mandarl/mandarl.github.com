@@ -1,9 +1,9 @@
 <?php
 /**
- * Susie's Quest - Global Leaderboard API
+ * Susie's Quest - Global Leaderboard API (v1.1)
  * 
  * Endpoints:
- *   GET  - Fetch top scores (returns all stored, up to MAX_ENTRIES)
+ *   GET  - Fetch top scores (deduplicated, sorted by score desc)
  *   POST - Submit a new score (deduplicates by player name, keeps highest)
  * 
  * Host this file at: https://dipoletech.com/projects/susies-quest/leaderboard.php
@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Configuration
 $scriptDir = dirname(__FILE__);
 define('DATA_FILE', $scriptDir . '/leaderboard_data.json');
-define('MAX_ENTRIES', 50);         // Maximum unique player entries to store
-define('MAX_NAME_LENGTH', 20);     // Maximum player name length
-define('MIN_SCORE', 10);           // Minimum score to accept (reject trivial scores)
-define('MAX_SCORE', 9999999);      // Maximum valid score
+define('MAX_ENTRIES', 50);
+define('MAX_NAME_LENGTH', 20);
+define('MIN_SCORE', 10);
+define('MAX_SCORE', 9999999);
 define('RATE_LIMIT_FILE', $scriptDir . '/rate_limit.json');
-define('RATE_LIMIT_SECONDS', 5);   // Minimum seconds between submissions per IP
+define('RATE_LIMIT_SECONDS', 5);
 
 /**
  * Simple rate limiting by IP address
@@ -71,9 +71,9 @@ function checkRateLimit() {
 }
 
 /**
- * Load leaderboard data from JSON file
+ * Load raw leaderboard data from JSON file
  */
-function loadLeaderboard() {
+function loadRawLeaderboard() {
     if (!file_exists(DATA_FILE)) {
         file_put_contents(DATA_FILE, '[]', LOCK_EX);
         return [];
@@ -106,16 +106,53 @@ function loadLeaderboard() {
 }
 
 /**
- * Save leaderboard data to JSON file
+ * Deduplicate leaderboard: keep only the highest score per player name (case-insensitive).
+ * Returns a clean, sorted array.
  */
-function saveLeaderboard($data) {
+function deduplicateLeaderboard($data) {
+    $bestByName = [];
+    
+    foreach ($data as $entry) {
+        $name = isset($entry['name']) ? $entry['name'] : 'Anonymous';
+        $key = strtolower(trim($name));
+        $score = isset($entry['score']) ? intval($entry['score']) : 0;
+        
+        if (!isset($bestByName[$key]) || $score > $bestByName[$key]['score']) {
+            $bestByName[$key] = [
+                'name'  => $name,
+                'score' => $score,
+                'date'  => isset($entry['date']) ? $entry['date'] : date('Y-m-d H:i:s'),
+                'id'    => isset($entry['id']) ? $entry['id'] : uniqid()
+            ];
+        }
+    }
+    
+    // Convert back to indexed array
+    $result = array_values($bestByName);
+    
     // Sort by score descending
-    usort($data, function($a, $b) {
+    usort($result, function($a, $b) {
         return $b['score'] - $a['score'];
     });
     
     // Keep only top entries
-    $data = array_slice($data, 0, MAX_ENTRIES);
+    return array_slice($result, 0, MAX_ENTRIES);
+}
+
+/**
+ * Load leaderboard, deduplicated and sorted
+ */
+function loadLeaderboard() {
+    $raw = loadRawLeaderboard();
+    return deduplicateLeaderboard($raw);
+}
+
+/**
+ * Save leaderboard data to JSON file (deduplicates before saving)
+ */
+function saveLeaderboard($data) {
+    // Always deduplicate before saving
+    $data = deduplicateLeaderboard($data);
     
     $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     
@@ -160,10 +197,14 @@ function validateScore($score) {
 }
 
 // ============================================================
-// Handle GET request - Fetch leaderboard
+// Handle GET request - Fetch leaderboard (deduplicated)
 // ============================================================
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Load and deduplicate
     $leaderboard = loadLeaderboard();
+    
+    // Also save the deduplicated version back to clean up the file
+    saveLeaderboard($leaderboard);
     
     echo json_encode([
         'success' => true,
@@ -218,52 +259,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
     
-    // Load current leaderboard
-    $leaderboard = loadLeaderboard();
+    // Load current leaderboard (raw, before dedup, so we can add and then dedup)
+    $leaderboard = loadRawLeaderboard();
     
-    // Deduplicate: find existing entry for this player name (case-insensitive)
-    $existingIndex = -1;
-    foreach ($leaderboard as $i => $entry) {
-        if (strtolower($entry['name']) === strtolower($name)) {
-            $existingIndex = $i;
-            break;
-        }
-    }
+    // Add the new entry (deduplicateLeaderboard will handle keeping only the best)
+    $leaderboard[] = [
+        'name'  => $name,
+        'score' => $score,
+        'date'  => date('Y-m-d H:i:s'),
+        'id'    => uniqid('', true)
+    ];
     
-    $isNewHighScore = false;
-    
-    if ($existingIndex !== -1) {
-        // Player exists - only update if new score is higher
-        if ($score > $leaderboard[$existingIndex]['score']) {
-            $leaderboard[$existingIndex]['score'] = $score;
-            $leaderboard[$existingIndex]['date'] = date('Y-m-d H:i:s');
-            $isNewHighScore = true;
-        }
-        // Use the existing entry's ID
-        $entryId = $leaderboard[$existingIndex]['id'] ?? uniqid();
-    } else {
-        // New player - add entry
-        $entryId = uniqid('', true);
-        $leaderboard[] = [
-            'name' => $name,
-            'score' => $score,
-            'date' => date('Y-m-d H:i:s'),
-            'id' => $entryId
-        ];
-        $isNewHighScore = true;
-    }
-    
-    // Save updated leaderboard
+    // Save (this deduplicates, sorts, and trims automatically)
     if (saveLeaderboard($leaderboard)) {
-        // Reload to get sorted data and find rank
+        // Reload the clean deduplicated data
         $leaderboard = loadLeaderboard();
-        $rank = 1;
-        foreach ($leaderboard as $entry) {
+        
+        // Find the player's rank
+        $rank = 0;
+        $playerScore = 0;
+        foreach ($leaderboard as $i => $entry) {
             if (strtolower($entry['name']) === strtolower($name)) {
+                $rank = $i + 1;
+                $playerScore = $entry['score'];
                 break;
             }
-            $rank++;
         }
+        
+        $isNewHighScore = ($playerScore === $score);
         
         echo json_encode([
             'success' => true,
@@ -272,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'isNewHighScore' => $isNewHighScore,
             'entry' => [
                 'name' => $name,
-                'score' => $isNewHighScore ? $score : $leaderboard[$rank - 1]['score'],
+                'score' => $playerScore,
                 'date' => date('Y-m-d H:i:s')
             ],
             'leaderboard' => $leaderboard
