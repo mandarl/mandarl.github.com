@@ -115,9 +115,13 @@ class Game {
                     input.value = name;
                     input.dispatchEvent(new Event('input'));  // Trigger start button enable
                     input.classList.add('name-filled');
-                    input.focus();
                     setTimeout(() => {
                         input.classList.remove('name-filled');
+                        // Focus the Start button so user can tap to play immediately
+                        const startBtn = document.getElementById('start-btn');
+                        if (startBtn && !startBtn.disabled) {
+                            startBtn.focus();
+                        }
                     }, 600);
                 }
             }
@@ -844,8 +848,8 @@ class Game {
 
         const medals = ['🥇', '🥈', '🥉'];
         const currentPlayerName = this.state.playerName.toLowerCase();
-        // Welcome screen shows 3, game over shows 5
-        const maxEntries = (elementId === 'welcome-leaderboard') ? 3 : 5;
+        // Welcome screen shows 5, game over shows 5
+        const maxEntries = 5;
         const displayCount = Math.min(leaderboard.length, maxEntries);
         
         for (let index = 0; index < displayCount; index++) {

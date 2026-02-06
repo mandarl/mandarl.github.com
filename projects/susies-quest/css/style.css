@@ -236,6 +236,10 @@ body {
         rgba(44, 22, 84, 0.98) 0%, 
         rgba(26, 10, 48, 0.98) 100%);
     overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Mobile Warning */
@@ -685,11 +689,12 @@ button.secondary:active {
 
 .tutorial-content {
     max-width: 320px;
-    padding: 20px;
+    padding: 15px;
+    flex-shrink: 0;
 }
 
 .tutorial-section {
-    margin: 20px 0;
+    margin: 12px 0;
     text-align: left;
 }
 
@@ -703,22 +708,22 @@ button.secondary:active {
 .tutorial-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 12px 0;
-    font-size: 10px;
+    gap: 10px;
+    margin: 8px 0;
+    font-size: 9px;
     color: #FFF8DC;
 }
 
 .tutorial-icon {
-    font-size: 28px;
-    min-width: 45px;
+    font-size: 22px;
+    min-width: 35px;
     text-align: center;
 }
 
 .tutorial-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 /* ========================================
