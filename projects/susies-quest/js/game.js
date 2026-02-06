@@ -844,7 +844,9 @@ class Game {
 
         const medals = ['🥇', '🥈', '🥉'];
         const currentPlayerName = this.state.playerName.toLowerCase();
-        const displayCount = Math.min(leaderboard.length, 10);
+        // Welcome screen shows 3, game over shows 5
+        const maxEntries = (elementId === 'welcome-leaderboard') ? 3 : 5;
+        const displayCount = Math.min(leaderboard.length, maxEntries);
         
         for (let index = 0; index < displayCount; index++) {
             const entry = leaderboard[index];
@@ -861,9 +863,13 @@ class Game {
             }
             
             const medal = medals[index] || `${index + 1}.`;
-            const nameDisplay = entry.name || 'Anonymous';
+            let nameDisplay = entry.name || 'Anonymous';
+            // Truncate long names to prevent wrapping
+            if (nameDisplay.length > 8) {
+                nameDisplay = nameDisplay.substring(0, 7) + '…';
+            }
             const scoreDisplay = (entry.score || 0).toLocaleString();
-            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${index + 1}. ${nameDisplay}</span> <span class="leaderboard-score">${scoreDisplay}</span>`;
+            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${nameDisplay}</span> <span class="leaderboard-score">${scoreDisplay}</span>`;
             list.appendChild(li);
         }
     }
