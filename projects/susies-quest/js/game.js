@@ -74,7 +74,7 @@ class Game {
         document.getElementById("sound-btn").addEventListener("click", () => this.toggleSound());
         document.getElementById("music-btn").addEventListener("click", () => this.toggleMusic());
 
-        this.updateLeaderboardDisplay("welcome-leaderboard");
+        await this.fetchAndDisplayLeaderboard("welcome-leaderboard");
         this.setupClickableLeaderboard();
         this.toggleGameUI(false);
         this.hideLoading();
@@ -783,10 +783,28 @@ class Game {
         }
     }
 
+    async fetchAndDisplayLeaderboard(elementId) {
+        const list = document.getElementById(elementId);
+        list.innerHTML = '<li style="text-align: center; opacity: 0.7;">Loading...</li>';
+        
+        try {
+            await this.state.fetchLeaderboard(10);
+        } catch (error) {
+            console.warn('Failed to fetch leaderboard:', error);
+        }
+        
+        this.updateLeaderboardDisplay(elementId);
+    }
+
     updateLeaderboardDisplay(elementId) {
         const leaderboard = this.state.getLeaderboard();
         const list = document.getElementById(elementId);
         list.innerHTML = '';
+
+        if (leaderboard.length === 0) {
+            list.innerHTML = '<li style="text-align: center; opacity: 0.7;">No scores yet!</li>';
+            return;
+        }
 
         const medals = ['🥇', '🥈', '🥉'];
         leaderboard.slice(0, 5).forEach((entry, index) => {
@@ -800,15 +818,13 @@ class Game {
         });
     }
 
-    gameOver() {
+    async gameOver() {
         this.state.active = false;
         Sound.stopMusic();
         Sound.playGameOver();
         
-        const isHighScore = this.state.saveScore();
-        
         document.getElementById("final-score").textContent = `Score: ${this.state.score}`;
-        document.getElementById("high-score-message").textContent = isHighScore ? "🎉 NEW HIGH SCORE! 🎉" : "";
+        document.getElementById("high-score-message").textContent = "Submitting score...";
         
         // Show stats
         const statsEl = document.getElementById("stats-display");
@@ -819,8 +835,21 @@ class Game {
             <div class="stat-item">📏 Height: ${Math.round(this.maxHeightReached)}m</div>
         `;
         
-        this.updateLeaderboardDisplay("gameover-leaderboard");
+        // Show game over screen immediately
         document.getElementById("game-over-screen").style.display = "flex";
+        
+        // Submit score to remote API (async)
+        try {
+            await this.state.saveScore();
+            const highScoreMessage = this.state.getHighScoreMessage();
+            document.getElementById("high-score-message").textContent = highScoreMessage;
+        } catch (error) {
+            console.warn('Failed to submit score:', error);
+            document.getElementById("high-score-message").textContent = "";
+        }
+        
+        // Refresh leaderboard display
+        await this.fetchAndDisplayLeaderboard("gameover-leaderboard");
     }
 }
 

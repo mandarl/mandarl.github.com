@@ -1,5 +1,8 @@
 import { CONFIG } from './config.js';
 
+// Remote Leaderboard API URL
+const LEADERBOARD_API_URL = 'https://dipoletech.com/projects/susies-quest/leaderboard.php';
+
 export class GameState {
     constructor() {
         this.active = false;
@@ -28,10 +31,14 @@ export class GameState {
         // Tutorial state
         this.tutorialShown = localStorage.getItem('susies-quest-tutorial-shown') === 'true';
         
-        // Leaderboard
+        // Leaderboard - local cache with fallback data
         this.leaderboard = JSON.parse(localStorage.getItem('susies-quest-leaderboard')) || [
             { name: "Mandar", score: 4250 }
         ];
+        
+        // Track if we're using remote or local leaderboard
+        this.useRemoteLeaderboard = true;
+        this.lastRank = null;
     }
 
     reset() {
@@ -54,6 +61,7 @@ export class GameState {
         this.enemiesAvoided = 0;
         this.highestCombo = 0;
         this.currentCombo = 0;
+        this.lastRank = null;
     }
 
     updateDifficulty() {
@@ -151,32 +159,133 @@ export class GameState {
         localStorage.removeItem('susies-quest-tutorial-shown');
     }
 
-    saveScore() {
+    /**
+     * Fetch leaderboard from remote API
+     * Falls back to local storage if API fails
+     */
+    async fetchLeaderboard(limit = 10) {
+        try {
+            const response = await fetch(`${LEADERBOARD_API_URL}?limit=${limit}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.success && data.leaderboard) {
+                this.leaderboard = data.leaderboard;
+                this.useRemoteLeaderboard = true;
+                // Cache locally as backup
+                localStorage.setItem('susies-quest-leaderboard', JSON.stringify(this.leaderboard));
+                return this.leaderboard;
+            } else {
+                throw new Error(data.error || 'Invalid response');
+            }
+        } catch (error) {
+            console.warn('Failed to fetch remote leaderboard, using local cache:', error);
+            this.useRemoteLeaderboard = false;
+            // Return cached local data
+            return this.leaderboard;
+        }
+    }
+
+    /**
+     * Submit score to remote API
+     * Also saves locally as backup
+     */
+    async saveScore() {
+        // Always save locally first as backup
+        this.saveScoreLocally();
+        
+        // Try to submit to remote API
+        try {
+            const response = await fetch(LEADERBOARD_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.playerName,
+                    score: this.score
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                this.lastRank = data.rank;
+                this.useRemoteLeaderboard = true;
+                // Refresh leaderboard after submission
+                await this.fetchLeaderboard();
+                return data.rank <= 10; // Return true if in top 10
+            } else {
+                throw new Error(data.error || 'Failed to submit score');
+            }
+        } catch (error) {
+            console.warn('Failed to submit score to remote API:', error);
+            this.useRemoteLeaderboard = false;
+            // Check local leaderboard for high score
+            return this.isHighScore();
+        }
+    }
+
+    /**
+     * Save score to local storage (backup/fallback)
+     */
+    saveScoreLocally() {
         const existingIndex = this.leaderboard.findIndex(entry => entry.name === this.playerName);
         if (existingIndex !== -1) {
             if (this.score > this.leaderboard[existingIndex].score) {
                 this.leaderboard[existingIndex].score = this.score;
             }
         } else {
-            if (this.playerName !== "Mandar") {
-                this.leaderboard.push({ name: this.playerName, score: this.score });
-            }
+            this.leaderboard.push({ name: this.playerName, score: this.score });
         }
 
         this.leaderboard.sort((a, b) => b.score - a.score);
         this.leaderboard = this.leaderboard.slice(0, 10); // Keep top 10
 
-        // Ensure Mandar is always included for flavor
-        if (!this.leaderboard.some(entry => entry.name === "Mandar")) {
-            this.leaderboard.push({ name: "Mandar", score: 4250 });
-            this.leaderboard.sort((a, b) => b.score - a.score);
-            this.leaderboard = this.leaderboard.slice(0, 10);
-        }
-
         localStorage.setItem('susies-quest-leaderboard', JSON.stringify(this.leaderboard));
     }
 
+    /**
+     * Check if current score is a high score (local check)
+     */
+    isHighScore() {
+        if (this.leaderboard.length < 10) {
+            return true;
+        }
+        const lowestScore = this.leaderboard[this.leaderboard.length - 1].score;
+        return this.score > lowestScore;
+    }
+
+    /**
+     * Get the leaderboard (cached data)
+     */
+    getLeaderboard() {
+        return this.leaderboard;
+    }
+
     getHighScoreMessage() {
+        if (this.lastRank !== null) {
+            if (this.lastRank === 1) {
+                return "🎉 NEW HIGH SCORE! You're #1! 🎉";
+            } else if (this.lastRank <= 10) {
+                return `You're #${this.lastRank} on the global leaderboard!`;
+            }
+        }
+        
+        // Fallback to local check
         const index = this.leaderboard.findIndex(entry => entry.name === this.playerName);
         if (index === 0) {
             return "NEW HIGH SCORE! You're #1!";
