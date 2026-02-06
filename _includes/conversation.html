@@ -1,0 +1,35 @@
+{% comment %}
+  Continue the Conversation CTA
+  Appears at the end of each post to encourage discussion on social platforms.
+  
+  Twitter link auto-composes a tweet with the post title, URL, and author handle.
+  LinkedIn links to the author's profile.
+{% endcomment %}
+
+{% assign tweet_text = page.title | url_encode %}
+{% assign tweet_url = page.url | absolute_url | url_encode %}
+{% assign twitter_handle = site.twitter_username %}
+{% assign linkedin_username = site.linkedin_username %}
+
+<div class="conversation-cta">
+  <h3 class="conversation-title">Continue the Conversation</h3>
+  <p class="conversation-description">
+    Have thoughts on this post? I'd love to hear from you. Reply on Twitter or connect on LinkedIn — I read every message.
+  </p>
+  <div class="conversation-links">
+    <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}%20by%20%40{{ twitter_handle }}&url={{ tweet_url }}" 
+       class="btn btn-secondary btn-icon conversation-btn" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      {% include icons/twitter.svg %}
+      Discuss on Twitter
+    </a>
+    <a href="https://www.linkedin.com/in/{{ linkedin_username }}/" 
+       class="btn btn-secondary btn-icon conversation-btn" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      {% include icons/linkedin.svg %}
+      Connect on LinkedIn
+    </a>
+  </div>
+</div>
