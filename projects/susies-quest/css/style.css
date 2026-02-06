@@ -858,3 +858,48 @@ button.secondary:active {
     opacity: 0.8;
     pointer-events: none;
 }
+
+
+/* ========================================
+   SHAKE ANIMATION FOR VALIDATION
+   ======================================== */
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ========================================
+   CLICKABLE LEADERBOARD ENTRIES
+   ======================================== */
+
+.leaderboard-entry {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.leaderboard-entry:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: scale(1.02);
+}
+
+.leaderboard-entry:active {
+    transform: scale(0.98);
+    background: rgba(255, 215, 0, 0.3);
+}
+
+.leaderboard-name {
+    flex: 1;
+}
+
+.leaderboard-score {
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.leaderboard-medal {
+    margin-right: 5px;
+}

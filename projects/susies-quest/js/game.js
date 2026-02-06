@@ -35,6 +35,10 @@ class Game {
         this.screenShakeX = 0;
         this.screenShakeY = 0;
         
+        // Track height climbed for background scrolling
+        this.heightClimbed = 0;
+        this.maxHeightReached = 0;
+        
         this.init();
     }
 
@@ -64,20 +68,36 @@ class Game {
         document.getElementById("resume-btn").addEventListener("click", () => this.togglePause());
         document.getElementById("tutorial-btn").addEventListener("click", () => this.showTutorial());
         document.getElementById("tutorial-close-btn").addEventListener("click", () => this.hideTutorial());
-        document.getElementById("tutorial-start-btn").addEventListener("click", () => this.startFromTutorial());
+        document.getElementById("tutorial-start-btn").addEventListener("click", () => this.hideTutorial());
         
         // Sound controls
         document.getElementById("sound-btn").addEventListener("click", () => this.toggleSound());
         document.getElementById("music-btn").addEventListener("click", () => this.toggleMusic());
 
         this.updateLeaderboardDisplay("welcome-leaderboard");
+        this.setupClickableLeaderboard();
         this.toggleGameUI(false);
         this.hideLoading();
         
-        // Show tutorial for first-time players
+        // Show tutorial for first-time players but don't block name entry
         if (!this.state.tutorialShown) {
             this.showTutorial();
         }
+    }
+
+    setupClickableLeaderboard() {
+        // Make leaderboard entries clickable to start with that name
+        const welcomeLeaderboard = document.getElementById("welcome-leaderboard");
+        welcomeLeaderboard.addEventListener("click", (e) => {
+            const li = e.target.closest("li");
+            if (li) {
+                const nameSpan = li.querySelector(".leaderboard-name");
+                if (nameSpan) {
+                    const name = nameSpan.textContent.replace(/^\d+\.\s*/, '').trim();
+                    document.getElementById("player-name").value = name;
+                }
+            }
+        });
     }
 
     showLoading() {
@@ -113,6 +133,20 @@ class Game {
     }
 
     handleStartClick() {
+        const nameInput = document.getElementById("player-name");
+        const name = nameInput.value.trim();
+        
+        // Require a name before starting
+        if (!name) {
+            nameInput.focus();
+            nameInput.style.animation = 'shake 0.3s ease-in-out';
+            nameInput.placeholder = 'Please enter your name!';
+            setTimeout(() => {
+                nameInput.style.animation = '';
+            }, 300);
+            return;
+        }
+        
         Sound.resume();
         Sound.playSelect();
         this.startGame();
@@ -151,6 +185,8 @@ class Game {
         this.powerUps = [];
         this.enemies = [];
         this.particles = [];
+        this.heightClimbed = 0;
+        this.maxHeightReached = 0;
         this.createInitialPlatforms();
         this.updateScoreDisplay();
         this.updateLivesDisplay();
@@ -190,11 +226,6 @@ class Game {
         this.state.markTutorialShown();
     }
 
-    startFromTutorial() {
-        this.hideTutorial();
-        this.handleStartClick();
-    }
-
     toggleSound() {
         const enabled = Sound.toggleSound();
         document.getElementById("sound-btn").textContent = enabled ? "🔊" : "🔇";
@@ -209,11 +240,11 @@ class Game {
     }
 
     createInitialPlatforms() {
-        // Platform under Susie
+        // Platform under Susie - make it wider for easier start
         this.platforms.push(new Platform(
-            this.canvas.width / 2 - 70, 
+            this.canvas.width / 2 - 80, 
             this.canvas.height - 120, 
-            140, 
+            160, 
             28
         ));
 
@@ -232,13 +263,14 @@ class Game {
         const type = this.choosePlatformType();
         this.platforms.push(new Platform(x, y, width, 28, type));
 
-        // Spawn collectible
+        // Spawn collectible - LARGER SIZE (half to two-thirds of Susie's height)
         if (Math.random() < 0.5) {
             const collectibleType = Math.random() < 0.6 ? "yarn" : "candy";
+            const collectibleSize = 45 + Math.random() * 10; // 45-55px (about half Susie's height of 75px)
             this.collectibles.push(new Collectible(
-                x + Math.random() * (width - 35), 
-                y - 45, 
-                35, 
+                x + Math.random() * (width - collectibleSize), 
+                y - collectibleSize - 10, 
+                collectibleSize, 
                 collectibleType
             ));
         }
@@ -298,20 +330,33 @@ class Game {
 
         this.susie.update(this.canvas.width, this.canvas.height, this.input);
 
+        // NEW MECHANIC: Player must actively move to jump higher
+        // If not moving left/right, reduce jump power significantly
+        const isMoving = this.input.left || this.input.right;
+
         // Platform collisions & updates
         this.platforms.forEach((platform, index) => {
             platform.update(speed, this.canvas.width);
 
-            // Collision detection
+            // Improved collision detection - Susie lands closer to platform
+            const collisionBuffer = 8; // Smaller buffer for tighter collision
             if (platform.isCollidable() &&
                 this.susie.vy > 0 &&
-                this.susie.x + this.susie.width > platform.x &&
-                this.susie.x < platform.x + platform.width &&
-                this.susie.y + this.susie.height > platform.y &&
+                this.susie.x + this.susie.width - 5 > platform.x &&
+                this.susie.x + 5 < platform.x + platform.width &&
+                this.susie.y + this.susie.height > platform.y - collisionBuffer &&
                 this.susie.y + this.susie.height < platform.y + platform.height + this.susie.vy) {
 
+                // Land on platform
                 this.susie.land(platform.y);
-                const jumpMultiplier = platform.getJumpMultiplier();
+                
+                // NEW MECHANIC: Jump power depends on player input
+                let jumpMultiplier = platform.getJumpMultiplier();
+                if (!isMoving) {
+                    // Reduced jump when not moving - makes the game more engaging
+                    jumpMultiplier *= 0.7;
+                }
+                
                 this.susie.jump(jumpMultiplier);
                 platform.onTouch();
                 
@@ -324,6 +369,12 @@ class Game {
                 }
                 
                 this.createJumpParticles();
+                
+                // Track height climbed
+                this.heightClimbed += speed * 2;
+                if (this.heightClimbed > this.maxHeightReached) {
+                    this.maxHeightReached = this.heightClimbed;
+                }
             }
 
             if (platform.y > this.canvas.height) {
@@ -371,7 +422,7 @@ class Game {
         this.enemies.forEach((enemy, index) => {
             enemy.update(speed);
             if (this.checkCollision(this.susie, enemy)) {
-                if (!this.susie.invincible) {
+                if (!this.susie.invincible && !this.state.shieldActive) {
                     const gameOver = this.state.loseLife();
                     this.updateLivesDisplay();
                     
@@ -385,6 +436,12 @@ class Game {
                         this.createHitParticles();
                         this.triggerScreenShake(8);
                     }
+                } else if (this.state.shieldActive) {
+                    // Shield absorbs the hit
+                    this.state.shieldActive = false;
+                    this.updatePowerUpDisplay();
+                    Sound.playHit();
+                    this.createHitParticles();
                 }
                 this.enemies.splice(index, 1);
             }
@@ -518,7 +575,7 @@ class Game {
         this.ctx.save();
         this.ctx.translate(this.screenShakeX, this.screenShakeY);
 
-        // Draw parallax background
+        // Draw parallax background with height-based scrolling
         this.drawParallaxBackground();
         
         // Draw game objects
@@ -559,15 +616,30 @@ class Game {
     }
 
     drawParallaxBackground() {
-        // Sky gradient - warm sunset/sunrise feel
+        // Calculate how much the background should scroll based on height climbed
+        const bgScrollFactor = Math.min(this.heightClimbed / 2000, 1); // Max scroll at 2000 height
+        
+        // Sky gradient - changes as you climb higher
         const grad = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        grad.addColorStop(0, '#87CEEB');    // Light sky blue
-        grad.addColorStop(0.3, '#B8D4E8');  // Soft blue-lavender
-        grad.addColorStop(0.5, '#D4C4E8');  // Light purple
-        grad.addColorStop(0.7, '#E8D4E0');  // Pink tint
-        grad.addColorStop(0.85, '#F0E8E0'); // Warm light
-        grad.addColorStop(0.95, '#FFF8E7'); // Warm cream
-        grad.addColorStop(1, '#FFE4B5');    // Moccasin/warm
+        
+        // Transition from warm ground colors to cooler sky colors as you climb
+        if (bgScrollFactor < 0.5) {
+            // Lower altitude - warmer colors
+            grad.addColorStop(0, '#87CEEB');    // Light sky blue
+            grad.addColorStop(0.3, '#B8D4E8');  // Soft blue-lavender
+            grad.addColorStop(0.5, '#D4C4E8');  // Light purple
+            grad.addColorStop(0.7, '#E8D4E0');  // Pink tint
+            grad.addColorStop(0.85, '#F0E8E0'); // Warm light
+            grad.addColorStop(1, '#FFE4B5');    // Moccasin/warm
+        } else {
+            // Higher altitude - cooler, more sky-like
+            grad.addColorStop(0, '#5BA3D0');    // Deeper sky blue
+            grad.addColorStop(0.3, '#7BB8E0');  // Medium blue
+            grad.addColorStop(0.5, '#9DCAEA');  // Lighter blue
+            grad.addColorStop(0.7, '#B8D8F0');  // Very light blue
+            grad.addColorStop(1, '#D0E8F8');    // Almost white blue
+        }
+        
         this.ctx.fillStyle = grad;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -581,53 +653,56 @@ class Game {
         
         const assets = window.gameAssets;
         
-        // Draw mountains layer (far background - slowest)
+        // Calculate vertical position based on height - ground disappears as you climb
+        const groundFadeStart = 500;  // Start fading ground at this height
+        const groundFadeEnd = 1500;   // Ground completely gone at this height
+        const groundOpacity = Math.max(0, 1 - (this.heightClimbed - groundFadeStart) / (groundFadeEnd - groundFadeStart));
+        
+        // Draw mountains layer (far background - slowest) - always visible but moves up
         if (assets && assets.bg_mountains) {
             const mountainImg = assets.bg_mountains;
             const mountainScale = this.canvas.height * 0.5 / mountainImg.height;
             const mountainWidth = mountainImg.width * mountainScale;
-            const mountainY = this.canvas.height * 0.3;
             
-            // Tile the mountains
-            const mountainOffsetX = -(this.mountainOffset % mountainWidth);
-            for (let x = mountainOffsetX; x < this.canvas.width + mountainWidth; x += mountainWidth) {
-                this.ctx.drawImage(
-                    mountainImg,
-                    x, mountainY,
-                    mountainWidth, this.canvas.height * 0.5
-                );
+            // Mountains move down as you climb, eventually off screen
+            const mountainY = this.canvas.height * 0.3 + (this.heightClimbed * 0.1);
+            
+            if (mountainY < this.canvas.height) {
+                const mountainOffsetX = -(this.mountainOffset % mountainWidth);
+                for (let x = mountainOffsetX; x < this.canvas.width + mountainWidth; x += mountainWidth) {
+                    this.ctx.drawImage(
+                        mountainImg,
+                        x, mountainY,
+                        mountainWidth, this.canvas.height * 0.5
+                    );
+                }
             }
         }
         
-        // Draw trees layer (mid background - medium speed)
-        if (assets && assets.bg_trees) {
+        // Draw trees layer (mid background - medium speed) - fades as you climb
+        if (assets && assets.bg_trees && groundOpacity > 0) {
+            this.ctx.save();
+            this.ctx.globalAlpha = groundOpacity;
+            
             const treeImg = assets.bg_trees;
             const treeScale = this.canvas.height * 0.35 / treeImg.height;
             const treeWidth = treeImg.width * treeScale;
-            const treeY = this.canvas.height * 0.55;
             
-            // Tile the trees
-            const treeOffsetX = -(this.treeOffset % treeWidth);
-            for (let x = treeOffsetX; x < this.canvas.width + treeWidth; x += treeWidth) {
-                this.ctx.drawImage(
-                    treeImg,
-                    x, treeY,
-                    treeWidth, this.canvas.height * 0.45
-                );
+            // Trees move down faster as you climb
+            const treeY = this.canvas.height * 0.55 + (this.heightClimbed * 0.2);
+            
+            if (treeY < this.canvas.height + 100) {
+                const treeOffsetX = -(this.treeOffset % treeWidth);
+                for (let x = treeOffsetX; x < this.canvas.width + treeWidth; x += treeWidth) {
+                    this.ctx.drawImage(
+                        treeImg,
+                        x, treeY,
+                        treeWidth, this.canvas.height * 0.45
+                    );
+                }
             }
-        }
-    }
-
-    drawPixelHill(x, y, width, height) {
-        // Draw a simple rounded hill shape with pixel-style steps
-        const steps = 8;
-        const stepWidth = width / steps;
-        
-        for (let i = 0; i < steps; i++) {
-            // Parabolic curve for hill shape
-            const t = (i - steps / 2) / (steps / 2);
-            const h = height * (1 - t * t);
-            this.ctx.fillRect(x + i * stepWidth, y + (height - h), stepWidth + 1, h + 50);
+            
+            this.ctx.restore();
         }
     }
 
@@ -683,31 +758,45 @@ class Game {
     }
 
     updatePowerUpDisplay() {
-        const powerUpEl = document.getElementById("powerup-display");
-        const activePowerUps = this.state.getActivePowerUps();
+        const display = document.getElementById("powerup-display");
+        display.innerHTML = '';
         
-        powerUpEl.innerHTML = '';
-        
-        activePowerUps.forEach(pu => {
-            const div = document.createElement('div');
-            div.className = 'powerup-indicator';
-            
+        if (this.state.shieldActive) {
             const icon = document.createElement('span');
-            icon.className = 'powerup-icon';
-            if (pu.type === 'shield') icon.textContent = '🛡️';
-            else if (pu.type === 'magnet') icon.textContent = '🧲';
-            else if (pu.type === 'double') icon.textContent = '2️⃣';
+            icon.className = 'powerup-icon shield';
+            icon.textContent = '🛡️';
+            display.appendChild(icon);
+        }
+        
+        if (this.state.magnetActive) {
+            const icon = document.createElement('span');
+            icon.className = 'powerup-icon magnet';
+            icon.textContent = '🧲';
+            display.appendChild(icon);
+        }
+        
+        if (this.state.doublePointsActive) {
+            const icon = document.createElement('span');
+            icon.className = 'powerup-icon double';
+            icon.textContent = '2️⃣';
+            display.appendChild(icon);
+        }
+    }
+
+    updateLeaderboardDisplay(elementId) {
+        const leaderboard = this.state.getLeaderboard();
+        const list = document.getElementById(elementId);
+        list.innerHTML = '';
+
+        const medals = ['🥇', '🥈', '🥉'];
+        leaderboard.slice(0, 5).forEach((entry, index) => {
+            const li = document.createElement('li');
+            li.className = 'leaderboard-entry';
+            li.style.cursor = 'pointer';
             
-            const bar = document.createElement('div');
-            bar.className = 'powerup-bar';
-            const fill = document.createElement('div');
-            fill.className = 'powerup-bar-fill';
-            fill.style.width = `${(pu.timer / pu.maxTimer) * 100}%`;
-            bar.appendChild(fill);
-            
-            div.appendChild(icon);
-            div.appendChild(bar);
-            powerUpEl.appendChild(div);
+            const medal = medals[index] || `${index + 1}.`;
+            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${index + 1}. ${entry.name}</span> <span class="leaderboard-score">${entry.score}</span>`;
+            list.appendChild(li);
         });
     }
 
@@ -715,61 +804,25 @@ class Game {
         this.state.active = false;
         Sound.stopMusic();
         Sound.playGameOver();
-        this.state.saveScore();
-
+        
+        const isHighScore = this.state.saveScore();
+        
         document.getElementById("final-score").textContent = `Score: ${this.state.score}`;
-        document.getElementById("high-score-message").textContent = this.state.getHighScoreMessage();
+        document.getElementById("high-score-message").textContent = isHighScore ? "🎉 NEW HIGH SCORE! 🎉" : "";
         
         // Show stats
-        const stats = this.state.getStats();
-        document.getElementById("stats-display").innerHTML = `
-            <div class="stat-item">Platforms: ${stats.platformsCleared}</div>
-            <div class="stat-item">Collectibles: ${stats.collectiblesGathered}</div>
-            <div class="stat-item">Enemies Avoided: ${stats.enemiesAvoided}</div>
-            <div class="stat-item">Best Combo: ${stats.highestCombo}</div>
+        const statsEl = document.getElementById("stats-display");
+        statsEl.innerHTML = `
+            <div class="stat-item">🧶 Collectibles: ${this.state.collectiblesGathered}</div>
+            <div class="stat-item">🪵 Platforms: ${this.state.platformsCleared}</div>
+            <div class="stat-item">👾 Enemies Avoided: ${this.state.enemiesAvoided}</div>
+            <div class="stat-item">📏 Height: ${Math.round(this.maxHeightReached)}m</div>
         `;
-
+        
         this.updateLeaderboardDisplay("gameover-leaderboard");
         document.getElementById("game-over-screen").style.display = "flex";
     }
-
-    updateLeaderboardDisplay(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.innerHTML = "";
-
-        if (this.state.leaderboard.length === 0) {
-            const li = document.createElement("li");
-            li.style.textAlign = "center";
-            li.style.padding = "10px";
-            li.style.opacity = "0.7";
-            li.textContent = "No scores yet. Be the first!";
-            el.appendChild(li);
-            return;
-        }
-
-        this.state.leaderboard.slice(0, 5).forEach((entry, i) => {
-            const li = document.createElement("li");
-            li.className = "leaderboard-item";
-            
-            // Highlight current player
-            if (entry.name === this.state.playerName) {
-                li.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-            }
-            
-            // Medal for top 3
-            let medal = '';
-            if (i === 0) medal = '🥇 ';
-            else if (i === 1) medal = '🥈 ';
-            else if (i === 2) medal = '🥉 ';
-            
-            li.innerHTML = `<span>${medal}${i + 1}. ${entry.name}</span><span>${entry.score}</span>`;
-            el.appendChild(li);
-        });
-    }
 }
 
-// Start the game when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new Game();
-});
+// Start the game
+new Game();
