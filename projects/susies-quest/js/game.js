@@ -68,7 +68,6 @@ class Game {
         document.getElementById("resume-btn").addEventListener("click", () => this.togglePause());
         document.getElementById("tutorial-btn").addEventListener("click", () => this.showTutorial());
         document.getElementById("tutorial-close-btn").addEventListener("click", () => this.hideTutorial());
-        document.getElementById("tutorial-start-btn").addEventListener("click", () => this.hideTutorial());
         
         // Sound controls
         document.getElementById("sound-btn").addEventListener("click", () => this.toggleSound());
