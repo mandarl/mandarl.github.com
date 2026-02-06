@@ -865,11 +865,12 @@ class Game {
             const medal = medals[index] || `${index + 1}.`;
             let nameDisplay = entry.name || 'Anonymous';
             // Truncate long names to prevent wrapping
-            if (nameDisplay.length > 8) {
-                nameDisplay = nameDisplay.substring(0, 7) + '…';
+            if (nameDisplay.length > 6) {
+                nameDisplay = nameDisplay.substring(0, 5) + '…';
             }
-            const scoreDisplay = (entry.score || 0).toLocaleString();
-            li.innerHTML = `<span class="leaderboard-medal">${medal}</span> <span class="leaderboard-name">${nameDisplay}</span> <span class="leaderboard-score">${scoreDisplay}</span>`;
+            // Use plain number without comma formatting to save space
+            const scoreDisplay = entry.score || 0;
+            li.innerHTML = `<span class="leaderboard-medal">${medal}</span><span class="leaderboard-name">${nameDisplay}</span><span class="leaderboard-score">${scoreDisplay}</span>`;
             list.appendChild(li);
         }
     }
