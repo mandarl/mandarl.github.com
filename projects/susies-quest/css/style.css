@@ -398,6 +398,22 @@ button:active, .btn:active {
         inset 0 2px 0 rgba(255, 255, 255, 0.3);
 }
 
+button:disabled {
+    background: linear-gradient(180deg, #b0a0a0 0%, #999 50%, #888 100%);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+    box-shadow: 
+        0 4px 0 #666,
+        0 6px 10px rgba(0, 0, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+    transform: none;
+}
+
+button:disabled:active {
+    transform: none;
+}
+
 button.secondary {
     background: linear-gradient(180deg, #7ec8e3 0%, #6699cc 50%, #4477aa 100%);
     box-shadow: 

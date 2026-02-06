@@ -72,6 +72,17 @@ class Game {
         // Sound controls
         document.getElementById("sound-btn").addEventListener("click", () => this.toggleSound());
         document.getElementById("music-btn").addEventListener("click", () => this.toggleMusic());
+        
+        // Enable/disable start button based on name input
+        const nameInput = document.getElementById("player-name");
+        const startBtn = document.getElementById("start-btn");
+        const updateStartBtn = () => {
+            const hasName = nameInput.value.trim().length > 0;
+            startBtn.disabled = !hasName;
+        };
+        nameInput.addEventListener("input", updateStartBtn);
+        nameInput.addEventListener("change", updateStartBtn);
+        updateStartBtn();
 
         await this.fetchAndDisplayLeaderboard("welcome-leaderboard");
         this.setupClickableLeaderboard();
@@ -102,6 +113,7 @@ class Game {
                     
                     // Animate the name input: flash border + scale pulse
                     input.value = name;
+                    input.dispatchEvent(new Event('input'));  // Trigger start button enable
                     input.classList.add('name-filled');
                     input.focus();
                     setTimeout(() => {
