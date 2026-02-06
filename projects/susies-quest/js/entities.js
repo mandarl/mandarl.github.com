@@ -11,7 +11,8 @@ export class Susie {
 
     reset(canvasWidth, canvasHeight) {
         this.x = canvasWidth / 2 - this.width / 2;
-        this.y = canvasHeight - 200;
+        // Respawn at 35-40% from top (60-65% up the screen) for better recovery
+        this.y = canvasHeight * 0.35;
         this.vx = 0;
         this.vy = 0;
         this.isJumping = false;
