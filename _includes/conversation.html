@@ -4,6 +4,7 @@
   
   Twitter link auto-composes a tweet with the post title, URL, and author handle.
   LinkedIn links to the author's profile.
+  Copy Link copies the post URL to clipboard.
 {% endcomment %}
 
 {% assign tweet_text = page.title | url_encode %}
@@ -31,5 +32,27 @@
       {% include icons/linkedin.svg %}
       Connect on LinkedIn
     </a>
+    <button class="btn btn-secondary btn-icon conversation-btn copy-link-btn" 
+            onclick="copyPostLink(this)" 
+            data-url="{{ page.url | absolute_url }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+      <span class="copy-link-text">Copy Link</span>
+    </button>
   </div>
 </div>
+
+<script>
+function copyPostLink(btn) {
+  var url = btn.getAttribute('data-url');
+  var textEl = btn.querySelector('.copy-link-text');
+  navigator.clipboard.writeText(url).then(function() {
+    textEl.textContent = 'Copied!';
+    setTimeout(function() {
+      textEl.textContent = 'Copy Link';
+    }, 2000);
+  });
+}
+</script>
