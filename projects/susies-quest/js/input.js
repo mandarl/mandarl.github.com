@@ -8,7 +8,14 @@ export class InputHandler {
     }
 
     initKeyboard() {
+        // Check if a text input or textarea is focused
+        const isTyping = () => {
+            const el = document.activeElement;
+            return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+        };
+
         window.addEventListener('keydown', (e) => {
+            if (isTyping()) return;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
                 this.left = true;
                 e.preventDefault();
@@ -20,6 +27,7 @@ export class InputHandler {
         });
 
         window.addEventListener('keyup', (e) => {
+            if (isTyping()) return;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
                 this.left = false;
             }
@@ -30,6 +38,7 @@ export class InputHandler {
         
         // Pause with Escape or P
         window.addEventListener('keydown', (e) => {
+            if (isTyping()) return;
             if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') {
                 const pauseBtn = document.getElementById('pause-btn');
                 const pauseScreen = document.getElementById('pause-screen');
