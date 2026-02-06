@@ -324,8 +324,9 @@ p {
 input[type="text"] {
     padding: 14px 18px;
     margin: 12px 0;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: bold;
     width: 85%;
     max-width: 280px;
     border-radius: 25px;
@@ -333,12 +334,24 @@ input[type="text"] {
     background: linear-gradient(180deg, #FFF8DC 0%, #FAEBD7 100%);
     text-align: center;
     outline: none;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     box-shadow: 
         0 4px 0 #654321,
         0 6px 15px rgba(0, 0, 0, 0.2),
         inset 0 2px 0 rgba(255, 255, 255, 0.5);
-    color: #4a3520;
+    color: #3a2510;
+    letter-spacing: 1px;
+}
+
+/* Animation when name is filled from leaderboard click */
+input[type="text"].name-filled {
+    border-color: #FFD700;
+    transform: scale(1.05);
+    box-shadow: 
+        0 4px 0 #b8860b,
+        0 6px 15px rgba(255, 215, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
+    background: linear-gradient(180deg, #FFFDE7 0%, #FFF8DC 100%);
 }
 
 input[type="text"]:focus {
@@ -712,17 +725,17 @@ button.secondary:active {
     font-display: swap;
 }
 
-/* Retro glow effect */
+/* Retro glow effect - subtle */
 .retro-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 3s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FFD700, 0 0 20px #FFD700;
+        text-shadow: 0 0 3px rgba(255, 255, 255, 0.3), 0 0 6px rgba(255, 215, 0, 0.2);
     }
     to {
-        text-shadow: 0 0 10px #fff, 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 40px #FFA500;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 215, 0, 0.3);
     }
 }
 

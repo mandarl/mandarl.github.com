@@ -85,7 +85,7 @@ class Game {
     }
 
     setupClickableLeaderboard() {
-        // Make leaderboard entries clickable to start with that name
+        // Make leaderboard entries clickable to fill name input with animation
         const welcomeLeaderboard = document.getElementById("welcome-leaderboard");
         welcomeLeaderboard.addEventListener("click", (e) => {
             const li = e.target.closest("li");
@@ -93,7 +93,20 @@ class Game {
                 const nameSpan = li.querySelector(".leaderboard-name");
                 if (nameSpan) {
                     const name = nameSpan.textContent.replace(/^\d+\.\s*/, '').trim();
-                    document.getElementById("player-name").value = name;
+                    const input = document.getElementById("player-name");
+                    
+                    // Brief highlight on the clicked leaderboard entry
+                    li.style.transition = 'background 0.2s ease';
+                    li.style.background = 'rgba(255, 215, 0, 0.3)';
+                    setTimeout(() => { li.style.background = ''; }, 300);
+                    
+                    // Animate the name input: flash border + scale pulse
+                    input.value = name;
+                    input.classList.add('name-filled');
+                    input.focus();
+                    setTimeout(() => {
+                        input.classList.remove('name-filled');
+                    }, 600);
                 }
             }
         });
