@@ -43,6 +43,13 @@ show_newsletter_on_home: true
 show_newsletter_on_posts: true
 
 # -----------------------------------------------------------------------------
+# Social Card / Open Graph
+# -----------------------------------------------------------------------------
+# Default image used for social media share cards when a post doesn't specify one
+# Posts can override this by adding `image: /path/to/image.jpg` in front matter
+social_card_image: /assets/images/social-card.png
+
+# -----------------------------------------------------------------------------
 # Content Features
 # -----------------------------------------------------------------------------
 show_share_buttons: true
