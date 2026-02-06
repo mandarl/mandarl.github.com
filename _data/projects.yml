@@ -14,6 +14,15 @@
 #   - external: true if link opens in new tab (optional)
 # =============================================================================
 
+- name: "Susie's Quest"
+  description: "A retro-style platform jumping game. Help Susie collect yarn and candy while avoiding enemies! Features power-ups, multiple platform types, and 8-bit sound effects."
+  url: "/projects/susies-quest"
+  tags:
+    - Game
+    - HTML5 Canvas
+    - Mobile
+  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2"/><path d="M9 11l-2 4"/><path d="M15 11l2 4"/></svg>'
+
 - name: "Markets Heatmap"
   description: "A visual heatmap displaying real-time market data and trends across different sectors and asset classes."
   url: "/projects/markets-heatmap"
@@ -21,11 +30,3 @@
     - Finance
     - Data Visualization
   icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
-
-# Add more projects below:
-# - name: "Another Project"
-#   description: "Description here"
-#   url: "/projects/another"
-#   tags:
-#     - JavaScript
-#     - React

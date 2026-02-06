@@ -1,47 +1,122 @@
 # Susie's Quest
 
-Susie's Quest is a vibrant, fast-paced jumping game built with HTML5 Canvas and Vanilla JavaScript. Players guide Susie through a colorful world, jumping on platforms and collecting items to achieve the highest score possible.
+Susie's Quest is a vibrant, retro-style platform jumping game built with HTML5 Canvas and Vanilla JavaScript. Players guide Susie through a colorful world, jumping on platforms, collecting items, avoiding enemies, and using power-ups to achieve the highest score possible.
 
-## 🚀 Play Now
+## Play Now
 
-**Note: This game is mobile-only.** 
+**[Play Susie's Quest](https://mandar.dev/projects/susies-quest/)**
 
-To play, open `index.html` on a mobile device or use your browser's "Responsive Design Mode" (F12 > Device Toggle) to simulate a mobile screen. Screens wider than 768px will show a "Mobile Only" warning.
+The game is optimized for mobile devices but also works great on desktop with keyboard controls.
 
-## 🎮 How to Play
+## How to Play
 
 ### Objective
-Survival is key! Keep jumping on platforms and avoid falling off the bottom of the screen. The game gets faster and more challenging as your score increases.
+
+Keep jumping on platforms and avoid falling off the bottom of the screen. Collect yarn and candy for points while avoiding spiky enemies. The game gets faster and more challenging as your score increases!
 
 ### Controls
-Susie is controlled exclusively via touch buttons:
-- **Left Arrow (←)**: Move Left
-- **Right Arrow (→)**: Move Right
-- **Auto-Jump**: Susie jumps automatically upon landing on a platform.
+
+**Mobile:**
+- Tap the **◀** button to move left
+- Tap the **▶** button to move right
+- Susie jumps automatically when landing on a platform
+
+**Desktop:**
+- **Arrow Keys** or **WASD** to move left/right
+- **P** or **Escape** to pause
 
 ### Scoring
-- **Yarn**: +100 points
-- **Candy**: +150 points
-- **Surviving Platforms**: +10 points for every platform that passes the bottom of the screen.
 
-## ✨ Features
+| Item | Points |
+|------|--------|
+| Yarn Ball | +100 |
+| Candy | +150 |
+| Platform Cleared | +10 |
+| Enemy Avoided | +25 |
 
-- **Dynamic Gameplay**: The game speed increases over time, challenging your reflexes.
-- **Visual Effects**: Particle systems for jumping and collecting items, plus smooth CSS gradients and decorative cloud backgrounds.
-- **Leaderboard**: Compete for a top spot on the local leaderboard.
-- **Responsive Design**: Optimized for both desktop and mobile devices with touch-friendly controls.
+*Double Points power-up multiplies all scores by 2x!*
 
-## 🛠️ Built With
+## Features
 
-- **HTML5 Canvas**: For high-performance game rendering.
-- **Vanilla JavaScript**: All game logic, physics, and state management.
-- **CSS3**: For the UI, menus, and beautiful backgrounds.
+### Lives System
+Start with 3 lives (up to 5 maximum). Hitting an enemy costs one life. When all lives are lost, the game ends.
 
-## 📁 Repository Structure
+### Power-Ups
 
-- `index.html`: The main entry point containing the game logic, styles, and structure.
-- `*.png`: Image assets for Susie, platforms, and collectibles.
+| Power-Up | Effect | Duration |
+|----------|--------|----------|
+| 🛡️ Shield | Absorbs one enemy hit | 8 seconds |
+| 🧲 Magnet | Attracts nearby collectibles | 8 seconds |
+| 2️⃣ Double Points | 2x score multiplier | 8 seconds |
+
+### Platform Types
+
+| Platform | Behavior |
+|----------|----------|
+| Normal | Standard platform |
+| Moving | Slides horizontally |
+| Cloud | Disappears after one jump |
+| Bouncy | Extra high jump (1.5x) |
+| Breakable | Crumbles after landing |
+
+### Enemies
+Spiky ball enemies patrol the screen. Avoid them or use a shield to survive contact!
+
+### Retro Aesthetics
+- 8-bit style sound effects and music
+- Scanline overlay effect
+- CRT vignette effect
+- Pixelated particle effects
+- Retro "Press Start 2P" font
+
+### Additional Features
+- **Tutorial Screen** - Learn the controls and mechanics
+- **Pause Functionality** - Take a break anytime
+- **Local Leaderboard** - Compete for top scores
+- **Game Statistics** - Track platforms cleared, collectibles gathered, and more
+- **Progressive Difficulty** - Speed increases as you score higher
+
+## Technical Details
+
+### Built With
+- **HTML5 Canvas** - High-performance game rendering
+- **Vanilla JavaScript (ES6 Modules)** - All game logic, physics, and state management
+- **Web Audio API** - Procedural 8-bit sound effects and music
+- **CSS3** - Retro-styled UI with animations
+
+### File Structure
+
+```
+susies-quest/
+├── index.html          # Main game page
+├── css/
+│   └── style.css       # Retro-styled CSS
+├── js/
+│   ├── game.js         # Main game loop and logic
+│   ├── entities.js     # Game entities (Susie, platforms, enemies, etc.)
+│   ├── state.js        # Game state management
+│   ├── input.js        # Input handling (touch + keyboard)
+│   ├── assets.js       # Asset loading
+│   ├── config.js       # Game configuration
+│   └── sound.js        # 8-bit sound system
+├── susie.png           # Character sprite
+├── platform.png        # Platform sprite
+├── yarn.png            # Yarn collectible
+├── candy.png           # Candy collectible
+└── README.md           # This file
+```
+
+### Browser Support
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+- Mobile browsers (iOS Safari, Chrome for Android)
+
+## Credits
+
+Created by Mandar Limaye
 
 ---
 
-Created by Mandar Limaye.
+*Enjoy playing Susie's Quest! 🎮*

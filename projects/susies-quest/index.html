@@ -3,70 +3,196 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Susie's Quest - A retro-style jumping game. Help Susie collect yarn and candy while avoiding enemies!">
+    
     <title>Susie's Quest</title>
+    
+    <!-- Retro Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <h1>Loading...</h1>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Mobile Warning (hidden by default) -->
     <div id="mobile-warning" class="screen">
-        <h1>Mobile Only</h1>
-        <p>Susie's Quest is designed for mobile devices.</p>
-        <p>Please open this page on your phone or tablet to play!</p>
-        <div style="margin-top: 30px; font-size: 50px;">📱</div>
+        <h1>📱 Mobile Optimized</h1>
+        <p>Susie's Quest is designed for mobile devices but works on desktop too!</p>
+        <p>Use Arrow keys or WASD to play on desktop.</p>
     </div>
 
     <div id="game-container">
+        <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen">
-            <div style="width: 80px; height: 100px; position: relative; margin-bottom: 20px;">
-                <div
-                    style="width: 70px; height: 75px; background: #ffdbac; border-radius: 50%; position: absolute; left: 5px; top: 10px;">
-                </div>
-                <div
-                    style="width: 80px; height: 40px; background: #1a1a1a; position: absolute; top: 5px; border-radius: 40px 40px 0 0;">
-                </div>
-                <div
-                    style="width: 30px; height: 25px; background: #1a1a1a; position: absolute; bottom: 35px; left: -10px; border-radius: 20px 0 20px 0; transform: rotate(-20deg);">
-                </div>
-                <div
-                    style="width: 30px; height: 25px; background: #1a1a1a; position: absolute; bottom: 35px; right: -10px; border-radius: 0 20px 0 20px; transform: rotate(20deg);">
-                </div>
-                <div
-                    style="width: 8px; height: 5px; background: #333; position: absolute; top: 45px; left: 25px; border-radius: 50%;">
-                </div>
-                <div
-                    style="width: 8px; height: 5px; background: #333; position: absolute; top: 45px; right: 25px; border-radius: 50%;">
-                </div>
+            <div class="character-preview">
+                <img src="susie.png" alt="Susie">
             </div>
-            <h1>Susie's Quest</h1>
+            
+            <h1 class="retro-glow">Susie's Quest</h1>
             <p>Help Susie collect yarn and candy as she jumps through her colorful world!</p>
-            <input type="text" id="player-name" placeholder="Enter your name" maxlength="15">
-            <button id="start-btn">START GAME</button>
-            <p style="font-size: 12px; opacity: 0.8; margin-top: -5px;">(Or press Arrows/WASD on Desktop)</p>
+            
+            <input type="text" id="player-name" placeholder="Enter your name" maxlength="12" autocomplete="off">
+            
+            <button id="start-btn">▶ START GAME</button>
+            
+            <button id="tutorial-btn" class="secondary">❓ HOW TO PLAY</button>
+            
+            <p style="font-size: 9px; opacity: 0.7; margin-top: 5px;">
+                Desktop: Arrow keys / WASD | P to pause
+            </p>
 
             <div class="leaderboard">
-                <h2>Global Leaderboard</h2>
+                <h2>🏆 Leaderboard</h2>
                 <ul class="leaderboard-list" id="welcome-leaderboard">
                     <!-- Generated dynamically -->
                 </ul>
             </div>
         </div>
 
+        <!-- Tutorial Screen -->
+        <div id="tutorial-screen" class="screen">
+            <div class="tutorial-content">
+                <h1>How to Play</h1>
+                
+                <div class="tutorial-section">
+                    <h3>🎮 Controls</h3>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">⬅️ ➡️</span>
+                        <span>Tap the arrow buttons to move left or right</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">⬆️</span>
+                        <span>Susie jumps automatically when landing on platforms</span>
+                    </div>
+                </div>
+
+                <div class="tutorial-section">
+                    <h3>🎯 Objective</h3>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🧶</span>
+                        <span>Collect yarn balls for +100 points</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🍭</span>
+                        <span>Collect candy for +150 points</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">⚠️</span>
+                        <span>Avoid spiky enemies or lose a life!</span>
+                    </div>
+                </div>
+
+                <div class="tutorial-section">
+                    <h3>🌟 Power-Ups</h3>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🛡️</span>
+                        <span>Shield - Protects from one enemy hit</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🧲</span>
+                        <span>Magnet - Attracts nearby collectibles</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">2️⃣</span>
+                        <span>Double Points - 2x score for a limited time</span>
+                    </div>
+                </div>
+
+                <div class="tutorial-section">
+                    <h3>🪵 Platform Types</h3>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🟫</span>
+                        <span>Normal - Standard platform</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🟩</span>
+                        <span>Moving - Slides left and right</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">☁️</span>
+                        <span>Cloud - Disappears after one jump</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">💗</span>
+                        <span>Bouncy - Extra high jump!</span>
+                    </div>
+                    <div class="tutorial-item">
+                        <span class="tutorial-icon">🟧</span>
+                        <span>Breakable - Crumbles after landing</span>
+                    </div>
+                </div>
+
+                <div class="tutorial-buttons">
+                    <button id="tutorial-start-btn">▶ START</button>
+                    <button id="tutorial-close-btn" class="secondary">✕ CLOSE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
         <canvas id="game-canvas"></canvas>
 
-        <div id="left-btn" class="control-btn">←</div>
-        <div id="right-btn" class="control-btn">→</div>
+        <!-- Sound Controls -->
+        <div class="sound-controls">
+            <button id="sound-btn" class="sound-btn">🔊</button>
+            <button id="music-btn" class="sound-btn">🎵</button>
+        </div>
 
+        <!-- Pause Button -->
+        <button id="pause-btn">⏸</button>
+
+        <!-- Lives Display -->
+        <div id="lives-display">
+            <!-- Hearts generated dynamically -->
+        </div>
+
+        <!-- Score Display -->
         <div id="score-display" class="score-display">Score: 0</div>
 
+        <!-- Power-up Display -->
+        <div id="powerup-display">
+            <!-- Power-up indicators generated dynamically -->
+        </div>
+
+        <!-- Control Buttons -->
+        <div id="left-btn" class="control-btn">◀</div>
+        <div id="right-btn" class="control-btn">▶</div>
+
+        <!-- Pause Screen -->
+        <div id="pause-screen" class="screen">
+            <h1>⏸ PAUSED</h1>
+            <div class="pause-buttons">
+                <button id="resume-btn">▶ RESUME</button>
+                <button onclick="location.reload()" class="secondary">🏠 MAIN MENU</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
         <div id="game-over-screen" class="screen">
-            <h1>Game Over!</h1>
-            <p id="final-score">Your score: 0</p>
-            <p id="high-score-message"></p>
-            <button id="restart-btn">PLAY AGAIN</button>
+            <h1>💔 Game Over</h1>
+            <p id="final-score" style="font-size: 16px; color: #ffcc00;">Score: 0</p>
+            <p id="high-score-message" style="color: #88ff88;"></p>
+            
+            <div id="stats-display">
+                <!-- Stats generated dynamically -->
+            </div>
+            
+            <button id="restart-btn">🔄 PLAY AGAIN</button>
 
             <div class="leaderboard">
-                <h2>Global Leaderboard</h2>
+                <h2>🏆 Leaderboard</h2>
                 <ul class="leaderboard-list" id="gameover-leaderboard">
                     <!-- Generated dynamically -->
                 </ul>

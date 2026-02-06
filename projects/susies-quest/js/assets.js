@@ -1,147 +1,251 @@
-const createSVGImage = (svgString) => {
+// Asset loader for PNG images
+const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+    });
+};
+
+// Asset paths
+const ASSET_PATHS = {
+    susie: 'susie.png',
+    platform: 'platform.png',
+    yarn: 'yarn.png',
+    candy: 'candy.png',
+    // Power-up icons (will be generated as canvas)
+    powerup_shield: null,
+    powerup_magnet: null,
+    powerup_double: null,
+    // Enemy (will be generated as canvas)
+    enemy: null
+};
+
+// Generate retro-style power-up icons
+const generatePowerUpIcon = (type) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    
+    // Pixelated rendering
+    ctx.imageSmoothingEnabled = false;
+    
+    if (type === 'shield') {
+        // Blue shield icon
+        ctx.fillStyle = '#4488ff';
+        ctx.beginPath();
+        ctx.moveTo(16, 2);
+        ctx.lineTo(28, 8);
+        ctx.lineTo(28, 18);
+        ctx.lineTo(16, 30);
+        ctx.lineTo(4, 18);
+        ctx.lineTo(4, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#2266cc';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // Inner highlight
+        ctx.fillStyle = '#66aaff';
+        ctx.beginPath();
+        ctx.moveTo(16, 6);
+        ctx.lineTo(24, 10);
+        ctx.lineTo(24, 16);
+        ctx.lineTo(16, 24);
+        ctx.lineTo(8, 16);
+        ctx.lineTo(8, 10);
+        ctx.closePath();
+        ctx.fill();
+    } else if (type === 'magnet') {
+        // Red magnet icon
+        ctx.fillStyle = '#ff4444';
+        ctx.fillRect(4, 4, 8, 20);
+        ctx.fillRect(20, 4, 8, 20);
+        ctx.fillRect(4, 4, 24, 8);
+        ctx.fillStyle = '#cc2222';
+        ctx.fillRect(4, 20, 8, 8);
+        ctx.fillRect(20, 20, 8, 8);
+        // Poles
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(6, 22, 4, 4);
+        ctx.fillStyle = '#888888';
+        ctx.fillRect(22, 22, 4, 4);
+    } else if (type === 'double') {
+        // Gold 2x icon
+        ctx.fillStyle = '#ffcc00';
+        ctx.beginPath();
+        ctx.arc(16, 16, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#cc9900';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = '#884400';
+        ctx.font = 'bold 16px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('2X', 16, 16);
+    }
+    
     const img = new Image();
-    const svg = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svg);
-    img.src = url;
+    img.src = canvas.toDataURL();
     return img;
 };
 
-// --- SUSIE (High-Fidelity 2D) ---
-const susieSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60">
-    <defs>
-        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#ffdbac;stop-opacity:1" />
-            <stop offset="70%" style="stop-color:#f1c27d;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#e0ac69;stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#333;stop-opacity:1" />
-            <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-        </linearGradient>
-        <radialGradient id="eyeShine" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" style="stop-color:#fff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#fff;stop-opacity:0" />
-        </radialGradient>
-    </defs>
-    <!-- Hair (Back) -->
-    <path d="M4,15 Q20,2 36,15 L39,35 Q42,50 32,45 Q20,48 8,45 Q-2,50 1,35 Z" fill="url(#hairGrad)"/>
-    <!-- Face Shape -->
-    <path d="M10,15 Q20,10 30,15 L32,28 Q32,42 20,44 Q8,42 8,28 Z" fill="url(#skinGrad)"/>
-    <!-- Realistic Almond Eyes -->
-    <g transform="translate(13,24)">
-        <path d="M0,0 Q3,-4 7,0 Q3,2 0,0 Z" fill="white"/> <!-- Sclera -->
-        <circle cx="3.5" cy="-0.5" r="2" fill="#222"/> <!-- Iris -->
-        <circle cx="2.5" cy="-1.5" r="0.8" fill="white"/> <!-- Shine -->
-    </g>
-    <g transform="translate(20,24)">
-        <path d="M0,0 Q3,-4 7,0 Q3,2 0,0 Z" fill="white"/>
-        <circle cx="3.5" cy="-0.5" r="2" fill="#222"/>
-        <circle cx="2.5" cy="-1.5" r="0.8" fill="white"/>
-    </g>
-    <!-- Lips -->
-    <path d="M18,36 Q20,38 22,36" fill="none" stroke="#b27f55" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- Detailed Hair Flips -->
-    <path d="M5,28 Q-3,50 10,48 Q15,46 12,35" fill="url(#hairGrad)"/>
-    <path d="M35,28 Q43,50 30,48 Q25,46 28,35" fill="url(#hairGrad)"/>
-    <path d="M12,12 Q20,5 28,12" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/> <!-- Hair highlight -->
-    <!-- White T-Shirt with Folds -->
-    <path d="M9,41 L31,41 L33,54 L7,54 Z" fill="#ffffff"/>
-    <path d="M10,41 Q20,44 30,41 L30,44 Q20,47 10,44 Z" fill="#e0e0e0"/> <!-- Shadow fold -->
-    <path d="M7,41 L3,48 L7,52 L11,46 Z" fill="#ffffff"/> <!-- L Sleeve -->
-    <path d="M33,41 L37,48 L33,52 L29,46 Z" fill="#ffffff"/> <!-- R Sleeve -->
-    <!-- Denim Skirt Textured -->
-    <path d="M7,54 L33,54 L35,60 L5,60 Z" fill="#3b5998"/>
-    <path d="M7,54 H33" stroke="#253a6b" stroke-width="2"/> <!-- Seam -->
-    <rect x="15" y="55" width="10" height="2" fill="#253a6b" opacity="0.3"/> <!-- Pocket detail -->
-</svg>`;
-
-// --- YARN (Fuzzy with Needles) ---
-const yarnSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <defs>
-        <radialGradient id="yarnRad" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" style="stop-color:#ff80ab;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#880e4f;stop-opacity:1" />
-        </radialGradient>
-        <filter id="fuzz">
-            <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
-        </filter>
-    </defs>
-    <!-- Knitting Needles (Background) -->
-    <g stroke="#b0bec5" stroke-width="1.5" stroke-linecap="round">
-        <line x1="2" y1="2" x2="28" y2="28" />
-        <line x1="28" y1="2" x2="2" y2="28" />
-    </g>
-    <!-- Needle Tips/Knobs -->
-    <circle cx="2" cy="2" r="2" fill="#78909c" />
-    <circle cx="28" cy="2" r="2" fill="#78909c" />
+// Generate retro-style enemy sprite
+const generateEnemySprite = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
     
-    <!-- Fuzzy Yarn Ball -->
-    <circle cx="15" cy="15" r="12" fill="url(#yarnRad)" filter="url(#fuzz)" />
+    ctx.imageSmoothingEnabled = false;
     
-    <!-- Thread Pattern -->
-    <g fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1" opacity="0.6">
-        <path d="M7,15 Q15,7 23,15"/>
-        <path d="M7,11 Q15,3 23,11"/>
-        <path d="M7,19 Q15,11 23,19"/>
-        <path d="M12,7 Q20,15 12,23"/>
-    </g>
-    <!-- Loose Thread -->
-    <path d="M15,27 Q20,30 25,25" fill="none" stroke="#ff80ab" stroke-width="1.5" stroke-linecap="round" />
-</svg>`;
+    // Spiky enemy ball (retro style)
+    ctx.fillStyle = '#8B0000';
+    ctx.beginPath();
+    ctx.arc(16, 16, 10, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Spikes
+    ctx.fillStyle = '#ff4444';
+    const spikes = 8;
+    for (let i = 0; i < spikes; i++) {
+        const angle = (i / spikes) * Math.PI * 2;
+        const x1 = 16 + Math.cos(angle) * 8;
+        const y1 = 16 + Math.sin(angle) * 8;
+        const x2 = 16 + Math.cos(angle) * 15;
+        const y2 = 16 + Math.sin(angle) * 15;
+        ctx.beginPath();
+        ctx.moveTo(x1 - 3, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x1 + 3, y1);
+        ctx.closePath();
+        ctx.fill();
+    }
+    
+    // Evil eyes
+    ctx.fillStyle = '#ffff00';
+    ctx.fillRect(11, 13, 4, 4);
+    ctx.fillRect(17, 13, 4, 4);
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(13, 14, 2, 2);
+    ctx.fillRect(19, 14, 2, 2);
+    
+    const img = new Image();
+    img.src = canvas.toDataURL();
+    return img;
+};
 
-// --- PREMIUM CANDY ---
-const lollipopSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <rect x="14" y="15" width="2" height="13" fill="#eee"/>
-    <circle cx="15" cy="12" r="10" fill="#f44336"/>
-    <path d="M15,12 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-dasharray="2,6"/>
-    <ellipse cx="11" cy="8" rx="4" ry="2" fill="white" fill-opacity="0.3" transform="rotate(-30, 11, 8)"/>
-</svg>`;
+// Generate heart icon for lives
+const generateHeartIcon = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 24;
+    canvas.height = 24;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.imageSmoothingEnabled = false;
+    
+    ctx.fillStyle = '#ff4466';
+    ctx.beginPath();
+    ctx.moveTo(12, 20);
+    ctx.bezierCurveTo(4, 14, 2, 8, 6, 4);
+    ctx.bezierCurveTo(10, 2, 12, 6, 12, 6);
+    ctx.bezierCurveTo(12, 6, 14, 2, 18, 4);
+    ctx.bezierCurveTo(22, 8, 20, 14, 12, 20);
+    ctx.fill();
+    
+    // Highlight
+    ctx.fillStyle = '#ff8899';
+    ctx.beginPath();
+    ctx.arc(8, 7, 2, 0, Math.PI * 2);
+    ctx.fill();
+    
+    const img = new Image();
+    img.src = canvas.toDataURL();
+    return img;
+};
 
-const hardCandySVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <path d="M2,15 L9,10 L9,20 Z M28,15 L21,10 L21,20 Z" fill="#ffd54f"/>
-    <rect x="8" y="9" width="14" height="12" rx="4" fill="#f57f17"/>
-    <path d="M10,12 L20,12" stroke="white" stroke-opacity="0.4" stroke-width="4" stroke-linecap="round"/>
-    <rect x="12" y="10" width="1" height="10" fill="white" opacity="0.2"/>
-</svg>`;
+// Generate empty heart icon
+const generateEmptyHeartIcon = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 24;
+    canvas.height = 24;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.imageSmoothingEnabled = false;
+    
+    ctx.strokeStyle = '#ff4466';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(12, 20);
+    ctx.bezierCurveTo(4, 14, 2, 8, 6, 4);
+    ctx.bezierCurveTo(10, 2, 12, 6, 12, 6);
+    ctx.bezierCurveTo(12, 6, 14, 2, 18, 4);
+    ctx.bezierCurveTo(22, 8, 20, 14, 12, 20);
+    ctx.stroke();
+    
+    const img = new Image();
+    img.src = canvas.toDataURL();
+    return img;
+};
 
-const chocolateSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <rect x="4" y="6" width="22" height="18" rx="1" fill="#2d1a15"/>
-    <g fill="#4e342e">
-        <rect x="6" y="8" width="8" height="6"/>
-        <rect x="16" y="8" width="8" height="6"/>
-        <rect x="6" y="16" width="8" height="6"/>
-        <rect x="16" y="16" width="8" height="6"/>
-    </g>
-    <path d="M4,12 H26 M15,6 V24" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
-    <path d="M6,8 L9,11" stroke="white" stroke-opacity="0.1" stroke-width="1"/>
-</svg>`;
-
-// --- PREMIUM PLATFORM ---
-const platformSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="20" viewBox="0 0 100 20">
-    <defs>
-        <linearGradient id="woodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#8d6e63;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
-        </linearGradient>
-    </defs>
-    <rect width="100" height="20" rx="4" fill="url(#woodGrad)"/>
-    <path d="M5,4 H95 M5,16 H95 M20,4 V16 M50,4 V16 M80,4 V16" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
-    <rect width="100" height="2" fill="rgba(255,255,255,0.1)"/>
-</svg>`;
-
+// Main assets object
 export const ASSETS = {
-    susie: createSVGImage(susieSVG),
-    yarn: createSVGImage(yarnSVG),
-    candy_lollipop: createSVGImage(lollipopSVG),
-    candy_hard: createSVGImage(hardCandySVG),
-    candy_choc: createSVGImage(chocolateSVG),
-    platform: createSVGImage(platformSVG)
+    susie: null,
+    platform: null,
+    yarn: null,
+    candy: null,
+    candy_lollipop: null,
+    candy_hard: null,
+    candy_choc: null,
+    powerup_shield: null,
+    powerup_magnet: null,
+    powerup_double: null,
+    enemy: null,
+    heart: null,
+    heart_empty: null,
+    loaded: false
+};
+
+// Load all assets
+export const loadAssets = async () => {
+    try {
+        // Load PNG images
+        const [susie, platform, yarn, candy] = await Promise.all([
+            loadImage(ASSET_PATHS.susie),
+            loadImage(ASSET_PATHS.platform),
+            loadImage(ASSET_PATHS.yarn),
+            loadImage(ASSET_PATHS.candy)
+        ]);
+        
+        ASSETS.susie = susie;
+        ASSETS.platform = platform;
+        ASSETS.yarn = yarn;
+        ASSETS.candy = candy;
+        // Use candy for all candy types (they all look like lollipops now)
+        ASSETS.candy_lollipop = candy;
+        ASSETS.candy_hard = candy;
+        ASSETS.candy_choc = candy;
+        
+        // Generate power-up icons
+        ASSETS.powerup_shield = generatePowerUpIcon('shield');
+        ASSETS.powerup_magnet = generatePowerUpIcon('magnet');
+        ASSETS.powerup_double = generatePowerUpIcon('double');
+        
+        // Generate enemy sprite
+        ASSETS.enemy = generateEnemySprite();
+        
+        // Generate heart icons
+        ASSETS.heart = generateHeartIcon();
+        ASSETS.heart_empty = generateEmptyHeartIcon();
+        
+        ASSETS.loaded = true;
+        console.log('All assets loaded successfully!');
+        return true;
+    } catch (error) {
+        console.error('Failed to load assets:', error);
+        return false;
+    }
 };
