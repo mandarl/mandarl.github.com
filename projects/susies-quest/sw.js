@@ -1,7 +1,7 @@
 // Susie's Quest - Service Worker
 // Provides offline caching and PWA install support
 
-const CACHE_NAME = 'susies-quest-v1.5.0';
+const CACHE_NAME = 'susies-quest-v1.6.0';
 const GHPATH = '/projects/susies-quest';
 
 // Assets to cache for offline play
@@ -26,7 +26,10 @@ const ASSETS_TO_CACHE = [
     `${GHPATH}/bg_clouds.png`,
     `${GHPATH}/bg_hills.png`,
     `${GHPATH}/icon-192.png`,
-    `${GHPATH}/icon-512.png`
+    `${GHPATH}/icon-512.png`,
+    `${GHPATH}/apple-touch-icon.png`,
+    `${GHPATH}/manifest.webmanifest`,
+    `${GHPATH}/manifest.json`
 ];
 
 // Install event - cache all static assets
