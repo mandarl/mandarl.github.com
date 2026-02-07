@@ -1,0 +1,47 @@
+{
+    "name": "Susie's Quest",
+    "short_name": "Susie's Quest",
+    "description": "A retro-style jumping game! Help Susie collect yarn and candy while avoiding enemies.",
+    "scope": "/projects/susies-quest/",
+    "start_url": "/projects/susies-quest/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#87CEEB",
+    "theme_color": "#87CEEB",
+    "categories": ["games", "entertainment"],
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Susie's Quest - Retro Jumping Game"
+        }
+    ]
+}

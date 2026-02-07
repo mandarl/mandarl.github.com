@@ -84,6 +84,13 @@ class Game {
         nameInput.addEventListener("change", updateStartBtn);
         updateStartBtn();
 
+        // Pre-populate name from localStorage if available
+        const savedName = localStorage.getItem('susies-quest-player-name');
+        if (savedName) {
+            nameInput.value = savedName;
+            nameInput.dispatchEvent(new Event('input'));  // Enable start button
+        }
+
         await this.fetchAndDisplayLeaderboard("welcome-leaderboard");
         this.setupClickableLeaderboard();
         this.toggleGameUI(false);
@@ -183,6 +190,9 @@ class Game {
     startGame() {
         const nameInput = document.getElementById("player-name");
         this.state.playerName = nameInput.value.trim() || "Player";
+
+        // Cache the player name for next visit
+        localStorage.setItem('susies-quest-player-name', this.state.playerName);
 
         document.getElementById("welcome-screen").style.display = "none";
         this.toggleGameUI(true);

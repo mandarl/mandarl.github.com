@@ -11,6 +11,12 @@
     
     <title>Susie's Quest</title>
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    
     <!-- Retro Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +72,7 @@
             </p>
             
             <p style="font-size: 8px; opacity: 0.5; margin-top: 10px; color: #5a4030;">
-                v1.4.0
+                v1.5.0
             </p>
 
             <div class="leaderboard">
@@ -220,8 +226,74 @@
         </div>
     </div>
 
+    <!-- PWA Install Banner -->
+    <div id="install-banner" style="display: none;">
+        <div class="install-banner-content">
+            <img src="icon-192.png" alt="Susie" class="install-icon">
+            <div class="install-text">
+                <strong>Install Susie's Quest</strong>
+                <span>Add to your home screen for the best experience!</span>
+            </div>
+            <button id="install-btn" class="install-button">Install</button>
+            <button id="install-dismiss" class="install-dismiss">&times;</button>
+        </div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/projects/susies-quest/sw.js', {
+                    scope: '/projects/susies-quest/'
+                }).then((reg) => {
+                    console.log('[PWA] Service worker registered:', reg.scope);
+                }).catch((err) => {
+                    console.warn('[PWA] Service worker registration failed:', err);
+                });
+            });
+        }
+
+        // Handle PWA install prompt
+        let deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Don't show if user previously dismissed
+            if (localStorage.getItem('susies-quest-install-dismissed')) return;
+            
+            // Show custom install banner
+            const banner = document.getElementById('install-banner');
+            if (banner) banner.style.display = 'flex';
+        });
+
+        // Install button click
+        document.getElementById('install-btn')?.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('[PWA] Install outcome:', outcome);
+            deferredPrompt = null;
+            document.getElementById('install-banner').style.display = 'none';
+        });
+
+        // Dismiss button
+        document.getElementById('install-dismiss')?.addEventListener('click', () => {
+            document.getElementById('install-banner').style.display = 'none';
+            localStorage.setItem('susies-quest-install-dismissed', 'true');
+        });
+
+        // Hide banner if app is already installed
+        window.addEventListener('appinstalled', () => {
+            console.log('[PWA] App installed!');
+            document.getElementById('install-banner').style.display = 'none';
+            deferredPrompt = null;
+        });
+    </script>
+
     <!-- Main Game Script -->
-    <script type="module" src="js/game.js?v=1.4.0"></script>
+    <script type="module" src="js/game.js?v=1.5.0"></script>
 </body>
 
 </html>
