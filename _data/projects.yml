@@ -23,10 +23,12 @@
     - Mobile
   icon: '<img src="/projects/susies-quest/susie.png" alt="Susie" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated;">'
 
-- name: "Markets Heatmap"
-  description: "A visual heatmap displaying real-time market data and trends across different sectors and asset classes."
-  url: "/projects/markets-heatmap"
+- name: "Market Heatmap"
+  description: "A Finviz-style interactive treemap showing real-time stock market data for S&P 500, Nasdaq 100, and Dow Jones 30. Features pre-market data, sector grouping, WSB trending tickers, and auto-refresh."
+  url: "https://projects.mandar.dev"
+  external: true
   tags:
     - Finance
+    - React
     - Data Visualization
-  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+  icon: '<img src="/projects/market-heatmap/logo.png" alt="Market Heatmap" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated;">'
