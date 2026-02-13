@@ -3,8 +3,11 @@ layout: post
 title: "From Chatbot to Employee: Why 2026 is the Year of the AI Agent"
 date: 2026-02-06
 description: "A personal exploration of the shift from passive chatbots to autonomous AI agents, with hands-on experiences using OpenClaw and Manus, and why 2026 marks the beginning of the agentic AI era."
+snippet: "2026 marks the shift from passive chatbots to autonomous AI agents. After a weekend with OpenClaw and experience with Manus, I've seen the future: AI that actually does things, not just talks about them."
 tags: [ai, agents, openclaw, manus, agentic-ai]
 image: /assets/images/2026-02-06-year-of-ai-agent-hero.png
+twitter_url: "https://x.com/mandarlimaye/status/2019840022866715119?s=20"
+# hackernews_url: "https://news.ycombinator.com/item?id=YOUR_HN_ID"  # Uncomment when posted to HN
 ---
 
 ![Illustration of an autonomous AI agent orchestrating multiple digital tasks including code execution, file management, and workflow automation](/assets/images/2026-02-06-year-of-ai-agent-hero.png)

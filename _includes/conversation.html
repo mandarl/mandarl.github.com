@@ -1,8 +1,12 @@
 {% comment %}
   Continue the Conversation CTA
   Appears at the end of each post to encourage discussion on social platforms.
-  
-  Twitter link auto-composes a tweet with the post title, URL, and author handle.
+
+  Supports optional frontmatter fields:
+  - twitter_url: Direct link to Twitter discussion thread
+  - hackernews_url: Link to Hacker News discussion
+
+  If twitter_url is not provided, falls back to tweet intent with post title and URL.
   LinkedIn links to the author's profile.
   Copy Link copies the post URL to clipboard.
 {% endcomment %}
@@ -15,25 +19,44 @@
 <div class="conversation-cta">
   <h3 class="conversation-title">Continue the Conversation</h3>
   <p class="conversation-description">
-    Have thoughts on this post? I'd love to hear from you. Reply on Twitter or connect on LinkedIn — I read every message.
+    Have thoughts on this post? I'd love to hear from you. {% if page.twitter_url %}Join the discussion on Twitter{% elsif page.hackernews_url %}Join the discussion on Hacker News{% else %}Reply on Twitter{% endif %} or connect on LinkedIn — I read every message.
   </p>
   <div class="conversation-links">
-    <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}%20by%20%40{{ twitter_handle }}&url={{ tweet_url }}" 
-       class="btn btn-secondary btn-icon conversation-btn" 
-       target="_blank" 
+    {% if page.twitter_url %}
+    <a href="{{ page.twitter_url }}"
+       class="btn btn-secondary btn-icon conversation-btn"
+       target="_blank"
        rel="noopener noreferrer">
       {% include icons/twitter.svg %}
       Discuss on Twitter
     </a>
-    <a href="https://www.linkedin.com/in/{{ linkedin_username }}/" 
-       class="btn btn-secondary btn-icon conversation-btn" 
-       target="_blank" 
+    {% else %}
+    <a href="https://twitter.com/intent/tweet?text={{ tweet_text }}%20by%20%40{{ twitter_handle }}&url={{ tweet_url }}"
+       class="btn btn-secondary btn-icon conversation-btn"
+       target="_blank"
+       rel="noopener noreferrer">
+      {% include icons/twitter.svg %}
+      Discuss on Twitter
+    </a>
+    {% endif %}
+    {% if page.hackernews_url %}
+    <a href="{{ page.hackernews_url }}"
+       class="btn btn-secondary btn-icon conversation-btn"
+       target="_blank"
+       rel="noopener noreferrer">
+      {% include icons/hackernews.svg %}
+      Discuss on Hacker News
+    </a>
+    {% endif %}
+    <a href="https://www.linkedin.com/in/{{ linkedin_username }}/"
+       class="btn btn-secondary btn-icon conversation-btn"
+       target="_blank"
        rel="noopener noreferrer">
       {% include icons/linkedin.svg %}
       Connect on LinkedIn
     </a>
-    <button class="btn btn-secondary btn-icon conversation-btn copy-link-btn" 
-            onclick="copyPostLink(this)" 
+    <button class="btn btn-secondary btn-icon conversation-btn copy-link-btn"
+            onclick="copyPostLink(this)"
             data-url="{{ page.url | absolute_url }}">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
