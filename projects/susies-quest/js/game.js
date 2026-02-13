@@ -392,8 +392,13 @@ class Game {
     update() {
         this.state.updateDifficulty();
         this.state.updatePowerUps(this.deltaTime);
-        
-        const speed = CONFIG.PLATFORM_SPEED * this.state.difficultyMultiplier;
+
+        // Increase platform speed exponentially as Susie approaches the top of screen
+        // Speed increases as Susie's Y position decreases (moves upward)
+        const spawnY = this.canvas.height * 0.35; // Susie's starting Y position
+        const distanceFromTop = Math.max(0, spawnY - this.susie.y); // Distance above spawn point
+        const speedMultiplier = 1 + Math.pow(distanceFromTop / 350, 1.5); // Exponential increase
+        const speed = CONFIG.PLATFORM_SPEED * this.state.difficultyMultiplier * speedMultiplier;
 
         this.susie.update(this.canvas.width, this.canvas.height, this.input);
 
@@ -525,11 +530,15 @@ class Game {
             if (p.life <= 0) this.particles.splice(index, 1);
         });
 
-        // Spawning
+        // Spawning - spawn platforms ahead of Susie's current position
+        // Adjust spawn rate based on speed multiplier to keep spacing uniform
         this.platformSpawnTimer++;
-        if (this.platformSpawnTimer >= 60 / this.state.difficultyMultiplier) {
+        const spawnInterval = (60 / this.state.difficultyMultiplier) / speedMultiplier;
+        if (this.platformSpawnTimer >= spawnInterval) {
             this.platformSpawnTimer = 0;
-            this.createPlatformAt(-30);
+            // Spawn ahead of Susie by 200 pixels, or at -30 if she's low
+            const spawnY = Math.min(-30, this.susie.y - 200);
+            this.createPlatformAt(spawnY);
         }
 
         // Update power-up display

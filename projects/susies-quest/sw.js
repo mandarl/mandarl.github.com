@@ -1,7 +1,7 @@
 // Susie's Quest - Service Worker
 // Provides offline caching and PWA install support
 
-const CACHE_NAME = 'susies-quest-v1.6.0';
+const CACHE_NAME = 'susies-quest-v1.6.2';
 const GHPATH = '/projects/susies-quest';
 
 // Assets to cache for offline play
