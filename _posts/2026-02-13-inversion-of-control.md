@@ -7,6 +7,7 @@ excerpt: "In software engineering, Inversion of Control means the framework call
 tags: [ai, agents, manus, productivity, agentic-ai]
 image: /assets/images/2026-02-13-inversion-of-control-hero.png
 hackernews_url: https://news.ycombinator.com/item?id=47006318
+twitter_url: https://x.com/mandarlimaye/status/2022380504906108969?s=20
 ---
 
 ![A workspace with a laptop and phone, connected by glowing threads to an abstract AI network above — representing the inversion of control from human to AI orchestrator](/assets/images/2026-02-13-inversion-of-control-hero.png)
