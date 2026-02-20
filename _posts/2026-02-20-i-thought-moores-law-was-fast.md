@@ -7,11 +7,26 @@ excerpt: "AI agents now consume more tokens than humans. The Token Law — a dem
 tags: [ai, agents, manus, productivity, agentic-ai, token-law, moores-law]
 image: /assets/images/2026-02-20-token-law-hero.png
 draft: false
+body_class: infographic-post
 ---
 
 <div class="infographic-container">
 <style>
-/* Scoped styles for the infographic container */
+/* ── Infographic Post: Hide redundant Jekyll header ── */
+  .infographic-post .post-header {
+    display: none !important;
+  }
+
+  /* Remove gap between nav bar and hero for immersive feel */
+  .infographic-post .site-header {
+    margin-bottom: 0;
+  }
+
+  /* Remove top padding from the post content container */
+  .infographic-post .post.content-container {
+    padding-top: 0;
+  }
+
   /* Break out of blog content-container width constraint */
   .infographic-container {
     width: 100vw;
@@ -106,6 +121,52 @@ draft: false
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  /* ── Hero Metadata Overlay ── */
+  .infographic-container .hero-meta {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font);
+    font-size: 0.85rem;
+    color: #6b7280;
+    z-index: 10;
+    opacity: 0.85;
+  }
+
+  .infographic-container .hero-date,
+  .infographic-container .hero-reading-time {
+    letter-spacing: 0.02em;
+  }
+
+  .infographic-container .hero-separator {
+    color: #d1d5db;
+    font-weight: 300;
+  }
+
+  .infographic-container .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-left: 0.5rem;
+  }
+
+  .infographic-container .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #6b7280;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
   }
 
   @keyframes bounce {
@@ -516,6 +577,18 @@ draft: false
       padding: 1.5rem;
     }
 
+    .infographic-container .hero-meta {
+      top: 1rem;
+      font-size: 0.75rem;
+      gap: 0.35rem;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    .infographic-container .hero-tags {
+      display: none; /* Hide tags on mobile to save space */
+    }
+
     .infographic-container .hero h1 {
       font-size: clamp(1.6rem, 7vw, 2.2rem);
       margin-bottom: 1rem;
@@ -672,6 +745,20 @@ draft: false
 <!-- HERO -->
 <!-- ════════════════════════════════════════════════════════════ -->
 <section class="hero">
+  <div class="hero-meta">
+    <span class="hero-date">February 20, 2026</span>
+    <span class="hero-separator">·</span>
+    <span class="hero-reading-time">47 min read</span>
+    <div class="hero-tags">
+      <span class="hero-tag">ai</span>
+      <span class="hero-tag">agents</span>
+      <span class="hero-tag">manus</span>
+      <span class="hero-tag">productivity</span>
+      <span class="hero-tag">agentic-ai</span>
+      <span class="hero-tag">token-law</span>
+      <span class="hero-tag">moores-law</span>
+    </div>
+  </div>
   <h1>The Machines Are Talking to Themselves</h1>
   <p class="subtitle">OpenRouter data shows that AI agents now consume more tokens than humans. Here's what that means for the future of computing.</p>
   <div class="scroll-hint">↓ Scroll to explore</div>
