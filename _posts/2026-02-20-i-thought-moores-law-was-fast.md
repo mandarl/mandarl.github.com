@@ -6,7 +6,7 @@ description: "OpenRouter data shows that AI agents now consume more tokens than 
 excerpt: "AI agents now consume more tokens than humans. The Token Law — a demand-side exponential far steeper than Moore's Law — is reshaping the economics of computing. Here's what the data shows."
 tags: [ai, agents, manus, productivity, agentic-ai, token-law, moores-law]
 image: /assets/images/2026-02-20-token-law-hero.png
-draft: true
+draft: false
 ---
 
 > **Architect's Cut:** This version incorporates five key pieces of feedback from a panel of software architects to add technical depth and practitioner credibility.
@@ -21,9 +21,9 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
 /* Scoped styles for the infographic container */
 
   /* ── Reset & Base ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .infographic-container *, .infographic-container *::before, .infographic-container *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
+  .infographic-container {
     --bg: #ffffff;
     --bg-card: #f8f9fa;
     --text: #1a1a2e;
@@ -39,7 +39,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   }
 
-  html { scroll-behavior: smooth; }
+  .infographic-container { scroll-behavior: smooth; }
 
   .infographic-container {
     font-family: var(--font);
@@ -50,10 +50,10 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Typography ── */
-  h1, h2, h3 { font-weight: 700; line-height: 1.2; text-wrap: balance; }
+  .infographic-container h1, .infographic-container h2, .infographic-container h3 { font-weight: 700; line-height: 1.2; text-wrap: balance; }
 
   /* ── Hero Section ── */
-  .hero {
+  .infographic-container .hero {
     min-height: 100vh;
     min-height: 100dvh; /* Dynamic viewport height — accounts for mobile address bar */
     display: flex;
@@ -66,7 +66,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     overflow: hidden;
   }
 
-  .hero::before {
+  .infographic-container .hero::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -77,7 +77,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     pointer-events: none;
   }
 
-  .hero h1 {
+  .infographic-container .hero h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     max-width: 800px;
     margin-bottom: 1.5rem;
@@ -87,13 +87,13 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     background-clip: text;
   }
 
-  .hero .subtitle {
+  .infographic-container .hero .subtitle {
     font-size: 1.15rem;
     color: #4b5563;
     max-width: 600px;
   }
 
-  .scroll-hint {
+  .infographic-container .scroll-hint {
     position: absolute;
     bottom: 2rem;
     bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
@@ -111,19 +111,19 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Prose Sections ── */
-  .prose-section {
+  .infographic-container .prose-section {
     max-width: 720px;
     margin: 0 auto;
     padding: 4rem 1.5rem;
   }
 
-  .prose-section h2 {
+  .infographic-container .prose-section h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     color: var(--accent-glow);
   }
 
-  .prose-section p {
+  .infographic-container .prose-section p {
     margin-bottom: 1.25rem;
     font-size: 1.05rem;
     color: var(--text);
@@ -131,12 +131,12 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     max-width: 65ch;
   }
 
-  .prose-section .highlight {
+  .infographic-container .prose-section .highlight {
     color: var(--orange-text);
     font-weight: 700;
   }
 
-  blockquote {
+  .infographic-container blockquote {
     border-left: 3px solid var(--accent);
     padding: 1rem 1.5rem;
     margin: 2rem 0;
@@ -146,7 +146,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     color: var(--text-muted);
   }
 
-  blockquote cite {
+  .infographic-container blockquote cite {
     display: block;
     margin-top: 0.75rem;
     font-style: normal;
@@ -155,14 +155,14 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Chart Containers ── */
-  .chart-section {
+  .infographic-container .chart-section {
     width: 100%;
     max-width: 960px;
     margin: 0 auto 4rem;
     padding: 0 1rem;
   }
 
-  .chart-container {
+  .infographic-container .chart-container {
     background: var(--bg-card);
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 16px;
@@ -171,7 +171,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     overflow: hidden;
   }
 
-  .chart-container::before {
+  .infographic-container .chart-container::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -179,24 +179,24 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     background: linear-gradient(90deg, var(--accent), var(--orange));
   }
 
-  .chart-title {
+  .infographic-container .chart-title {
     font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
 
-  .chart-subtitle {
+  .infographic-container .chart-subtitle {
     font-size: 0.9rem;
     color: var(--text-muted);
     margin-bottom: 1.5rem;
   }
 
-  svg text {
+  .infographic-container svg text {
     font-family: var(--font);
   }
 
   /* ── Agent Comparison ── */
-  .agent-comparison {
+  .infographic-container .agent-comparison {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
@@ -206,10 +206,10 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   @media (max-width: 700px) {
-    .agent-comparison { grid-template-columns: 1fr; }
+    .infographic-container .agent-comparison { grid-template-columns: 1fr; }
   }
 
-  .agent-card {
+  .infographic-container .agent-card {
     background: var(--bg-card);
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 16px;
@@ -218,17 +218,17 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     overflow: hidden;
   }
 
-  .agent-card::before {
+  .infographic-container .agent-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
   }
 
-  .agent-card.simple::before { background: var(--green); }
-  .agent-card.agentic::before { background: var(--orange); }
+  .infographic-container .agent-card.simple::before { background: var(--green); }
+  .infographic-container .agent-card.agentic::before { background: var(--orange); }
 
-  .agent-card h3 {
+  .infographic-container .agent-card h3 {
     font-size: 1rem;
     margin-bottom: 0.75rem;
     display: flex;
@@ -236,7 +236,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     gap: 0.5rem;
   }
 
-  .agent-card .prompt-box {
+  .infographic-container .agent-card .prompt-box {
     background: rgba(0,0,0,0.03);
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 8px;
@@ -247,7 +247,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     color: var(--text-muted);
   }
 
-  .token-counter {
+  .infographic-container .token-counter {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -257,32 +257,32 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     margin-top: 1rem;
   }
 
-  .token-counter .label { font-size: 0.8rem; color: var(--text-muted); }
-  .token-counter .value { font-size: 1.6rem; font-weight: 800; font-family: var(--mono); }
-  .token-counter .cost { font-size: 1.1rem; color: var(--text-muted); font-weight: 600; }
+  .infographic-container .token-counter .label { font-size: 0.8rem; color: var(--text-muted); }
+  .infographic-container .token-counter .value { font-size: 1.6rem; font-weight: 800; font-family: var(--mono); }
+  .infographic-container .token-counter .cost { font-size: 1.1rem; color: var(--text-muted); font-weight: 600; }
 
-  .simple .token-counter .value { color: var(--green); }
-  .agentic .token-counter .value { color: var(--orange-text); }
+  .infographic-container .simple .token-counter .value { color: var(--green); }
+  .infographic-container .agentic .token-counter .value { color: var(--orange-text); }
 
   /* ── Agent Tree ── */
-  .agent-tree-node {
+  .infographic-container .agent-tree-node {
     fill: var(--bg-card);
     stroke: var(--orange);
     stroke-width: 1.5;
   }
 
-  .agent-tree-link {
+  .infographic-container .agent-tree-link {
     fill: none;
     stroke: rgba(249,115,22,0.3);
     stroke-width: 1.5;
   }
 
-  .agent-tree-label {
+  .infographic-container .agent-tree-label {
     fill: var(--text);
     font-size: 11px;
   }
 
-  .loop-arrow {
+  .infographic-container .loop-arrow {
     fill: none;
     stroke: var(--red);
     stroke-width: 1.5;
@@ -290,7 +290,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Stat Cards ── */
-  .stat-grid {
+  .infographic-container .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
@@ -299,7 +299,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     padding: 0 1rem;
   }
 
-  .stat-card {
+  .infographic-container .stat-card {
     background: var(--bg-card);
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 16px;
@@ -307,7 +307,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     text-align: center;
   }
 
-  .stat-card .stat-value {
+  .infographic-container .stat-card .stat-value {
     font-size: 2rem;
     font-weight: 800;
     font-family: var(--mono);
@@ -317,7 +317,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     background-clip: text;
   }
 
-  .stat-card .stat-label {
+  .infographic-container .stat-card .stat-label {
     font-size: 0.8rem;
     color: var(--text-muted);
     margin-top: 0.25rem;
@@ -325,13 +325,13 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Top Apps Table ── */
-  .apps-table {
+  .infographic-container .apps-table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
   }
 
-  .apps-table th {
+  .infographic-container .apps-table th {
     text-align: left;
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -341,15 +341,15 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 
-  .apps-table td {
+  .infographic-container .apps-table td {
     padding: 0.6rem 0.75rem;
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
 
-  .apps-table .bar-cell { width: 40%; }
+  .infographic-container .apps-table .bar-cell { width: 40%; }
 
-  .bar-bg {
+  .infographic-container .bar-bg {
     height: 20px;
     background: rgba(0,0,0,0.04);
     border-radius: 4px;
@@ -357,16 +357,16 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     position: relative;
   }
 
-  .bar-fill {
+  .infographic-container .bar-fill {
     height: 100%;
     border-radius: 4px;
     transition: width 1.2s ease-out;
   }
 
-  .bar-fill.coding { background: linear-gradient(90deg, var(--orange), #fb923c); }
-  .bar-fill.other { background: linear-gradient(90deg, var(--accent), var(--accent-glow)); }
+  .infographic-container .bar-fill.coding { background: linear-gradient(90deg, var(--orange), #fb923c); }
+  .infographic-container .bar-fill.other { background: linear-gradient(90deg, var(--accent), var(--accent-glow)); }
 
-  .type-badge {
+  .infographic-container .type-badge {
     display: inline-block;
     font-size: 0.65rem;
     padding: 0.15rem 0.5rem;
@@ -376,31 +376,31 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     letter-spacing: 0.05em;
   }
 
-  .type-badge.coding {
+  .infographic-container .type-badge.coding {
     background: rgba(249,115,22,0.15);
     color: var(--orange-text);
   }
 
-  .type-badge.other {
+  .infographic-container .type-badge.other {
     background: rgba(99,102,241,0.15);
     color: var(--accent-glow);
   }
 
   /* ── Multiplier Viz ── */
-  .multiplier-section {
+  .infographic-container .multiplier-section {
     max-width: 960px;
     margin: 0 auto;
     padding: 0 1rem;
   }
 
-  .multiplier-row {
+  .infographic-container .multiplier-row {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
 
-  .multiplier-label {
+  .infographic-container .multiplier-label {
     width: 140px;
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -412,7 +412,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     min-height: 32px;
   }
 
-  .multiplier-bar-track {
+  .infographic-container .multiplier-bar-track {
     flex: 1;
     height: 32px;
     background: rgba(0,0,0,0.03);
@@ -421,7 +421,7 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     position: relative;
   }
 
-  .multiplier-bar {
+  .infographic-container .multiplier-bar {
     height: 100%;
     border-radius: 6px;
     display: flex;
@@ -436,26 +436,26 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
   }
 
   /* ── Scroll Animations ── */
-  .fade-in {
+  .infographic-container .fade-in {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   }
 
-  .fade-in.visible {
+  .infographic-container .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
   /* ── Footer ── */
-  .section-divider {
+  .infographic-container .section-divider {
     max-width: 720px;
     margin: 0 auto;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);
   }
 
-  .footer {
+  .infographic-container .footer {
     max-width: 720px;
     margin: 0 auto;
     padding: 3rem 1.5rem;
@@ -464,12 +464,12 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
     color: var(--text-muted);
   }
 
-  .footer a {
+  .infographic-container .footer a {
     color: var(--accent-glow);
     text-decoration: none;
   }
 
-  .footer a:hover { text-decoration: underline; }
+  .infographic-container .footer a:hover { text-decoration: underline; }
 
   /* ══════════════════════════════════════════════════════ */
   /* MOBILE RESPONSIVE STYLES                              */
@@ -477,185 +477,185 @@ I'm calling it the **Token Law**. Where Moore's Law was a supply-side observatio
 
   /* ── Tablet (768px and below) ── */
   @media (max-width: 768px) {
-    .prose-section {
+    .infographic-container .prose-section {
       padding: 3rem 1.25rem;
     }
 
-    .prose-section h2 {
+    .infographic-container .prose-section h2 {
       font-size: 1.5rem;
     }
 
-    .chart-container {
+    .infographic-container .chart-container {
       padding: 1.5rem 1rem;
     }
 
-    .chart-title {
+    .infographic-container .chart-title {
       font-size: 1.15rem;
     }
 
-    .stat-grid {
+    .infographic-container .stat-grid {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .multiplier-label {
+    .infographic-container .multiplier-label {
       width: 110px;
       font-size: 0.78rem;
     }
 
-    .multiplier-bar-track {
+    .infographic-container .multiplier-bar-track {
       height: 28px;
     }
   }
 
   /* ── Mobile (480px and below) ── */
   @media (max-width: 480px) {
-    .hero {
+    .infographic-container .hero {
       padding: 1.5rem;
     }
 
-    .hero h1 {
+    .infographic-container .hero h1 {
       font-size: clamp(1.6rem, 7vw, 2.2rem);
       margin-bottom: 1rem;
     }
 
-    .hero .subtitle {
+    .infographic-container .hero .subtitle {
       font-size: 1rem;
     }
 
-    .prose-section {
+    .infographic-container .prose-section {
       padding: 2.5rem 1rem;
     }
 
-    .prose-section h2 {
+    .infographic-container .prose-section h2 {
       font-size: 1.35rem;
     }
 
-    .prose-section p {
+    .infographic-container .prose-section p {
       font-size: 0.95rem;
       line-height: 1.7;
     }
 
-    .stat-grid {
+    .infographic-container .stat-grid {
       grid-template-columns: 1fr;
       gap: 0.75rem;
     }
 
-    .stat-card .stat-value {
+    .infographic-container .stat-card .stat-value {
       font-size: 1.6rem;
     }
 
-    .chart-section {
+    .infographic-container .chart-section {
       padding: 0 0.5rem;
       margin: 1.5rem auto 3rem;
     }
 
-    .chart-container {
+    .infographic-container .chart-container {
       padding: 1.25rem 0.75rem;
       border-radius: 12px;
     }
 
-    .chart-title {
+    .infographic-container .chart-title {
       font-size: 1.05rem;
     }
 
-    .chart-subtitle {
+    .infographic-container .chart-subtitle {
       font-size: 0.8rem;
     }
 
     /* ── Apps Table: Mobile Layout ── */
-    .apps-table {
+    .infographic-container .apps-table {
       font-size: 0.8rem;
     }
 
-    .apps-table th {
+    .infographic-container .apps-table th {
       font-size: 0.65rem;
       padding: 0.4rem 0.4rem;
     }
 
-    .apps-table td {
+    .infographic-container .apps-table td {
       padding: 0.5rem 0.4rem;
       font-size: 0.8rem;
     }
 
     /* Hide the bar chart column on mobile to prevent overflow */
     .apps-table .bar-cell,
-    .apps-table td:nth-child(4) {
+    .infographic-container .apps-table td:nth-child(4) {
       display: none;
     }
 
-    .apps-table th:nth-child(4) {
+    .infographic-container .apps-table th:nth-child(4) {
       display: none;
     }
 
-    .type-badge {
+    .infographic-container .type-badge {
       font-size: 0.55rem;
       padding: 0.1rem 0.35rem;
     }
 
     /* ── Agent Comparison: Stack vertically ── */
-    .agent-comparison {
+    .infographic-container .agent-comparison {
       grid-template-columns: 1fr;
       gap: 1rem;
       padding: 0 0.5rem;
       margin: 1.5rem auto 3rem;
     }
 
-    .agent-card {
+    .infographic-container .agent-card {
       padding: 1.25rem;
       border-radius: 12px;
     }
 
-    .agent-card .prompt-box {
+    .infographic-container .agent-card .prompt-box {
       font-size: 0.78rem;
       padding: 0.6rem 0.75rem;
     }
 
-    .token-counter .value {
+    .infographic-container .token-counter .value {
       font-size: 1.15rem;
     }
 
-    #agent-tree-viz {
+    .infographic-container #agent-tree-viz {
       height: 260px !important;
       overflow: hidden;
     }
 
-    .agent-card {
+    .infographic-container .agent-card {
       overflow: hidden;
     }
 
     /* ── Multiplier Bars: Compact ── */
-    .multiplier-row {
+    .infographic-container .multiplier-row {
       gap: 0.5rem;
       margin-bottom: 1rem;
     }
 
-    .multiplier-label {
+    .infographic-container .multiplier-label {
       width: 90px;
       font-size: 0.72rem;
     }
 
-    .multiplier-bar-track {
+    .infographic-container .multiplier-bar-track {
       height: 26px;
     }
 
-    .multiplier-bar {
+    .infographic-container .multiplier-bar {
       font-size: 0.7rem;
     }
 
     /* ── Jevons Chart ── */
-    #jevons-chart {
+    .infographic-container #jevons-chart {
       min-height: 180px;
     }
 
     /* ── Blockquote ── */
-    blockquote {
+    .infographic-container blockquote {
       padding: 0.75rem 1rem;
       margin: 1.5rem 0;
       font-size: 0.9rem;
     }
 
     /* ── Footer ── */
-    .footer {
+    .infographic-container .footer {
       padding: 2rem 1rem;
       font-size: 0.75rem;
     }
