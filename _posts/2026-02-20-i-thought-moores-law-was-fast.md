@@ -17,13 +17,47 @@ body_class: infographic-post
     display: none !important;
   }
 
-  /* Remove gap between nav bar and hero for immersive feel */
+  /* Float nav bar transparently over the hero */
   .infographic-post .site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: transparent;
+    border-bottom: none;
     margin-bottom: 0;
+  }
+
+  /* Ensure nav links are readable over the light hero gradient */
+  .infographic-post .site-title {
+    color: #1a1a2e;
+  }
+
+  .infographic-post .nav-link {
+    color: #4b5563;
+  }
+
+  .infographic-post .nav-link:hover {
+    color: #1a1a2e;
+  }
+
+  /* Mobile nav dropdown needs a solid background when open */
+  @media (max-width: 768px) {
+    .infographic-post .site-nav.is-open {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
   }
 
   /* Remove top padding from the post content container */
   .infographic-post .post.content-container {
+    padding-top: 0;
+  }
+
+  /* Ensure site-main has no top margin so hero starts at viewport top */
+  .infographic-post .site-main {
     padding-top: 0;
   }
 
@@ -126,7 +160,7 @@ body_class: infographic-post
   /* ── Hero Metadata Overlay ── */
   .infographic-container .hero-meta {
     position: absolute;
-    top: 2rem;
+    top: 5rem; /* Clear the floating nav bar (~64px + breathing room) */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -578,7 +612,7 @@ body_class: infographic-post
     }
 
     .infographic-container .hero-meta {
-      top: 1rem;
+      top: 4.5rem; /* Clear floating nav bar on mobile */
       font-size: 0.75rem;
       gap: 0.35rem;
       padding: 0 1rem;
