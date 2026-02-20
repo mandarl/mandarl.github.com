@@ -9,16 +9,19 @@ image: /assets/images/2026-02-20-token-law-hero.png
 draft: false
 ---
 
-> **Architect's Cut:** This version incorporates five key pieces of feedback from a panel of software architects to add technical depth and practitioner credibility.
-
-Moore's Law was the steady heartbeat of tech for half a century. The relentless doubling of transistors on a chip gave us everything from the PC to the smartphone. As a software engineer, I grew up taking that rhythm for granted—it was just the way progress worked. But I've come to realize that era is over. I’m now seeing a new engine of progress, one that runs on a completely different fuel and follows a far more aggressive exponential curve. 
-
-I'm calling it the **Token Law**. Where Moore's Law was a supply-side observation about the physics of silicon, this new Token Law is a **demand-side phenomenon**, reflecting the explosive growth in the complexity of tasks we are now entrusting to AI. It’s not about how many transistors we can cram onto a chip, but about how many “thoughts” an AI can process. The growth I'm seeing is staggering—a 12x explosion in a single year—and it’s driven by a fact that I found genuinely surprising: the majority of AI “conversation” is no longer between us and our machines, but between machines talking to themselves.
-
-
 <div class="infographic-container">
 <style>
 /* Scoped styles for the infographic container */
+  /* Break out of blog content-container width constraint */
+  .infographic-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
 
   /* ── Reset & Base ── */
   .infographic-container *, .infographic-container *::before, .infographic-container *::after { box-sizing: border-box; margin: 0; padding: 0; }
