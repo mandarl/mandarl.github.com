@@ -51,4 +51,4 @@
     - Android
     - RSS
     - Offline
-  icon: '<img src="/projects/rss-readers/logo.png" alt="RSS Readers" style="height:100%;width:auto;object-fit:contain;">'
+  icon: '<img src="/projects/rss-readers/logo.png" alt="RSS Readers" style="width:auto;height:48px;max-width:none;">'
