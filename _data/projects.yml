@@ -32,3 +32,13 @@
     - React
     - Data Visualization
   icon: '<img src="/projects/market-heatmap/logo.png" alt="Market Heatmap" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated;">'
+
+- name: "Options Rebel"
+  description: "An automated bot that scans the options market for unusual activity and surfaces interesting trades in real time. Delivers daily picks featuring strike prices, expirations, and volume data across Twitter, Discord, and Telegram."
+  url: "https://x.com/optionsrebel"
+  external: true
+  tags:
+    - Finance
+    - Automation
+    - Bot
+  icon: '<img src="/projects/options-rebel/logo.png" alt="Options Rebel" style="width:100%;height:100%;object-fit:contain;image-rendering:pixelated;">'
