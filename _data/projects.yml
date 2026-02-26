@@ -25,7 +25,7 @@
 
 - name: "Market Heatmap"
   description: "A Finviz-style interactive treemap showing real-time stock market data for S&P 500, Nasdaq 100, and Dow Jones 30. Features pre-market data, sector grouping, WSB trending tickers, and auto-refresh."
-  url: "https://projects.mandar.dev"
+  url: "https://projects.mandar.dev/market-heatmap/"
   external: true
   tags:
     - Finance
