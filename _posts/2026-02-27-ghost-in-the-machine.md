@@ -11,7 +11,7 @@ image: /assets/images/2026-02-27-ghost-in-the-machine-hero.png
 
 There is a certain magic to modern AI-assisted development, a practice that has been affectionately dubbed "vibe coding." It's the exhilarating experience of describing an application in plain English and watching it materialize on your screen, seemingly by magic. It promises a future where the friction between idea and execution disappears. But as I recently discovered, while the magic is real, it has its limits. The ghost in the machine can write the code, but it doesn't yet possess a soul seasoned by experience.
 
-My journey into this new paradigm began with a simple idea from a friend, Krish Sundaram: a market heat map. The concept was to create a web application that visualizes stock performance across pre-market, regular, and post-market hours. Fueled by the promise of rapid, conversational development, I spun up Claude. In less than fifteen minutes, I had a working prototype. It was visually impressive, functionally plausible, and a testament to the incredible power of vibe coding. The dream was real.
+My journey into this new paradigm began with a simple idea from a friend, [Krish Sundaram](https://www.linkedin.com/in/krishsund/): a market heat map. Thanks, Krish, for the suggestion! The concept was to create a web application that visualizes stock performance across pre-market, regular, and post-market hours. Fueled by the promise of rapid, conversational development, I spun up Claude. In less than fifteen minutes, I had a working prototype. It was visually impressive, functionally plausible, and a testament to the incredible power of vibe coding. The dream was real.
 
 ### The Unraveling
 
