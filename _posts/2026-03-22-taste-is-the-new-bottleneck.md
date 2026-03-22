@@ -54,3 +54,7 @@ We are about to drown in a sea of perfectly executed, perfectly average software
 So what do I tell my mentees now? I tell them to stop optimizing for throughput. Stop trying to be the fastest typist. Start reading more, observing more, and developing a point of view about what good looks like.
 
 The engineers who win the next decade won't be the ones who can execute the fastest. They'll be the ones with the taste to know what is worth executing in the first place. Ideas aren't cheap anymore. Good ones are the only thing that matters.
+
+---
+
+*P.S. I mentor a small number of engineers each year. If this essay resonated and you're navigating a career transition in the age of AI, I have one open slot. Reach out on [LinkedIn](https://www.linkedin.com/in/mandarlimaye).*
