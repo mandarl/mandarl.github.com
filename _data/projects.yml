@@ -14,6 +14,17 @@
 #   - external: true if link opens in new tab (optional)
 # =============================================================================
 
+- name: "PennyClaw"
+  description: "A lightweight, open-source AI agent built in Go, designed to run 24/7 on GCP's Always Free e2-micro VM. One click deploys it. Zero dollars keeps it running. Forever. Features multi-provider LLM support, sandboxed tool execution, and a built-in web chat UI."
+  url: "https://github.com/mandarl/pennyclaw"
+  external: true
+  tags:
+    - AI
+    - Go
+    - Open Source
+    - GCP
+  icon: '<img src="/projects/pennyclaw/logo.png" alt="PennyClaw" style="width:100%;height:100%;object-fit:contain;">'
+
 - name: "Susie's Quest"
   description: "A retro-style platform jumping game. Help Susie collect yarn and candy while avoiding enemies! Features power-ups, multiple platform types, and 8-bit sound effects."
   url: "/projects/susies-quest"
