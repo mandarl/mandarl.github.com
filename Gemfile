@@ -18,6 +18,10 @@ source "https://rubygems.org"
 gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 
+# Enables retry middleware for octokit's Faraday 2.x client (used by
+# jekyll-github-metadata / github-pages-health-check during build).
+gem "faraday-retry"
+
 group :jekyll_plugins do
   gem 'jekyll-redirect-from'
   gem 'jekyll-feed'
